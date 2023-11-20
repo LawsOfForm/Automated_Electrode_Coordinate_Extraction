@@ -134,11 +134,7 @@ for sub =1:length(All_Subjects)
         ref_image_path = fullfile(ref_image_folder, ref_image_name);
 
         matlabbatch{1} = create_batch_segm(ref_image_path);
-        matlabbatch{2} = create_batch_image_calculator(ref_image_folder,sub);
-
-        coregistr_batch = fullfile(coregistration_path, SubFolderNames{sub},'coregistr_batch_seg_calc.mat');
-        save(coregistr_batch,'matlabbatch');
-        spm_jobman('run',matlabbatch);
+        matlabbatch{2} = create_batch_image_calculator(path,sub);
 
 
 
@@ -150,7 +146,12 @@ for sub =1:length(All_Subjects)
 end
   
 
-   
+ 
+
+
+
+
+    
 
 
 function [SubFolderDir_func, SubFolderNames_func] = get_subdir(act_directory)
