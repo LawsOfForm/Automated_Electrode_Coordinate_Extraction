@@ -64,7 +64,7 @@ for sub =1:length(All_Subjects)
                     %% sesbase T1 unzip will only be in sesbase
                     if contains(all_session{session_num} ,'sesbase')
                     gunzip(fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1.folder,filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1.name),fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped'))
-                    filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', '*mprage_T1w.nii'));
+                    filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', [SubFolderNames{sub},'*mprage_T1w.nii']));
                     
                     %% all other sessions contain Petra_Post and Petra_Pre unziped files
                     else
@@ -97,6 +97,10 @@ for sub =1:length(All_Subjects)
                 all_session = {'ses1','ses2','ses3','ses4'};
                 for session_num = 1:length(all_session)
                     if isfield(filelist.(All_Subjects{sub}).Session, all_session(session_num))
+                        filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', [SubFolderNames{sub},'*mprage_T1w.nii']));
+
+
+
         
                         ref_image_folder = filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip.folder;
                         ref_image_name = filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip.name;
@@ -127,14 +131,16 @@ end
 %% create segmentation for all T1 files
 for sub =1:length(All_Subjects)
     
-    if exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped'),'dir') && isfield(filelist.(All_Subjects{sub}).Session, "sesbase") && ~exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped',['c1',{sub},'_ses-base_acq-mprage_T1w.nii']),'file')
+    if (exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped'),'dir') && isfield(filelist.(All_Subjects{sub}).Session, "sesbase") && ~exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped',['c1',sub,'_ses-base_acq-mprage_T1w.nii']),'file'))
+        filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', [SubFolderNames{sub},'*mprage_T1w.nii']));
+
 
         ref_image_folder = filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip.folder;
         ref_image_name = filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip.name;
         ref_image_path = fullfile(ref_image_folder, ref_image_name);
 
         matlabbatch{1} = create_batch_segm(ref_image_path);
-        matlabbatch{2} = create_batch_image_calculator(ref_image_folder,sub);
+        matlabbatch{2} = create_batch_image_calculator(ref_image_folder,SubFolderNames{sub});
 
         coregistr_batch = fullfile(coregistration_path, SubFolderNames{sub},'coregistr_batch_seg_calc.mat');
         save(coregistr_batch,'matlabbatch');
@@ -231,14 +237,14 @@ function [matlabbatch] = create_batch_image_calculator(path, sub)
 
 
 matlabbatch.spm.util.imcalc.input = {
-                                       fullfile(path,'unzipped' ,['/c1',sub,'_ses-base_acq-mprage_T1w.nii,1'])
-                                        fullfile(path,'unzipped' ,['/c2',sub,'_ses-base_acq-mprage_T1w.nii,1'])
-                                        fullfile(path,'unzipped' ,['/c3',sub,'_ses-base_acq-mprage_T1w.nii,1'])
-                                        fullfile(path,'unzipped' ,['/c4',sub,'_ses-base_acq-mprage_T1w.nii,1'])
-                                        fullfile(path,'unzipped' ,['/c5',sub,'_ses-base_acq-mprage_T1w.nii,1'])
+                                       fullfile(path,['/c1',sub,'_ses-base_acq-mprage_T1w.nii,1'])
+                                        fullfile(path,['/c2',sub,'_ses-base_acq-mprage_T1w.nii,1'])
+                                        fullfile(path,['/c3',sub,'_ses-base_acq-mprage_T1w.nii,1'])
+                                        fullfile(path,['/c4',sub,'_ses-base_acq-mprage_T1w.nii,1'])
+                                        fullfile(path,['/c5',sub,'_ses-base_acq-mprage_T1w.nii,1'])
                                         };
 matlabbatch.spm.util.imcalc.output = 'finalmask_SPM';
-matlabbatch.spm.util.imcalc.outdir = {fullfile(path,'unzipped') };
+matlabbatch.spm.util.imcalc.outdir = {fullfile(path)};
 matlabbatch.spm.util.imcalc.expression = 'i1+i2+i3+i4+i5';
 matlabbatch.spm.util.imcalc.var = struct('name', {}, 'value', {});
 matlabbatch.spm.util.imcalc.options.dmtx = 0;
