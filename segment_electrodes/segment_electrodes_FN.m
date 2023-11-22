@@ -5,13 +5,18 @@
 % author Russell Butler russell.buttler@usherbrooke.ca
 clear all ; close all ;
 
-addpath('/media/Data03/Studies/MeMoSLAP/code/comparison_coordinates/GitHub/ute_git')
+addpath('/media/Data03/Studies/MeMoSLAP/code/Automated_Electrode_Coordinate_Extraction/segment_electrodes')
+addpath('/media/Data03/Studies/MeMoSLAP/code/Automated_Electrode_Coordinate_Extraction/electrode_extraction_by_hand')
+
+sub='sub-001';
+ses='ses-1';
+run='run-01';
 
 
-handLabel_output_path = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction/sub-001/electrode_extraction' ; % should be the same as path_output from hand_labeling.m
+handLabel_output_path = fullfile('/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction',sub,'electrode_extraction',ses) ; % should be the same as path_output from hand_labeling.m
 cd(handLabel_output_path) ; 
 disp('loading raw data...') ; 
-rute = load_untouch_nii('../unzipped/rsub-001_ses-1_acq-petra_run-01_PDw.nii') ; ruteorig = double(rute.img) ;  
+rute = load_untouch_nii(fullfile('../unzipped',['r',sub,'_',ses,'_acq-petra_',run,'_PDw.nii')) ; ruteorig = double(rute.img) ;  
 fmask = load_untouch_nii('finalmask.nii.gz') ; maskimg = imdilate(fmask.img>0,strel(ones(3,3,3))) ; maskimg = ~maskimg ; 
 outerint = maskimg.*ruteorig ; 
 
