@@ -16,7 +16,7 @@ run='run-01';
 handLabel_output_path = fullfile('/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction',sub,'electrode_extraction',ses) ; % should be the same as path_output from hand_labeling.m
 cd(handLabel_output_path) ; 
 disp('loading raw data...') ; 
-rute = load_untouch_nii(fullfile('../unzipped',['r',sub,'_',ses,'_acq-petra_',run,'_PDw.nii')) ; ruteorig = double(rute.img) ;  
+rute = load_untouch_nii(fullfile('../unzipped',['r',sub,'_',ses,'_acq-petra_',run,'_PDw.nii'])) ; ruteorig = double(rute.img) ;  
 fmask = load_untouch_nii('finalmask.nii.gz') ; maskimg = imdilate(fmask.img>0,strel(ones(3,3,3))) ; maskimg = ~maskimg ; 
 outerint = maskimg.*ruteorig ; 
 
