@@ -30,6 +30,17 @@ path_ute = strcat(sub_dir, 'unzipped/', 'r', sub_to_analyse, ...
     num2str(run),'_PDw.nii');
 path_mask = strcat(sub_dir ,'/mask/test_mask_smooth_fwhm_4.nii.gz');
 
+if ~isfile(path_ute)
+    error(strcat("Petra not found. Check if the path is correct.\n", ...
+        " Path: ", path_ute))
+end
+
+[filepath, name, ext] = fileparts(path_ute);
+
+if ~startsWith(name, 'r')
+    error('Petra file name must start with "r". Check if you choose a coregistered file.')
+end
+
 path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
     num2str(session), '/', 'run-0', num2str(run), '/');
 
@@ -43,7 +54,7 @@ path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
 %    'T7','C5','C3','C1','CZ','C2','C4','C6','T8','TP10','TP8','CP6','CP4','CP2','CPZ','CP1','CP3','CP5','TP7','TP9','P7','P5','P3','P1','PZ','P2','P4','P6','P8',...
 %    'PO8','PO4','POZ','PO3','PO7','O1','OZ','O2'} ;
 
-elecorder = {'anode', 'cathode_1', 'cathode_2', 'cathode_3'}
+elecorder = {'anode', 'cathode_1', 'cathode_2', 'cathode_3'};
 
 % get the raw UTE, and the mask
 disp('loading raw data...');
@@ -88,7 +99,7 @@ end
 
 disp('computing final layers...');
 layers = intensitylayers;
-dilbottom = imdilate(mask.img == 2, strel(ones(12, 12, 12)));
+dilbottom = imdilate(mask.img == 2, strel(ones(n_layers, n_layers, n_layers)));
 layers(dilbottom == 1) = 0;
 inds = find(layers > 0);
 
@@ -97,7 +108,7 @@ rute.img = single(layers);
 save_untouch_nii(rute, strcat(path_output, 'layers.nii.gz'));
 
 layers_binarized = rute;
-layers_binarized.img(layers_binarized.img > 12) = 1;
+layers_binarized.img(layers_binarized.img > 0) = 1;
 
 save_untouch_nii(layers_binarized, strcat(path_output, ...
     'layers_binarized.nii.gz'));
