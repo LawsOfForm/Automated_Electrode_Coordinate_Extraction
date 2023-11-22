@@ -14,6 +14,7 @@ clear all; close all;
 
 sub_to_analyse = 'sub-001'; %insert here
 session = 2; % and here
+run = 1; % and here
 
 if ~ismember(session, 1:4) 
     error("`session` must be an integer between 1 and 4")
@@ -25,11 +26,11 @@ sub_dir = strcat(electrode_dir, sub_to_analyse, '/');
 
 % paths to relevant data and output
 path_ute = strcat(sub_dir, 'unzipped/', 'r', sub_to_analyse, ...
-    '_ses-1_acq-petra_run-01_PDw.nii');
+    '_ses-', session, '_acq-petra_run-0', run,'_PDw.nii');
 path_mask = strcat(sub_dir ,'/mask/test_mask_smooth_fwhm_4.nii.gz');
 
 path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
-    num2str(session), '/');
+    num2str(session), '/', 'run-', num2str(run), '/');
 
 % the order in which to label the electrodes. after each mouse click, the
 % program will move to the next electrode, ie, each mouse click labels an
