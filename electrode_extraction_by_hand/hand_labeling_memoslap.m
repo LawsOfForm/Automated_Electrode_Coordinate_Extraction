@@ -29,7 +29,7 @@ path_ute = strcat(sub_dir, 'unzipped/', 'r', sub_to_analyse, ...
 path_mask = strcat(sub_dir ,'/mask/test_mask_smooth_fwhm_4.nii.gz');
 
 path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
-    num2str(session));
+    num2str(session), '/');
 
 % the order in which to label the electrodes. after each mouse click, the
 % program will move to the next electrode, ie, each mouse click labels an
