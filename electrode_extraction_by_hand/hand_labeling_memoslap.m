@@ -30,7 +30,7 @@ path_ute = strcat(sub_dir, 'unzipped/', 'r', sub_to_analyse, ...
 path_mask = strcat(sub_dir ,'/mask/test_mask_smooth_fwhm_4.nii.gz');
 
 path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
-    num2str(session), '/', 'run-', num2str(run), '/');
+    num2str(session), '/', 'run-0', num2str(run), '/');
 
 % the order in which to label the electrodes. after each mouse click, the
 % program will move to the next electrode, ie, each mouse click labels an
@@ -49,6 +49,9 @@ disp('loading raw data...');
 rute = load_untouch_nii(path_ute); ruteorig = double(rute.img); % raw ute
 mask = load_untouch_nii(path_mask); % mask
 
+if exists(path_output, "dir") 
+    error("Output directory already exists. Check if the electrodes have already been extracted.")
+end
 
 mkdir(path_output)
 % save UTE and mask in the output directory, for segmentation script
