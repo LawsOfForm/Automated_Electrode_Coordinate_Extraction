@@ -26,7 +26,8 @@ sub_dir = strcat(electrode_dir, sub_to_analyse, '/');
 
 % paths to relevant data and output
 path_ute = strcat(sub_dir, 'unzipped/', 'r', sub_to_analyse, ...
-    '_ses-', session, '_acq-petra_run-0', run,'_PDw.nii');
+    '_ses-', num2str(session) , '_acq-petra_run-0', ...
+    num2str(run),'_PDw.nii');
 path_mask = strcat(sub_dir ,'/mask/test_mask_smooth_fwhm_4.nii.gz');
 
 path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
