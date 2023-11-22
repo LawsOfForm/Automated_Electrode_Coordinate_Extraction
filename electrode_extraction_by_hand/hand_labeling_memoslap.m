@@ -50,7 +50,7 @@ disp('loading raw data...');
 rute = load_untouch_nii(path_ute); ruteorig = double(rute.img); % raw ute
 mask = load_untouch_nii(path_mask); % mask
 
-if exists(path_output, "dir") 
+if isfolder(path_output) 
     error("Output directory already exists. Check if the electrodes have already been extracted.")
 end
 
