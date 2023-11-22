@@ -12,7 +12,12 @@
 
 clear all; close all;
 
-sub_to_analyse = 'sub-001' %insert here
+sub_to_analyse = 'sub-001'; %insert here
+session = 2; % and here
+
+if ~ismember(session, 1:4) 
+    error("`session` must be an integer between 1 and 4")
+end
 
 electrode_dir = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction/';
 
@@ -23,7 +28,8 @@ path_ute = strcat(sub_dir, 'unzipped/', 'r', sub_to_analyse, ...
     '_ses-1_acq-petra_run-01_PDw.nii');
 path_mask = strcat(sub_dir ,'/mask/test_mask_smooth_fwhm_4.nii.gz');
 
-path_output = strcat(sub_dir, 'electrode_extraction/');
+path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
+    num2str(session));
 
 % the order in which to label the electrodes. after each mouse click, the
 % program will move to the next electrode, ie, each mouse click labels an
@@ -52,7 +58,7 @@ save_untouch_nii(mask, strcat(path_output, 'finalmask.nii.gz'));
 %% create the layers surrounding the head mask (12 layers)
 mask.img = ceil(mask.img);
 layer2 = imdilate(mask.img == 2, strel(ones(5, 5, 5)));
-prevdil = double(mask.img == 1); 
+prevdil = double(mask.img == 1);
 outim = double(mask.img == 0);
 disp('performing iterative dilation...');
 intensitylayers = zeros(size(prevdil));
@@ -65,13 +71,13 @@ for i = 1:n_layers
     dilmaski = imdilate(prevdil, strel(kernel)) .* outim;
     clayer = (dilmaski - prevdil) > 0;
     intensitylayers(clayer == 1) = i;
-
+    
     if i == 1
         prevdil = dilmaski;
     else
         prevdil = (prevdil + dilmaski) > 0;
     end
-
+    
     intensitylayers = intensitylayers .* (~layer2);
 end
 
@@ -115,12 +121,12 @@ for layer_index = 1:max_layer_idx
     xlayer_diffs = lx - cx; ylayer_diffs = ly - cy; zlayer_diffs = lz - cz;
     [theta, phi, rho] = cart2sph(xlayer_diffs, ylayer_diffs, zlayer_diffs);
     if layer_index == 1; ftheta = theta; fphi = phi; frho = rho; end
-    theta_brain = zeros(size(layers)); phi_brain = zeros(size(layers)); 
+    theta_brain = zeros(size(layers)); phi_brain = zeros(size(layers));
     rho_brain = zeros(size(layers));
-    theta_brain(layerinds) = theta; phi_brain(layerinds) = phi; 
+    theta_brain(layerinds) = theta; phi_brain(layerinds) = phi;
     rho_brain(layerinds) = rho;
     [pancake_x, pancake_y] = pol2cart(theta, max(phi) - phi); % theta and phi are the rotation point and height point (z) of the head
-    xsteps = min_xp:(max_xp - min_xp) / nsteps:(max_xp); 
+    xsteps = min_xp:(max_xp - min_xp) / nsteps:(max_xp);
     ysteps = min_yp:(max_yp - min_yp) / nsteps:(max_yp);
     [xg, yg] = meshgrid(xsteps, ysteps);
     vq = griddata(double(pancake_x), double(pancake_y), ...
@@ -163,8 +169,8 @@ im1 = (uint8(mat2gray(squeeze(mean(idqs(5:6, :, :), 1))) * 255));
 im2 = (uint8(mat2gray(squeeze(mean(idqs(3:4, :, :), 1))) * 255));
 im3 = (uint8(mat2gray(squeeze(mean(idqs(1:2, :, :), 1))) * 255));
 expon = 1.5; % to accentuate higher value pixels
-rgbs(:, :, 3) = uint8(mat2gray(im1) .^ expon * 255); 
-rgbs(:, :, 2) = uint8(mat2gray(im2) .^ expon * 255); 
+rgbs(:, :, 3) = uint8(mat2gray(im1) .^ expon * 255);
+rgbs(:, :, 2) = uint8(mat2gray(im2) .^ expon * 255);
 rgbs(:, :, 1) = uint8(mat2gray(im3) .^ expon * 255);
 imwrite(rgbs, strcat(path_output, 'rgbs.png'));
 save_nii(make_nii(idqs(1:6, :, :)), strcat(path_output, 'idqs.nii.gz'));
@@ -191,7 +197,7 @@ hold off
 % randomize the coordinates, and invert them to 3d MRI space (the original
 % hand-labeled coordinates are in mricoords_1)
 for mricoordn = 1:30
-
+    
     if mricoordn == 1 % save the original coordinates
         randcoords(:, 1) = coordinates(:, 1);
         randcoords(:, 2) = coordinates(:, 2);
@@ -199,15 +205,15 @@ for mricoordn = 1:30
         randcoords(:, 1) = coordinates(:, 1) + (rand(1, n)' - .5) * 10; % random offset (produces ~1.5mm standard deviation in 3d MRI space)
         randcoords(:, 2) = coordinates(:, 2) + (rand(1, n)' - .5) * 10;
     end
-
+    
     roundcoords = round(randcoords);
     for i = 1:size(roundcoords, 1)
-        xgvals(i) = xg(roundcoords(i, 2), roundcoords(i, 1)); 
+        xgvals(i) = xg(roundcoords(i, 2), roundcoords(i, 1));
         ygvals(i) = yg(roundcoords(i, 2), roundcoords(i, 1));
     end
-    [inv_theta, inv_phi] = cart2pol(xgvals, ygvals); 
+    [inv_theta, inv_phi] = cart2pol(xgvals, ygvals);
     inv_phi = 1.5708 - inv_phi;
-
+    
     for elec = 1:size(roundcoords, 1)
         oz_theta = inv_theta(elec); oz_phi = inv_phi(elec);
         sumdiffs = sqrt((ftheta - oz_theta) .^ 2 + (fphi - oz_phi) .^ 2);
@@ -218,17 +224,17 @@ for mricoordn = 1:30
         [x, y, z] = sph2cart(min_theta, min_phi, min_rho);
         ex(elec) = x + cx; ey(elec) = y + cy; ez(elec) = z + cz;
     end
-
+    
     elecimg = zeros(size(gsimg));
     colorelecs = zeros(size(gsimg));
     ex = round(ex); ey = round(ey); ez = round(ez);
-
+    
     for coord = 1:size(coordinates, 1)
         elecimg(ex(coord), ey(coord), ez(coord)) = 1000;
         colorelecs(ex(coord), ey(coord), ez(coord)) = coord;
     end
-
-    mricoords = [ex; ey; ez]; disp(mricoords); 
+    
+    mricoords = [ex; ey; ez]; disp(mricoords);
     save([path_output, '/', 'mricoords_', num2str(mricoordn)], 'mricoords');
     
     if mricoordn == 1
