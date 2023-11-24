@@ -1,5 +1,6 @@
 import numpy as np
 import nibabel as nib
+import cv2 as cv
 
 def circle_mask(xdim, ydim, radius, centre):
     Y, X = np.ogrid[:ydim, :xdim]
@@ -66,6 +67,11 @@ def rotate_img_obj(img, R, centre):
     
     return np.unique(rotated_cylinder_ind, axis = 0)
 
+def fill_holes(img, kernel_size = 3):
+    kernel = np.ones((kernel_size, kernel_size), np.uint8)
+    img = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
+    return img
+
     
 if __name__ == "__main__":
     nifti = nib.load("/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction/sub-010/electrode_extraction/ses-1/run-01/finalmask.nii.gz")
@@ -99,9 +105,11 @@ if __name__ == "__main__":
         rotated_cylinder_ind[:, 1],
         rotated_cylinder_ind[:, 2]
     ] = 1
+    
+    rotated_cylinder = fill_holes(emtpy_img) 
      
     new_img = nib.Nifti1Image(
-        empty_img,
+        rotated_cylinder,
         nifti.affine,
         nifti.header
     )
