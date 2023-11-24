@@ -4,6 +4,7 @@ import cv2 as cv
 import nibabel as nib
 import numpy as np
 import scipy
+from packaging import version
 from scipy.spatial.transform import Rotation as R
 
 
@@ -61,7 +62,7 @@ def create_rotation_matrix(v1, v2):
 
     # Erstellen Sie die Rotationsmatrix
     rotation = R.from_rotvec(axis * angle)
-    if scipy.__version__ > "1.4.0":
+    if version.parse(scipy.__version__) > version.parse("1.4.0"):
         return rotation.as_matrix()
     return rotation.as_dcm()
 
