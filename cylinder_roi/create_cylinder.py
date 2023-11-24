@@ -1,6 +1,8 @@
 import numpy as np
 import nibabel as nib
 import cv2 as cv
+import os.path as op
+from scipy.spatial.transform import Rotation as R
 
 def circle_mask(xdim, ydim, radius, centre):
     Y, X = np.ogrid[:ydim, :xdim]
@@ -74,29 +76,49 @@ def fill_holes(img, kernel_size = 3):
 
     
 if __name__ == "__main__":
-    nifti = nib.load("/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction/sub-010/electrode_extraction/ses-1/run-01/finalmask.nii.gz")
-    sub_dir = "/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction/sub-010/electrode_extraction/ses-1/run-01/"
+    sub = "010"
+    ses = "1"
+    run = "01"
+    root_dir = op.join(
+        "/media",
+        "MeMoSLAP_Subjects",
+        "derivatives",
+        "automated_electrode_extraction",
+    )
+    sub_dir = op.join(
+       root_dir,
+         f"sub-{sub}",
+         "electrode_extraction",
+         f"ses-{ses}",
+         f"run-{run}",
+    ) 
+    nifti = nib.load(op.join(sub_dir,"finalmask.nii.gz"))
     centre = np.array([176, 165, 227])
     normal = np.array([89, 21, 70])
 
     height = 5
     radius = 10
-    xdim = 224
-    ydim = 288
-    zdim = 288
     empty_img = np.zeros(nifti.shape)
     
     for z in range(centre[2], centre[2] + height):
         
-        mask = circle_mask(xdim, ydim, radius, centre[:2])
+        mask = circle_mask(
+            nifti.shape[0],
+            nifti.shape[1], 
+            radius,
+            centre[:2],
+        )
         empty_img[:,:, z] = mask.transpose()
     
     mask_img = empty_img
     
-    R = get_transformation_matrix(np.array([0, 0, 1]), normal)
-    R_pad = pad_transformation_matrix(R)
+    rotation_matrix = get_transformation_matrix(np.array([0, 0, 1]), normal)
     
-    rotated_cylinder_ind = rotate_img_obj(mask_img, R, centre)
+    rotated_cylinder_ind = rotate_img_obj(
+        mask_img,
+        rotation_matrix, 
+        centre
+    )
     
     emtpy_img = np.zeros((nifti.shape))
     
@@ -115,4 +137,4 @@ if __name__ == "__main__":
     )
     
     nib.save(new_img,
-        "/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction/sub-010/electrode_extraction/ses-1/run-01/cylinder_test.nii.gz")
+        op.join(sub_dir, "cylinder_test.nii.gz"))
