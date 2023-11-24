@@ -3,6 +3,7 @@ import nibabel as nib
 import cv2 as cv
 import os.path as op
 from scipy.spatial.transform import Rotation as R
+import scipy
 
 def circle_mask(xdim, ydim, radius, centre):
     Y, X = np.ogrid[:ydim, :xdim]
@@ -74,6 +75,15 @@ def fill_holes(img, kernel_size = 3):
     img = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
     return img
 
+def read_mricoords(path):
+    return scipy.io.loadmat(path)["mricoords"].T
+
+def get_normal_component(mricoords):
+    return np.cross(
+        mricoords[1] - mricoords[0],
+        mricoords[2] - mricoords[0]
+    )
+
     
 if __name__ == "__main__":
     sub = "010"
@@ -93,8 +103,11 @@ if __name__ == "__main__":
          f"run-{run}",
     ) 
     nifti = nib.load(op.join(sub_dir,"finalmask.nii.gz"))
-    centre = np.array([176, 165, 227])
-    normal = np.array([89, 21, 70])
+    
+    mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat")) 
+    
+    centre = mricoords[0]
+    normal = get_normal_component(mricoords[:3]) 
 
     height = 5
     radius = 10
