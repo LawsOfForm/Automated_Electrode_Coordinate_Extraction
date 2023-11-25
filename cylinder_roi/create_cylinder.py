@@ -62,7 +62,7 @@ def create_rotation_matrix(v1, v2):
 
     # Erstellen Sie die Rotationsmatrix
     rotation = R.from_rotvec(axis * angle)
-    if version.parse(scipy.__version__) > version.parse("1.4.0"):
+    if version.parse(scipy.__version__) >= version.parse("1.4.0"):
         return rotation.as_matrix()
     return rotation.as_dcm()
 
@@ -80,7 +80,10 @@ def rotate_img_obj(img, rotation_matrix, centre):
     rotated_centered_cylinder_ind = rotation_matrix @ centered_cylinder_ind
     rotated_cylinder_ind = (rotated_centered_cylinder_ind + centre).T
     rotated_cylinder_ind = np.vstack(
-        (np.floor(rotated_cylinder_ind), np.ceil(rotated_cylinder_ind))
+        (
+            np.floor(rotated_cylinder_ind),
+            np.ceil(rotated_cylinder_ind),
+        )
     ).astype("int32")
 
     return np.unique(rotated_cylinder_ind, axis=0)
@@ -97,7 +100,10 @@ def read_mricoords(path):
 
 
 def get_normal_component(mricoords):
-    return np.cross(mricoords[1] - mricoords[0], mricoords[2] - mricoords[0])
+    return np.cross(
+        mricoords[1] - mricoords[0],
+        mricoords[2] - mricoords[0],
+    )
 
 
 if __name__ == "__main__":
@@ -121,26 +127,37 @@ if __name__ == "__main__":
 
     mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
-    centre = mricoords[0]
-    normal = get_normal_component(mricoords[:3])
+    centres_ind = np.arange(0, 12, 3)
+    centres = mricoords[centres_ind]
+    normal_components = [
+        get_normal_component(mricoords[i : i + 3]) for i in centres_ind
+    ]
 
     height = 5
     radius = 10
     empty_img = np.zeros(nifti.shape)
 
-    mask_img = cylinder(nifti, centre, radius, height)
+    cylinder_masks = [cylinder(nifti, c, radius, height) for c in centres]
 
-    rotation_matrix = get_rotation_matrix(np.array([0, 0, 1]), normal)
+    rotation_matrices = [
+        get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
+    ]
 
-    rotated_cylinder_ind = rotate_img_obj(mask_img, rotation_matrix, centre)
+    rotated_cylinder_inds = [
+        rotate_img_obj(cylinder_mask, rotation_matrix, c)
+        for cylinder_mask, rotation_matrix, c in zip(
+            cylinder_masks, rotation_matrices, centres
+        )
+    ]
 
     emtpy_img = np.zeros((nifti.shape))
 
-    emtpy_img[
-        rotated_cylinder_ind[:, 0],
-        rotated_cylinder_ind[:, 1],
-        rotated_cylinder_ind[:, 2],
-    ] = 1
+    for rotated_cylinder_ind in rotated_cylinder_inds:
+        emtpy_img[
+            rotated_cylinder_ind[:, 0],
+            rotated_cylinder_ind[:, 1],
+            rotated_cylinder_ind[:, 2],
+        ] = 1
 
     rotated_cylinder = fill_holes(emtpy_img)
 
