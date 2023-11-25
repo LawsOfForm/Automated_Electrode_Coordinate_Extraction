@@ -1,4 +1,5 @@
 import os.path as op
+from glob import glob
 
 import cv2 as cv
 import nibabel as nib
@@ -107,60 +108,72 @@ def get_normal_component(mricoords):
 
 
 if __name__ == "__main__":
-    sub = "010"
-    ses = "1"
-    run = "01"
     root_dir = op.join(
         "/media",
         "MeMoSLAP_Subjects",
         "derivatives",
         "automated_electrode_extraction",
     )
-    sub_dir = op.join(
-        root_dir,
-        f"sub-{sub}",
-        "electrode_extraction",
-        f"ses-{ses}",
-        f"run-{run}",
-    )
-    nifti = nib.load(op.join(sub_dir, "finalmask.nii.gz"))
-
-    mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
-
-    centres_ind = np.arange(0, 12, 3)
-    centres = mricoords[centres_ind]
-    normal_components = [
-        get_normal_component(mricoords[i : i + 3]) for i in centres_ind
-    ]
-
-    height = 5
-    radius = 10
-    empty_img = np.zeros(nifti.shape)
-
-    cylinder_masks = [cylinder(nifti, c, radius, height) for c in centres]
-
-    rotation_matrices = [
-        get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
-    ]
-
-    rotated_cylinder_inds = [
-        rotate_img_obj(cylinder_mask, rotation_matrix, c)
-        for cylinder_mask, rotation_matrix, c in zip(
-            cylinder_masks, rotation_matrices, centres
+    sub_dirs = glob(
+        op.join(
+            root_dir,
+            "sub-*",
+            "electrode_extraction",
+            "ses-*",
+            "run-*",
         )
-    ]
+    )
+    for sub_dir in sub_dirs:
+        cylinder_mask_path = op.join(sub_dir, "cylinder_test.nii.gz")
+        final_mask_path = op.join(sub_dir, "finalmask.nii.gz")
 
-    emtpy_img = np.zeros((nifti.shape))
+        if not op.exists(final_mask_path):
+            continue
+        if op.exists(cylinder_mask_path):
+            continue
 
-    for rotated_cylinder_ind in rotated_cylinder_inds:
-        emtpy_img[
-            rotated_cylinder_ind[:, 0],
-            rotated_cylinder_ind[:, 1],
-            rotated_cylinder_ind[:, 2],
-        ] = 1
+        nifti = nib.load(final_mask_path)
 
-    rotated_cylinder = fill_holes(emtpy_img)
+        mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
-    new_img = nib.Nifti1Image(rotated_cylinder, nifti.affine, nifti.header)
+        centres_ind = np.arange(0, 12, 3)
+        centres = mricoords[centres_ind]
+        normal_components = [
+            get_normal_component(mricoords[i : i + 3]) for i in centres_ind
+        ]
 
-    nib.save(new_img, op.join(sub_dir, "cylinder_test.nii.gz"))
+        height = 5
+        radius = 10
+        empty_img = np.zeros(nifti.shape)
+
+        cylinder_masks = [cylinder(nifti, c, radius, height) for c in centres]
+
+        rotation_matrices = [
+            get_rotation_matrix(np.array([0, 0, 1]), n)
+            for n in normal_components
+        ]
+
+        rotated_cylinder_inds = [
+            rotate_img_obj(cylinder_mask, rotation_matrix, c)
+            for cylinder_mask, rotation_matrix, c in zip(
+                cylinder_masks, rotation_matrices, centres
+            )
+        ]
+
+        emtpy_img = np.zeros((nifti.shape))
+
+        for rotated_cylinder_ind in rotated_cylinder_inds:
+            emtpy_img[
+                rotated_cylinder_ind[:, 0],
+                rotated_cylinder_ind[:, 1],
+                rotated_cylinder_ind[:, 2],
+            ] = 1
+
+        rotated_cylinder = fill_holes(emtpy_img)
+
+        new_img = nib.Nifti1Image(rotated_cylinder, nifti.affine, nifti.header)
+
+        nib.save(
+            new_img,
+            cylinder_mask_path,
+        )
