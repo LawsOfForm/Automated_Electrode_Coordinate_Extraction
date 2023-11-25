@@ -136,6 +136,13 @@ if __name__ == "__main__":
 
         mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
+        if mricoords.shape[0] != 12:
+            print(
+                "Not 12 electrode coordinates in mricoords "
+                + f"found for {sub_dir}"
+            )
+            continue
+
         centres_ind = np.arange(0, 12, 3)
         centres = mricoords[centres_ind]
         normal_components = [
