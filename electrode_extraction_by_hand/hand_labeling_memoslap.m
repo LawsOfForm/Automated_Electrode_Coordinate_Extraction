@@ -12,9 +12,9 @@
 
 clear all; close all;
 
-sub_to_analyse = 'sub-001'; %insert here
-session = 2; % and here
-run = 1; % and here
+sub_to_analyse = 'sub-016'; %insert here
+session =4; % and here
+run = 2; % and here
 
 if ~ismember(session, 1:4) 
     error("`session` must be an integer between 1 and 4")
@@ -54,16 +54,16 @@ path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
 %    'T7','C5','C3','C1','CZ','C2','C4','C6','T8','TP10','TP8','CP6','CP4','CP2','CPZ','CP1','CP3','CP5','TP7','TP9','P7','P5','P3','P1','PZ','P2','P4','P6','P8',...
 %    'PO8','PO4','POZ','PO3','PO7','O1','OZ','O2'} ;
 
-elecorder = {'anode', 'cathode_1', 'cathode_2', 'cathode_3'};
+elecorder = {'anode','a_r1','a_r2', 'cathode_1','c1_r1','c1_r2', 'cathode_2','c2_r1','c2_r2', 'cathode_3','c3_r1','c3_r2'};
 
 % get the raw UTE, and the mask
 disp('loading raw data...');
 rute = load_untouch_nii(path_ute); ruteorig = double(rute.img); % raw ute
 mask = load_untouch_nii(path_mask); % mask
 
-if isfolder(path_output) 
-    error("Output directory already exists. Check if the electrodes have already been extracted.")
-end
+%if isfolder(path_output) 
+%    error("Output directory already exists. Check if the electrodes have already been extracted.")
+%end
 
 mkdir(path_output)
 % save UTE and mask in the output directory, for segmentation script
@@ -198,7 +198,7 @@ save_nii(make_nii(maskvq(1:5, :, :)), strcat(path_output, 'maskvq.nii.gz'));
 
 fhandle = figure('Position', [10, -10, 1000, 1000]);
 imagesc(rgbs);
-n = 4; coordinates = zeros(n, 2); hold on;
+n = length(elecorder); coordinates = zeros(n, 2); hold on;
 
 for i = 1:n
     title(elecorder{i});
