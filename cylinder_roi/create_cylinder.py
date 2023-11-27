@@ -13,6 +13,25 @@ from scipy.spatial.transform import Rotation as R
 
 
 def circle_mask(xdim, ydim, radius, centre):
+    """
+    Create a circle mask.
+
+    Parameters
+    ----------
+    xdim : int
+        The x dimension of the mask.
+    ydim : int
+        The y dimension of the mask.
+    radius : int
+        The radius of the circle.
+    centre : np.ndarray
+        The centre of the circle.
+
+    Returns
+    -------
+    np.ndarray
+        The circle mask.
+    """
     Y, X = np.ogrid[:ydim, :xdim]
     dist_from_centre = np.sqrt((X - centre[0]) ** 2 + (Y - centre[1]) ** 2)
 
@@ -20,6 +39,25 @@ def circle_mask(xdim, ydim, radius, centre):
 
 
 def cylinder(img, centre, radius, height):
+    """
+    Create a cylinder mask.
+
+    Parameters
+    ----------
+    img : np.ndarray
+        The image from which the dimension of the mask is infered.
+    centre : np.ndarray
+        The centre of the cylinder.
+    radius : int
+        The radius of the cylinder.
+    height : int
+        The height of the cylinder.
+
+    Returns
+    -------
+    np.ndarray
+        The cylinder mask.
+    """
     cylinder_img = np.zeros(img.shape)
 
     for z in range(centre[2], centre[2] + height):
@@ -35,6 +73,21 @@ def cylinder(img, centre, radius, height):
 
 
 def get_rotation_matrix(a, b):
+    """
+    Get the rotation matrix to rotate vector a onto vector b.
+
+    Parameters
+    ----------
+    a : np.ndarray
+        The vector to rotate.
+    b : np.ndarray
+        The vector to rotate onto.
+
+    Returns
+    -------
+    np.ndarray
+        The rotation matrix.
+    """
     u_normal = a / np.linalg.norm(a)
     v_normal = b / np.linalg.norm(b)
 
@@ -71,13 +124,45 @@ def create_rotation_matrix(v1, v2):
     return rotation.as_dcm()
 
 
-def pad_matrix(matrix):
+def pad_matrix(matrix: np.ndarray) -> np.ndarray:
+    """
+    Pad a 3x3 matrix to a 4x4 matrix.
+
+    Parameters
+    ----------
+    matrix : np.ndarray
+        The 3x3 matrix.
+
+    Returns
+    -------
+    np.ndarray
+        The padded 4x4 matrix.
+    """
     matrix_pad = np.eye(4)
     matrix_pad[:3, :3] = matrix
     return matrix_pad
 
 
-def rotate_img_obj(img, rotation_matrix, centre):
+def rotate_img_obj(
+    img: np.ndarray, rotation_matrix: np.ndarray, centre: np.ndarray
+) -> np.ndarray:
+    """
+    Rotate a binary image object and return the indices of the rotated image.
+
+    Parameters
+    ----------
+    img : np.ndarray
+        The binary image.
+    rotation_matrix : np.ndarray
+        The rotation matrix.
+    centre : np.ndarray
+        The centre of the rotation.
+
+    Returns
+    -------
+    np.ndarray
+        The indeices of the rotated binary image.
+    """
     centre = centre.reshape(3, 1)
     cylinder_ind = np.where(img == 1)
     centered_cylinder_ind = cylinder_ind - centre
@@ -93,17 +178,57 @@ def rotate_img_obj(img, rotation_matrix, centre):
     return np.unique(rotated_cylinder_ind, axis=0)
 
 
-def fill_holes(img, kernel_size=3):
+def fill_holes(img: np.ndarray, kernel_size: int = 3):
+    """
+    Fill holes in a binary image.
+
+    Parameters
+    ----------
+    img : np.ndarray
+        The binary image.
+    kernel_size : int, optional
+
+    Returns
+    -------
+    np.ndarray
+        The binary image with filled holes.
+    """
     kernel = np.ones((kernel_size, kernel_size), np.uint8)
     img = cv.morphologyEx(img, cv.MORPH_CLOSE, kernel)
     return img
 
 
-def read_mricoords(path):
+def read_mricoords(path: str) -> np.ndarray:
+    """
+    Read the mricoords from a matlab file.
+
+    Parameters
+    ----------
+    path : str
+        The path to the matlab file.
+
+    Returns
+    -------
+    np.ndarray
+        The mricoords.
+    """
     return scipy.io.loadmat(path)["mricoords"].T
 
 
-def get_normal_component(mricoords):
+def get_normal_component(mricoords: np.ndarray) -> np.ndarray:
+    """
+    Get the normal component of a plane defined by three points.
+
+    Parameters
+    ----------
+    mricoords : np.ndarray
+        The three points.
+
+    Returns
+    -------
+    np.ndarray
+        The normal component.
+    """
     return np.cross(
         mricoords[1] - mricoords[0],
         mricoords[2] - mricoords[0],
