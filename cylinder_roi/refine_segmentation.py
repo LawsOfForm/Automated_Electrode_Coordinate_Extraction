@@ -46,10 +46,7 @@ if __name__ == "__main__":
         sigma = 1
 
         edges = np.array(
-            [
-                canny(petra_img, mask=mask_img, sigma=sigma)
-                for img in masked_petra
-            ]
+            [canny(img, mask=mask_img, sigma=sigma) for img in petra_img]
         )
         chull = np.array(
             [
