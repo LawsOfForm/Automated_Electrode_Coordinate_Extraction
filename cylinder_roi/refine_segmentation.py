@@ -30,10 +30,6 @@ def save_nifti(
 
 
 if __name__ == "__main__":
-    sub = 10
-    run = 1
-    ses = 1
-
     sub_dirs = glob_sub_dir(root_dir)
 
     if sub_dirs is None:
