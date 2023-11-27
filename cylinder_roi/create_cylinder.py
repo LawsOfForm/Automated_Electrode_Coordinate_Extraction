@@ -110,6 +110,36 @@ def get_normal_component(mricoords):
     )
 
 
+def project_onto_plane(
+    point: np.ndarray,
+    plane_normal: np.ndarray,
+    plane_point: np.ndarray,
+) -> np.ndarray:
+    """
+    Project a point onto a plane.
+
+    Parameters
+    ----------
+    point : np.ndarray
+        The point to project.
+    plane_normal : np.ndarray
+        The normal vector of the plane.
+    plane_point : np.ndarray
+        A point on the plane.
+
+    Returns
+    -------
+    np.ndarray
+        The projected point.
+    """
+
+    plane_normal = plane_normal / np.linalg.norm(plane_normal)
+
+    dist_to_plane = np.dot(point - plane_point, plane_normal)
+
+    return point - dist_to_plane * plane_normal
+
+
 if __name__ == "__main__":
     root_dir = op.join(
         "/media",
