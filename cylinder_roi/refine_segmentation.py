@@ -37,14 +37,20 @@ if __name__ == "__main__":
         petra_path = op.join(sub_dir, "petra_.nii.gz")
         cylinder_mask_path = op.join(sub_dir, "cylinder_test.nii.gz")
 
+        if not op.exists(petra_path) or not op.exists(cylinder_mask_path):
+            continue
+
         petra, petra_img = load_nifti(petra_path)
         _, mask_img = load_nifti(cylinder_mask_path)
 
-        masked_petra = petra_img * mask_img
-
         sigma = 1
 
-        edges = np.array([canny(img, sigma=sigma) for img in masked_petra])
+        edges = np.array(
+            [
+                canny(petra_img, mask=mask_img, sigma=sigma)
+                for img in masked_petra
+            ]
+        )
         chull = np.array(
             [
                 convex_hull_image(img) if len(np.unique(img)) > 1 else img
