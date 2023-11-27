@@ -79,12 +79,3 @@ if __name__ == "__main__":
             edges, op.join(sub_dir, f"canny_sigma_{sigma}.nii.gz"), petra
         )
         save_nifti(chull, op.join(sub_dir, "chull.nii.gz"), petra)
-
-    # hough = np.array(
-    #     [
-    #         hough_ellipse(
-    #             img,
-    #         )
-    #         for img in edges
-    #     ]
-    # )
