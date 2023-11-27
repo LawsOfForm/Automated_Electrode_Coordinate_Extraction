@@ -1,10 +1,13 @@
+import logging
 import os.path as op
+import re
 from glob import glob
 
 import cv2 as cv
 import nibabel as nib
 import numpy as np
 import scipy
+from alive_progress import alive_it
 from packaging import version
 from scipy.spatial.transform import Rotation as R
 
@@ -123,9 +126,12 @@ if __name__ == "__main__":
             "run-*",
         )
     )
-    for sub_dir in sub_dirs:
-        cylinder_mask_path = op.join(sub_dir, "cylinder_test.nii.gz")
+    for sub_dir in alive_it(sub_dirs):
+        # logging.basicConfig(level=logging.INFO)
+        cylinder_mask_path = op.join(sub_dir, "cylinder_ROI.nii.gz")
         final_mask_path = op.join(sub_dir, "finalmask.nii.gz")
+
+        sub, ses, run = re.findall(r"([0-9]+)", sub_dir)
 
         if not op.exists(final_mask_path):
             continue
@@ -137,11 +143,15 @@ if __name__ == "__main__":
         mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
         if mricoords.shape[0] != 12:
-            print(
-                "Not 12 electrode coordinates in mricoords "
-                + f"found for {sub_dir}"
+            logging.warning(
+                f"sub-{sub} has {mricoords.shape[0]} electrode coordinates "
+                + f"in ses-{ses}, run-{run}. Expected 12.\n"
+                "Will skip subject."
             )
             continue
+        logging.info(
+            f"Creating cylinder ROI for sub-{sub}, ses-{ses}, run-{run}"
+        )
 
         centres_ind = np.arange(0, 12, 3)
         centres = mricoords[centres_ind]
