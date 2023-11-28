@@ -91,6 +91,35 @@ def rotate_img_obj(
 
     return np.unique(rotated_cylinder_ind, axis=0)
 
+def img_insert_value_at_ind(img: np.ndarray, inds: np.ndarray, value: int | float = 1,) -> np.ndarray:
+    """
+    Insert a value in the img at the given indices.
+
+    Parameters
+    ----------
+    img : np.ndarray
+        The image in which values are inserted.
+    inds : np.array
+        Indices at which the values are inserted.
+    value : int, optional
+        Value to be inserted. Default is 1.
+
+    Returns
+    -------
+    np.ndarray
+        Image with the inserted value
+    """
+
+    for ind in inds:
+        img[
+            ind[:, :, 0],
+            ind[:, :, 1],
+            ind[:, :, 2]
+        ] = value
+
+    return img
+    
+
 
 def fill_holes(img: np.ndarray, kernel_size: int = 3):
     """
