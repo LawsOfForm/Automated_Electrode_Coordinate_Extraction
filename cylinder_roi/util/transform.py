@@ -26,9 +26,7 @@ def get_rotation_matrix(a, b):
 
     v = np.cross(u_normal, v_normal)
 
-    v_skew_symmetric = np.array(
-        [[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]]
-    )
+    v_skew_symmetric = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
 
     rotation_matrix = (
         np.eye(3)
