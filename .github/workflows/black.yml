@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: formatting
-        uses: "lgeiger/lack_action@master"
+        uses: "lgeiger/black_action@master"
         with:
           args: .
       - uses: psf/black@stable
