@@ -17,12 +17,16 @@ from util.transform import (
     rotate_img_obj,
 )
 
+RADIUS = 10
+HEIGHT = 2
+PLUG_HEIGHT = HEIGHT + 5
+PLUG_RADIUS = RADIUS / 2
+
 sub_dirs = glob_sub_dir(root_dir)
 
 if sub_dirs is None:
     raise FileNotFoundError("No sub-directories found.")
 
-# sub_dir = [sub_dir for sub_dir in sub_dirs if "010" in sub_dir][4]
 
 for sub_dir in alive_it(sub_dirs):
     # logging.basicConfig(level=logging.INFO)
@@ -66,7 +70,8 @@ for sub_dir in alive_it(sub_dirs):
     else:
         first_non_centre_ind = centres_ind + 1
         normal_components = [
-            get_normal_component(mricoords[i : i + 3]) for i in (first_non_centre_ind)
+            get_normal_component(mricoords[i : i + 3])
+            for i in (first_non_centre_ind)
         ]
         point_on_plane = mricoords[first_non_centre_ind]
         centres = [
@@ -74,11 +79,9 @@ for sub_dir in alive_it(sub_dirs):
             for c, n, p in zip(centres, normal_components, point_on_plane)
         ]
 
-    height = -2
-    radius = 10
     empty_img = np.zeros(nifti.shape)
 
-    cylinder_masks = [cylinder(nifti, c, radius, height) for c in centres]
+    cylinder_masks = [cylinder(nifti, c, RADIUS, HEIGHT) for c in centres]
 
     rotation_matrices = [
         get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
@@ -93,7 +96,7 @@ for sub_dir in alive_it(sub_dirs):
         ]
     )
 
-    emtpy_img = np.zeros((nifti.shape))
+    emtpy_img = np.zeros((nifti.shape), dtype=np.int_)
 
     rotated_cylinder = img_insert_value_at_ind(
         img=empty_img,
@@ -107,10 +110,9 @@ for sub_dir in alive_it(sub_dirs):
 
     # add plug
 
-    plug_height = height + 5
-    plug_radius = radius / 2
-
-    plug_masks = [cylinder(nifti, c, plug_radius, plug_height) for c in centres]
+    plug_masks = [
+        cylinder(nifti, c, PLUG_RADIUS, PLUG_HEIGHT) for c in centres
+    ]
 
     rotated_plugs_inds = np.vstack(
         [
@@ -129,4 +131,6 @@ for sub_dir in alive_it(sub_dirs):
 
     rotated_cyl_plus_plugs = fill_holes(rotated_cyl_plus_plugs)
 
-    save_nifti(img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti)
+    save_nifti(
+        img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti
+    )

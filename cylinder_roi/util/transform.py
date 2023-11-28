@@ -26,7 +26,9 @@ def get_rotation_matrix(a, b):
 
     v = np.cross(u_normal, v_normal)
 
-    v_skew_symmetric = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+    v_skew_symmetric = np.array(
+        [[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]]
+    )
 
     rotation_matrix = (
         np.eye(3)
@@ -85,14 +87,7 @@ def rotate_img_obj(
     centered_cylinder_ind = cylinder_ind - centre
     rotated_centered_cylinder_ind = rotation_matrix @ centered_cylinder_ind
     rotated_cylinder_ind = (rotated_centered_cylinder_ind + centre).T
-    rotated_cylinder_ind = np.vstack(
-        (
-            np.floor(rotated_cylinder_ind),
-            np.ceil(rotated_cylinder_ind),
-        )
-    ).astype("int32")
-
-    return np.unique(rotated_cylinder_ind, axis=0)
+    return rotated_cylinder_ind.astype("int32")
 
 
 def img_insert_value_at_ind(
@@ -124,7 +119,7 @@ def img_insert_value_at_ind(
 
 
 def fill_holes(
-    img: npt.NDArray[np.bool8 | np.int8 | np.int16 | np.int_],
+    img: npt.NDArray[np.bool_ | np.int8 | np.int16 | np.int_],
     kernel_size: int = 3,
 ):
     """
