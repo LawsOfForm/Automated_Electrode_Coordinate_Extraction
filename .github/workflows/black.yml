@@ -1,3 +1,5 @@
+on: [ "Push", "Pull Request"]
+
 name: "Black"
 description: "The uncompromising Python code formatter."
 author: "Łukasz Langa and contributors to Black"
