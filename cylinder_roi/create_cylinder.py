@@ -28,15 +28,15 @@ if sub_dirs is None:
 for sub_dir in alive_it(sub_dirs):
     # logging.basicConfig(level=logging.INFO)
     cylinder_mask_path = op.join(sub_dir, "cylinder_ROI.nii.gz")
-    cylinder_mask_plus_plug = op.join(sub_dir, "cylinder_plug_plug_ROI.nii.gz")
+    cylinder_mask_plus_plug = op.join(sub_dir, "cylinder_plus_plug_ROI.nii.gz")
     final_mask_path = op.join(sub_dir, "finalmask.nii.gz")
 
     sub, ses, run = re.findall(r"([0-9]+)", sub_dir)
 
     if not op.exists(final_mask_path):
         continue
-    if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
-        continue
+    #if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
+    #    continue
 
     nifti = nib.load(final_mask_path)
 
@@ -46,11 +46,13 @@ for sub_dir in alive_it(sub_dirs):
     n_electrodes = 4
     coords_per_electrode = n_coords / n_electrodes
 
-    if n_coords != 12 or n_coords != 16:
+    if not (n_coords == 12 or n_coords == 16):
+        print('why')
         logging.warning(
             f"sub-{sub} has {mricoords.shape[0]} electrode coordinates "
             + f"in ses-{ses}, run-{run}. Expected 12 or 16.\n"
-            "Will skip subject."
+            f"Will skip subject. \n"
+            + f"!!! show n_coords {n_coords}!!!."
         )
         continue
 
@@ -61,24 +63,24 @@ for sub_dir in alive_it(sub_dirs):
         n_coords,
         coords_per_electrode,
     )
-    centres = mricoords[centres_ind]
+    centres = mricoords[centres_ind.astype(int)]
 
     if n_coords == 12:
         normal_components = [
-            get_normal_component(mricoords[i : i + 3]) for i in centres_ind
+            get_normal_component(mricoords[i : i + 3]) for i in centres_ind.astype(int)
         ]
     else:
         first_non_centre_ind = centres_ind + 1
         normal_components = [
-            get_normal_component(mricoords[i : i + 3]) for i in (first_non_centre_ind)
+            get_normal_component(mricoords[i : i + 3]) for i in (first_non_centre_ind.astype(int))
         ]
-        point_on_plane = mricoords[first_non_centre_ind]
+        point_on_plane = mricoords[first_non_centre_ind.astype(int)]
         centres = [
             project_onto_plane(c, n, p)
             for c, n, p in zip(centres, normal_components, point_on_plane)
         ]
 
-    height = 2
+    height = -2
     radius = 10
     empty_img = np.zeros(nifti.shape)
 
