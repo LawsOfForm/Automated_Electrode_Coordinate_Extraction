@@ -91,7 +91,7 @@ def rotate_img_obj(
 
     return np.unique(rotated_cylinder_ind, axis=0)
 
-def img_insert_value_at_ind(img: np.ndarray, inds: np.ndarray, value: int | float = 1,) -> np.ndarray:
+def img_insert_value_at_ind(img: np.ndarray, inds: np.ndarray, value: int | float = 1) -> np.ndarray:
     """
     Insert a value in the img at the given indices.
 
