@@ -49,7 +49,12 @@ def cylinder(img, centre, radius, height):
     """
     cylinder_img = np.zeros(img.shape)
 
-    for z in range(centre[2], centre[2] + height):
+    start = centre[2]
+    stop = centre[2] + height
+
+    range_stride = 1 if start < stop else -1
+
+    for z in range(start, stop, range_stride):
         mask = circle_mask(
             img.shape[0],
             img.shape[1],

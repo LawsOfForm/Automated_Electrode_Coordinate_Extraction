@@ -18,12 +18,12 @@ from util.transform import (
 )
 
 
-# TODO: add multiple cylinders
-
 sub_dirs = glob_sub_dir(root_dir)
 
 if sub_dirs is None:
     raise FileNotFoundError("No sub-directories found.")
+
+# sub_dir = [sub_dir for sub_dir in sub_dirs if "010" in sub_dir][4]
 
 for sub_dir in alive_it(sub_dirs):
     # logging.basicConfig(level=logging.INFO)
@@ -35,7 +35,7 @@ for sub_dir in alive_it(sub_dirs):
 
     if not op.exists(final_mask_path):
         continue
-    #if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
+    # if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
     #    continue
 
     nifti = nib.load(final_mask_path)
@@ -47,36 +47,31 @@ for sub_dir in alive_it(sub_dirs):
     coords_per_electrode = n_coords / n_electrodes
 
     if not (n_coords == 12 or n_coords == 16):
-        print('why')
         logging.warning(
             f"sub-{sub} has {mricoords.shape[0]} electrode coordinates "
             + f"in ses-{ses}, run-{run}. Expected 12 or 16.\n"
-            f"Will skip subject. \n"
-            + f"!!! show n_coords {n_coords}!!!."
+            + f"Will skip subject. \n"
+            + f"Coords:\n{mricoords}"
         )
         continue
 
     logging.info(f"Creating cylinder ROI for sub-{sub}, ses-{ses}, run-{run}")
 
-    centres_ind = np.arange(
-        0,
-        n_coords,
-        coords_per_electrode,
-    )
-    centres = mricoords[centres_ind.astype(int)]
+    centres_ind = np.arange(0, n_coords, coords_per_electrode, dtype="int8")
+    centres = mricoords[centres_ind]
 
     if n_coords == 12:
         normal_components = [
-            get_normal_component(mricoords[i : i + 3]) for i in centres_ind.astype(int)
+            get_normal_component(mricoords[i : i + 3]) for i in centres_ind
         ]
     else:
         first_non_centre_ind = centres_ind + 1
         normal_components = [
-            get_normal_component(mricoords[i : i + 3]) for i in (first_non_centre_ind.astype(int))
+            get_normal_component(mricoords[i : i + 3]) for i in (first_non_centre_ind)
         ]
-        point_on_plane = mricoords[first_non_centre_ind.astype(int)]
+        point_on_plane = mricoords[first_non_centre_ind]
         centres = [
-            project_onto_plane(c, n, p)
+            project_onto_plane(c, n, p).astype("int32")
             for c, n, p in zip(centres, normal_components, point_on_plane)
         ]
 
@@ -90,12 +85,14 @@ for sub_dir in alive_it(sub_dirs):
         get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
     ]
 
-    rotated_cylinder_inds = [
+    rotated_cylinder_inds = np.vstack(
+        [
             rotate_img_obj(cylinder_mask, rotation_matrix, c)
             for cylinder_mask, rotation_matrix, c in zip(
                 cylinder_masks, rotation_matrices, centres
             )
         ]
+    )
 
     emtpy_img = np.zeros((nifti.shape))
 
@@ -105,7 +102,7 @@ for sub_dir in alive_it(sub_dirs):
         value=1,
     )
 
-    rotated_cylinder = fill_holes(emtpy_img)
+    rotated_cylinder = fill_holes(rotated_cylinder)
 
     save_nifti(img=rotated_cylinder, path=cylinder_mask_path, ref=nifti)
 
@@ -116,12 +113,14 @@ for sub_dir in alive_it(sub_dirs):
 
     plug_masks = [cylinder(nifti, c, plug_radius, plug_height) for c in centres]
 
-    rotated_plugs_inds = [
+    rotated_plugs_inds = np.vstack(
+        [
             rotate_img_obj(plug_mask, rotation_matrix, c)
             for plug_mask, rotation_matrix, c in zip(
                 plug_masks, rotation_matrices, centres
             )
         ]
+    )
 
     rotated_cyl_plus_plugs = img_insert_value_at_ind(
         img=rotated_cylinder,

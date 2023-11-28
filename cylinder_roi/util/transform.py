@@ -1,3 +1,4 @@
+from tkinter import W
 import cv2 as cv
 import numpy as np
 
@@ -91,7 +92,7 @@ def rotate_img_obj(
 
 
 def img_insert_value_at_ind(
-    img: np.ndarray, inds: list[np.ndarray], value: int | float = 1
+    img: np.ndarray, inds: list, value: int | float = 1
 ) -> np.ndarray:
     """
     Insert a value in the img at the given indices.
@@ -111,8 +112,7 @@ def img_insert_value_at_ind(
         Image with the inserted value
     """
 
-    for ind in inds:
-        img[ind[:, 0], ind[:, 1], ind[:, 2]] = value
+    img[inds[:, 0], inds[:, 1], inds[:, 2]] = value
 
     return img
 
@@ -160,11 +160,15 @@ def project_onto_plane(
         The projected point.
     """
 
-    plane_normal = plane_normal / np.linalg.norm(plane_normal)
+    v = point - plane_point
 
-    dist_to_plane = np.dot(point - plane_point, plane_normal)
+    v_parallel = (
+        np.dot(v, plane_normal) / np.dot(plane_normal, plane_normal)
+    ) * plane_normal
 
-    return point - dist_to_plane * plane_normal
+    v_ortho = v - v_parallel
+
+    return point + v_ortho
 
 
 def get_normal_component(mricoords: np.ndarray) -> np.ndarray:

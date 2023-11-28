@@ -1,3 +1,4 @@
+from tkinter import W
 import nibabel as nib
 import numpy as np
 import scipy
@@ -65,4 +66,4 @@ def read_mricoords(path: str) -> np.ndarray:
     np.ndarray
         The mricoords.
     """
-    return scipy.io.loadmat(path)["mricoords"].T
+    return scipy.io.loadmat(path)["mricoords"].T.astype("int16")
