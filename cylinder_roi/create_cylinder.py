@@ -12,6 +12,7 @@ from util.transform import (
     fill_holes,
     get_normal_component,
     get_rotation_matrix,
+    project_onto_plane,
     rotate_img_obj,
 )
 
@@ -36,20 +37,42 @@ for sub_dir in alive_it(sub_dirs):
 
     mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
-    if mricoords.shape[0] != 12:
+    n_coords = mricoords.shape[0]
+    n_electrodes = 4
+    coords_per_electrode = n_coords / n_electrodes
+
+    if n_coords != 12 or n_coords != 16:
         logging.warning(
             f"sub-{sub} has {mricoords.shape[0]} electrode coordinates "
-            + f"in ses-{ses}, run-{run}. Expected 12.\n"
+            + f"in ses-{ses}, run-{run}. Expected 12 or 16.\n"
             "Will skip subject."
         )
         continue
+
     logging.info(f"Creating cylinder ROI for sub-{sub}, ses-{ses}, run-{run}")
 
-    centres_ind = np.arange(0, 12, 3)
+    centres_ind = np.arange(
+        0,
+        n_coords,
+        coords_per_electrode,
+    )
     centres = mricoords[centres_ind]
-    normal_components = [
-        get_normal_component(mricoords[i : i + 3]) for i in centres_ind
-    ]
+
+    if n_coords == 12:
+        normal_components = [
+            get_normal_component(mricoords[i : i + 3]) for i in centres_ind
+        ]
+    else:
+        first_non_centre_ind = centres_ind + 1
+        normal_components = [
+            get_normal_component(mricoords[i : i + 3])
+            for i in (first_non_centre_ind)
+        ]
+        point_on_plane = mricoords[first_non_centre_ind]
+        centres = [
+            project_onto_plane(c, n, p)
+            for c, n, p in zip(centres, normal_components, point_on_plane)
+        ]
 
     height = 5
     radius = 10
