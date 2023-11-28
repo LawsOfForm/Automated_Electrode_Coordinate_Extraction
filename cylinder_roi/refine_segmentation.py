@@ -41,14 +41,9 @@ for sub_dir in alive_it(sub_dirs):
 
     sigma = 1
 
-    edges = np.array(
-        [canny(img, mask=mask_img, sigma=sigma) for img in petra_img]
-    )
+    edges = np.array([canny(img, mask=mask_img, sigma=sigma) for img in petra_img])
     chull = np.array(
-        [
-            convex_hull_image(img) if len(np.unique(img)) > 1 else img
-            for img in edges
-        ]
+        [convex_hull_image(img) if len(np.unique(img)) > 1 else img for img in edges]
     )
 
     save_nifti(edges, op.join(sub_dir, f"canny_sigma_{sigma}.nii.gz"), petra)

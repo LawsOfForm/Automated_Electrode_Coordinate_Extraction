@@ -14,7 +14,7 @@ from util.transform import (
     get_rotation_matrix,
     project_onto_plane,
     rotate_img_obj,
-    img_insert_value_at_ind
+    img_insert_value_at_ind,
 )
 
 
@@ -70,8 +70,7 @@ for sub_dir in alive_it(sub_dirs):
     else:
         first_non_centre_ind = centres_ind + 1
         normal_components = [
-            get_normal_component(mricoords[i : i + 3])
-            for i in (first_non_centre_ind)
+            get_normal_component(mricoords[i : i + 3]) for i in (first_non_centre_ind)
         ]
         point_on_plane = mricoords[first_non_centre_ind]
         centres = [
@@ -89,15 +88,17 @@ for sub_dir in alive_it(sub_dirs):
         get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
     ]
 
-    rotated_cylinder_inds = np.array([
-        rotate_img_obj(cylinder_mask, rotation_matrix, c)
-        for cylinder_mask, rotation_matrix, c in zip(
-            cylinder_masks, rotation_matrices, centres
-        )
-    ])
+    rotated_cylinder_inds = np.array(
+        [
+            rotate_img_obj(cylinder_mask, rotation_matrix, c)
+            for cylinder_mask, rotation_matrix, c in zip(
+                cylinder_masks, rotation_matrices, centres
+            )
+        ]
+    )
 
     emtpy_img = np.zeros((nifti.shape))
-    
+
     rotated_cylinder = img_insert_value_at_ind(
         img=empty_img,
         inds=rotated_cylinder_inds,
@@ -115,12 +116,14 @@ for sub_dir in alive_it(sub_dirs):
 
     plug_masks = [cylinder(nifti, c, plug_radius, plug_height) for c in centres]
 
-    rotated_plugs_inds = np.array([
-        rotate_img_obj(plug_mask, rotation_matrix, c)
-        for plug_mask, rotation_matrix, c in zip(
-            plug_masks, rotation_matrices, centres
-        )
-    ])
+    rotated_plugs_inds = np.array(
+        [
+            rotate_img_obj(plug_mask, rotation_matrix, c)
+            for plug_mask, rotation_matrix, c in zip(
+                plug_masks, rotation_matrices, centres
+            )
+        ]
+    )
 
     rotated_cyl_plus_plugs = img_insert_value_at_ind(
         img=rotated_cylinder,
@@ -130,4 +133,4 @@ for sub_dir in alive_it(sub_dirs):
 
     rotated_cyl_plus_plugs = fill_holes(rotated_cyl_plus_plugs)
 
-    save_nifti(img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti) 
+    save_nifti(img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti)

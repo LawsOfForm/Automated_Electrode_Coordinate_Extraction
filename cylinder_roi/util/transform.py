@@ -23,9 +23,7 @@ def get_rotation_matrix(a, b):
 
     v = np.cross(u_normal, v_normal)
 
-    v_skew_symmetric = np.array(
-        [[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]]
-    )
+    v_skew_symmetric = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
 
     rotation_matrix = (
         np.eye(3)
@@ -91,7 +89,10 @@ def rotate_img_obj(
 
     return np.unique(rotated_cylinder_ind, axis=0)
 
-def img_insert_value_at_ind(img: np.ndarray, inds: np.ndarray, value: int | float = 1) -> np.ndarray:
+
+def img_insert_value_at_ind(
+    img: np.ndarray, inds: np.ndarray, value: int | float = 1
+) -> np.ndarray:
     """
     Insert a value in the img at the given indices.
 
@@ -111,14 +112,9 @@ def img_insert_value_at_ind(img: np.ndarray, inds: np.ndarray, value: int | floa
     """
 
     for ind in inds:
-        img[
-            ind[:, :, 0],
-            ind[:, :, 1],
-            ind[:, :, 2]
-        ] = value
+        img[ind[:, :, 0], ind[:, :, 1], ind[:, :, 2]] = value
 
     return img
-    
 
 
 def fill_holes(img: np.ndarray, kernel_size: int = 3):
