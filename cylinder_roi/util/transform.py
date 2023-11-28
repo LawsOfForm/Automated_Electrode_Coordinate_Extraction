@@ -91,7 +91,7 @@ def rotate_img_obj(
 
 
 def img_insert_value_at_ind(
-    img: np.ndarray, inds: np.ndarray, value: int | float = 1
+    img: np.ndarray, inds: list[np.ndarray], value: int | float = 1
 ) -> np.ndarray:
     """
     Insert a value in the img at the given indices.
@@ -100,7 +100,7 @@ def img_insert_value_at_ind(
     ----------
     img : np.ndarray
         The image in which values are inserted.
-    inds : np.array
+    inds : list[np.array]
         Indices at which the values are inserted.
     value : int, optional
         Value to be inserted. Default is 1.

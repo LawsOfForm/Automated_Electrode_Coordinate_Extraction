@@ -90,14 +90,12 @@ for sub_dir in alive_it(sub_dirs):
         get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
     ]
 
-    rotated_cylinder_inds = np.array(
-        [
+    rotated_cylinder_inds = [
             rotate_img_obj(cylinder_mask, rotation_matrix, c)
             for cylinder_mask, rotation_matrix, c in zip(
                 cylinder_masks, rotation_matrices, centres
             )
         ]
-    )
 
     emtpy_img = np.zeros((nifti.shape))
 
@@ -118,14 +116,12 @@ for sub_dir in alive_it(sub_dirs):
 
     plug_masks = [cylinder(nifti, c, plug_radius, plug_height) for c in centres]
 
-    rotated_plugs_inds = np.array(
-        [
+    rotated_plugs_inds = [
             rotate_img_obj(plug_mask, rotation_matrix, c)
             for plug_mask, rotation_matrix, c in zip(
                 plug_masks, rotation_matrices, centres
             )
         ]
-    )
 
     rotated_cyl_plus_plugs = img_insert_value_at_ind(
         img=rotated_cylinder,
