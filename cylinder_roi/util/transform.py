@@ -112,7 +112,7 @@ def img_insert_value_at_ind(
     """
 
     for ind in inds:
-        img[ind[:, :, 0], ind[:, :, 1], ind[:, :, 2]] = value
+        img[ind[:, 0], ind[:, 1], ind[:, 2]] = value
 
     return img
 
