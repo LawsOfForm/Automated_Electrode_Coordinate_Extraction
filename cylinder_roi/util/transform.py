@@ -1,6 +1,8 @@
 from tkinter import W
+
 import cv2 as cv
 import numpy as np
+import numpy.typing as npt
 
 
 def get_rotation_matrix(a, b):
@@ -24,7 +26,9 @@ def get_rotation_matrix(a, b):
 
     v = np.cross(u_normal, v_normal)
 
-    v_skew_symmetric = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+    v_skew_symmetric = np.array(
+        [[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]]
+    )
 
     rotation_matrix = (
         np.eye(3)
@@ -57,7 +61,9 @@ def pad_matrix(matrix: np.ndarray) -> np.ndarray:
 
 
 def rotate_img_obj(
-    img: np.ndarray, rotation_matrix: np.ndarray, centre: np.ndarray
+    img: npt.NDArray,
+    rotation_matrix: npt.NDArray[np.float64],
+    centre: np.ndarray,
 ) -> np.ndarray:
     """
     Rotate a binary image object and return the indices of the rotated image.
@@ -92,7 +98,9 @@ def rotate_img_obj(
 
 
 def img_insert_value_at_ind(
-    img: np.ndarray, inds: list, value: int | float = 1
+    img: npt.NDArray[np.bool_ | np.int16 | np.int_],
+    inds: npt.NDArray[np.int16 | np.int32],
+    value: int | float = 1,
 ) -> np.ndarray:
     """
     Insert a value in the img at the given indices.
@@ -117,7 +125,10 @@ def img_insert_value_at_ind(
     return img
 
 
-def fill_holes(img: np.ndarray, kernel_size: int = 3):
+def fill_holes(
+    img: npt.NDArray[np.bool8 | np.int8 | np.int16 | np.int_],
+    kernel_size: int = 3,
+):
     """
     Fill holes in a binary image.
 
