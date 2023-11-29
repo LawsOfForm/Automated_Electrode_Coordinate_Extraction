@@ -91,7 +91,7 @@ def rotate_img_obj(
 
 
 def img_insert_value_at_ind(
-    img: npt.NDArray[np.bool_ | np.int16 | np.int_],
+    img: npt.NDArray[np.bool_ | np.int16 | np.int_ | np.float_],
     inds: npt.NDArray[np.int16 | np.int32],
     value: int | float = 1,
 ) -> np.ndarray:
