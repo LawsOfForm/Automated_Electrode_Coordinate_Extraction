@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.typing as npt
 
 
 def circle_mask(xdim, ydim, radius, centre):
@@ -64,3 +65,25 @@ def cylinder(img, centre, radius, height):
         cylinder_img[:, :, z] = mask.transpose()
 
     return cylinder_img
+
+
+def binarize_img(layers_img: npt.NDArray, threshold: int = 3) -> npt.NDArray:
+    """
+    Binarize image.
+
+    Parameters
+    ----------
+    layers_img : np.ndarray
+        The layers image.
+    threshold : int, optional
+        The threshold, by default 3
+
+    Returns
+    -------
+    np.ndarray
+        The binarized image.
+    """
+    layers_img = layers_img.copy()
+    layers_img[layers_img < threshold] = 0
+    layers_img[layers_img >= threshold] = 1
+    return layers_img.astype("bool")
