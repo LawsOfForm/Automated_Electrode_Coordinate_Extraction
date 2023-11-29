@@ -18,7 +18,6 @@ from skimage.morphology import (
 from util.io import load_nifti, save_nifti
 from util.roi import binarize_img
 
-root_dir = "/home/steffen"
 sub_dirs = glob_sub_dir(root_dir)
 if sub_dirs is None:
     raise FileNotFoundError(
