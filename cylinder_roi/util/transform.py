@@ -1,8 +1,6 @@
 from tkinter import W
-
 import cv2 as cv
 import numpy as np
-import numpy.typing as npt
 
 
 def get_rotation_matrix(a, b):
@@ -26,9 +24,7 @@ def get_rotation_matrix(a, b):
 
     v = np.cross(u_normal, v_normal)
 
-    v_skew_symmetric = np.array(
-        [[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]]
-    )
+    v_skew_symmetric = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
 
     rotation_matrix = (
         np.eye(3)
@@ -61,9 +57,7 @@ def pad_matrix(matrix: np.ndarray) -> np.ndarray:
 
 
 def rotate_img_obj(
-    img: npt.NDArray,
-    rotation_matrix: npt.NDArray[np.float64],
-    centre: np.ndarray,
+    img: np.ndarray, rotation_matrix: np.ndarray, centre: np.ndarray
 ) -> np.ndarray:
     """
     Rotate a binary image object and return the indices of the rotated image.
@@ -87,13 +81,17 @@ def rotate_img_obj(
     centered_cylinder_ind = cylinder_ind - centre
     rotated_centered_cylinder_ind = rotation_matrix @ centered_cylinder_ind
     rotated_cylinder_ind = (rotated_centered_cylinder_ind + centre).T
-    return rotated_cylinder_ind.astype("int32")
+    rotated_cylinder_ind = np.vstack(
+        (
+            np.floor(rotated_cylinder_ind),
+            np.ceil(rotated_cylinder_ind),
+        )
+    ).astype("int32")
+    return np.unique(rotated_cylinder_ind, axis=0)
 
 
 def img_insert_value_at_ind(
-    img: npt.NDArray[np.bool_ | np.int16 | np.int_ | np.float_],
-    inds: npt.NDArray[np.int16 | np.int32],
-    value: int | float = 1,
+    img: np.ndarray, inds: list, value: int | float = 1
 ) -> np.ndarray:
     """
     Insert a value in the img at the given indices.
@@ -113,15 +111,13 @@ def img_insert_value_at_ind(
         Image with the inserted value
     """
 
-    img[inds[:, 0], inds[:, 1], inds[:, 2]] = value
+    img[inds[:, 0], inds[:, 1], inds[:, 2]] = value 
+
 
     return img
 
 
-def fill_holes(
-    img: npt.NDArray[np.bool_ | np.int8 | np.int16 | np.int_],
-    kernel_size: int = 3,
-):
+def fill_holes(img: np.ndarray, kernel_size: int = 3):
     """
     Fill holes in a binary image.
 

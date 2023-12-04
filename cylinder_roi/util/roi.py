@@ -1,5 +1,4 @@
 import numpy as np
-import numpy.typing as npt
 
 
 def circle_mask(xdim, ydim, radius, centre):
@@ -67,23 +66,12 @@ def cylinder(img, centre, radius, height):
     return cylinder_img
 
 
-def binarize_img(layers_img: npt.NDArray, threshold: int = 3) -> npt.NDArray:
-    """
-    Binarize image.
-
-    Parameters
-    ----------
-    layers_img : np.ndarray
-        The layers image.
-    threshold : int, optional
-        The threshold, by default 3
-
-    Returns
-    -------
-    np.ndarray
-        The binarized image.
-    """
-    layers_img = layers_img.copy()
-    layers_img[layers_img < threshold] = 0
-    layers_img[layers_img >= threshold] = 1
-    return layers_img.astype("bool")
+def centroid(vertexes, n_electrodes):
+     mid = []
+     for elec in range(0,n_electrodes):
+        _x_list = [vertex [0] for vertex in vertexes[0+elec*6:5+elec*6]]
+        _y_list = [vertex [1] for vertex in vertexes[0+elec*6:5+elec*6]]
+        _z_list = [vertex [2] for vertex in vertexes[0+elec*6:5+elec*6]]
+        _len = len(vertexes[0+elec*6:5+elec*6])
+        mid.append(np.array([(sum(_x_list) / _len), (sum(_y_list) / _len), (sum(_z_list) / _len)]).astype("int32"))
+     return mid
