@@ -41,8 +41,14 @@ if ~startsWith(name, 'r')
     error('Petra file name must start with "r". Check if you choose a coregistered file.')
 end
 
-path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
-    num2str(session), '/', 'run-0', num2str(run), '/');
+if isfile('config.m')
+    config
+    path_output = fullfile(derivatives, sub_to_analyse, strcat('ses-', ...
+        num2str(session)), strcat('run-0', num2str(run)));
+else
+    path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
+        num2str(session), '/', 'run-0', num2str(run), '/');
+end
 
 % the order in which to label the electrodes. after each mouse click, the
 % program will move to the next electrode, ie, each mouse click labels an
@@ -99,7 +105,8 @@ end
 
 disp('computing final layers...');
 layers = intensitylayers;
-dilbottom = imdilate(mask.img == 2, strel(ones(n_layers, n_layers, n_layers)));
+dilbottom = imdilate(mask.img == 2, strel(ones(n_layers, n_layers, ...
+    n_layers)));
 layers(dilbottom == 1) = 0;
 inds = find(layers > 0);
 
