@@ -1,2 +1,3 @@
 *.nii.gz
 __pycache__
+config.m
