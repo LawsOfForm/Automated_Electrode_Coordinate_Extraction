@@ -80,9 +80,7 @@ if __name__ == "__main__":
         if op.exists(refined_mask):
             continue
 
-        logging.info(
-            f"Refining cylinder ROI for sub-{sub}, ses-{ses}, run-{run}"
-        )
+        logging.info(f"Refining cylinder ROI for sub-{sub}, ses-{ses}, run-{run}")
 
         petra = sitk.ReadImage(masked_petra)
         mask = sitk.ReadImage(cylinder_mask_path)

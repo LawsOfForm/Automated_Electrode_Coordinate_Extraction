@@ -67,11 +67,15 @@ def cylinder(img, centre, radius, height):
 
 
 def centroid(vertexes, n_electrodes):
-     mid = []
-     for elec in range(0,n_electrodes):
-        _x_list = [vertex [0] for vertex in vertexes[0+elec*6:5+elec*6]]
-        _y_list = [vertex [1] for vertex in vertexes[0+elec*6:5+elec*6]]
-        _z_list = [vertex [2] for vertex in vertexes[0+elec*6:5+elec*6]]
-        _len = len(vertexes[0+elec*6:5+elec*6])
-        mid.append(np.array([(sum(_x_list) / _len), (sum(_y_list) / _len), (sum(_z_list) / _len)]).astype("int32"))
-     return mid
+    mid = []
+    for elec in range(0, n_electrodes):
+        _x_list = [vertex[0] for vertex in vertexes[0 + elec * 6 : 5 + elec * 6]]
+        _y_list = [vertex[1] for vertex in vertexes[0 + elec * 6 : 5 + elec * 6]]
+        _z_list = [vertex[2] for vertex in vertexes[0 + elec * 6 : 5 + elec * 6]]
+        _len = len(vertexes[0 + elec * 6 : 5 + elec * 6])
+        mid.append(
+            np.array(
+                [(sum(_x_list) / _len), (sum(_y_list) / _len), (sum(_z_list) / _len)]
+            ).astype("int32")
+        )
+    return mid

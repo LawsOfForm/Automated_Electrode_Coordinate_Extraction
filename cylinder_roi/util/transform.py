@@ -111,8 +111,7 @@ def img_insert_value_at_ind(
         Image with the inserted value
     """
 
-    img[inds[:, 0], inds[:, 1], inds[:, 2]] = value 
-
+    img[inds[:, 0], inds[:, 1], inds[:, 2]] = value
 
     return img
 
