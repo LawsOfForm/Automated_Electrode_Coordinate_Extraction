@@ -1,13 +1,6 @@
 import os.path as op
 from glob import glob
 
-root_dir = op.join(
-    "/media",
-    "MeMoSLAP_Subjects",
-    "derivatives",
-    "automated_electrode_extraction",
-)
-
 
 def sub_directory(root_dir: str, sub: int, ses: int, run: int) -> str:
     return op.join(

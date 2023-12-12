@@ -5,7 +5,8 @@ import re
 import nibabel as nib
 import numpy as np
 from alive_progress import alive_it
-from paths import glob_sub_dir, root_dir
+from paths import root_dir
+from paths_funcs import glob_sub_dir
 from util.io import read_mricoords, save_nifti
 from util.roi import centroid, cylinder
 from util.transform import (

@@ -4,7 +4,8 @@ import re
 
 import SimpleITK as sitk
 from alive_progress import alive_it
-from paths import glob_sub_dir, root_dir
+from paths import root_dir
+from paths_funcs import glob_sub_dir
 
 
 def mask_image(image, mask):
