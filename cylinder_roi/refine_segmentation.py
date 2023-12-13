@@ -2,11 +2,10 @@ import logging
 import os.path as op
 import re
 
-import cv2 as cv
-import nibabel as nib
 import numpy as np
 from alive_progress import alive_it
-from paths import glob_sub_dir, root_dir
+from paths import root_dir
+from paths_funcs import glob_sub_dir
 from skimage.feature import canny
 from skimage.morphology import (
     convex_hull_image,
@@ -52,7 +51,10 @@ for sub_dir in alive_it(sub_dirs):
     logging.info(f"Number of Voxel pre-dilation: {np.sum(mask_img)}")
 
     mask_img_dil = np.array(
-        [dilation(mask, square(3)) if np.any(mask) else mask for mask in mask_img]
+        [
+            dilation(mask, square(3)) if np.any(mask) else mask
+            for mask in mask_img
+        ]
     )
     logging.info(f"Number of Voxel post-dilation: {np.sum(mask_img_dil)}")
 
@@ -61,7 +63,9 @@ for sub_dir in alive_it(sub_dirs):
     mask_img_dil_cut = mask_img_dil * ~layers_img_bin * ~head_mask
     masked_petra = petra_img * mask_img_dil_cut
 
-    logging.info(f"N voxels cut from mask: {np.sum(mask_img_dil - mask_img_dil_cut)}")
+    logging.info(
+        f"N voxels cut from mask: {np.sum(mask_img_dil - mask_img_dil_cut)}"
+    )
 
     masked_denoised_petra = np.array(
         [white_tophat(img, disk(3)) for img in masked_petra]
@@ -69,7 +73,9 @@ for sub_dir in alive_it(sub_dirs):
 
     sigma = 1
 
-    edges = np.array([canny(img, sigma=sigma) for img in masked_denoised_petra])
+    edges = np.array(
+        [canny(img, sigma=sigma) for img in masked_denoised_petra]
+    )
 
     if not np.any(edges):
         logging.warning(
@@ -78,7 +84,9 @@ for sub_dir in alive_it(sub_dirs):
         )
         continue
 
-    chull = np.array([convex_hull_image(img) if np.any(img) else img for img in edges])
+    chull = np.array(
+        [convex_hull_image(img) if np.any(img) else img for img in edges]
+    )
 
     save_nifti(edges, op.join(sub_dir, f"canny_sigma_{sigma}.nii.gz"), petra)
     save_nifti(chull, op.join(sub_dir, "chull.nii.gz"), petra)

@@ -5,7 +5,8 @@ import re
 import nibabel as nib
 import numpy as np
 from alive_progress import alive_it
-from paths import glob_sub_dir, root_dir
+from paths import root_dir
+from paths_funcs import glob_sub_dir
 from util.io import read_mricoords, save_nifti
 from util.roi import centroid, cylinder
 from util.transform import (
@@ -67,7 +68,8 @@ for sub_dir in alive_it(sub_dirs):
 
     first_non_centre_ind = centres_ind + 1
     normal_components = [
-        get_normal_component(mricoords[i : i + 5]) for i in (first_non_centre_ind)
+        get_normal_component(mricoords[i : i + 5])
+        for i in (first_non_centre_ind)
     ]
     point_on_plane = mricoords[first_non_centre_ind]
 
@@ -77,7 +79,9 @@ for sub_dir in alive_it(sub_dirs):
         z = normal_components[normal_vector][2]
 
         if np.sum(np.array([x, y, z])) < 0:
-            normal_components[normal_vector] = normal_components[normal_vector] * -1
+            normal_components[normal_vector] = (
+                normal_components[normal_vector] * -1
+            )
 
     height = 4
     radius = 15
@@ -114,7 +118,9 @@ for sub_dir in alive_it(sub_dirs):
     plug_height = height + 10
     plug_radius = radius / 2
 
-    plug_masks = [cylinder(nifti, c, plug_radius, plug_height) for c in centres]
+    plug_masks = [
+        cylinder(nifti, c, plug_radius, plug_height) for c in centres
+    ]
 
     rotated_plugs_inds = np.vstack(
         [
@@ -133,4 +139,6 @@ for sub_dir in alive_it(sub_dirs):
 
     rotated_cyl_plus_plugs = fill_holes(rotated_cyl_plus_plugs)
 
-    save_nifti(img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti)
+    save_nifti(
+        img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti
+    )

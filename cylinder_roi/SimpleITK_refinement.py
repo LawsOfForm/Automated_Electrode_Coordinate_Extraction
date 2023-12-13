@@ -4,7 +4,8 @@ import re
 
 import SimpleITK as sitk
 from alive_progress import alive_it
-from paths import glob_sub_dir, root_dir
+from paths import root_dir
+from paths_funcs import glob_sub_dir
 
 
 def mask_image(image, mask):
@@ -24,7 +25,7 @@ def mask_image(image, mask):
     """
     # Apply mask to image
     masker = sitk.MaskImageFilter()
-    masker.SetMaskingValue(0)
+    masker.SetMaskingValue(1)
     masker.SetOutsideValue(0)
     masked_image = masker.Execute(image, mask)
 
@@ -65,7 +66,7 @@ if __name__ == "__main__":
         raise FileNotFoundError("No sub-directories found.")
 
     for sub_dir in alive_it(sub_dirs):
-        # logging.BasicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.INFO)
         cylinder_mask_path = op.join(sub_dir, "cylinder_ROI.nii.gz")
         # cylinder_mask_path = op.join(sub_dir, "cylinder_plus_plug_ROI.nii.gz")
         masked_petra = op.join(sub_dir, "petra_masked.nii.gz")
@@ -80,13 +81,15 @@ if __name__ == "__main__":
         if op.exists(refined_mask):
             continue
 
-        logging.info(f"Refining cylinder ROI for sub-{sub}, ses-{ses}, run-{run}")
+        logging.info(
+            f"Refining cylinder ROI for sub-{sub}, ses-{ses}, run-{run}"
+        )
 
-        petra = sitk.ReadImage(masked_petra)
-        mask = sitk.ReadImage(cylinder_mask_path)
+        petra = sitk.ReadImage(masked_petra, sitk.sitkFloat32)
+        mask = sitk.ReadImage(cylinder_mask_path, sitk.sitkUInt8)
 
         masked_petra = mask_image(petra, mask)
 
         thresholded_petra = huang_threshold(masked_petra)
 
-        sitk.WriteImage(thresholded_petra, cylinder_mask_path)
+        sitk.WriteImage(thresholded_petra, refined_mask)
