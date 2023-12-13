@@ -1,56 +1,45 @@
-from skimage.transform import resize
-from skimage.exposure import rescale_intensity
-import numpy as np
-import nibabel as nib
-from glob import glob
-import torchvision.transforms as tfms
 import os.path as op
-import re
 import random
+import re
+from glob import glob
+
+import nibabel as nib
+import numpy as np
+import torch
+import torchvision.transforms.v2 as tfms
+from skimage.exposure import rescale_intensity
+from skimage.transform import resize
 from torch.utils.data import Dataset
 
+
 class GreyToRGB(object):
-    
     def __call__(self, volume_mask):
         volume, mask = volume_mask
-        w, h, d =  volume.shape
+        w, h, d = volume.shape
         volume += np.abs(np.min(volume))
         volume_max = np.max(volume)
         if volume_max > 0:
-            volume /= volume_max 
+            volume /= volume_max
         ret = np.empty((w, h, d, 3), dtype=np.uint8)
         ret[:, :, :, 2] = ret[:, :, :, 1] = ret[:, :, :, 0] = volume * 255
         return ret, mask
-    
-class ChannelSwitchBST(object):
-    
-    def __call__(self, volume_mask):
-        volume, mask = volume_mask
-        volume = np.transpose(volume, (0, 1, 3, 2))
-        return volume, mask
-    
-class FixChannelDimension(object):
-    
-    def __call__(self, volume_mask):
-        volume, mask = volume_mask
-        volume = np.transpose(volume, (0, 1, 3, 2))
-        return volume, mask
+
 
 class CropSample(object):
     def __call__(self, volume_mask):
         volume, mask = volume_mask
-        
+
         def min_max_projection(axis: int):
-            
-            axis = [i for i in range(4) if i != axis]
+            axis = [i for i in range(3) if i != axis]
             axis = tuple(axis)
             projection = np.max(volume, axis=axis)
             non_zero = np.nonzero(projection)
-            return np.min(non_zero), np.max(non_zero) + 1 
+            return np.min(non_zero), np.max(non_zero) + 1
+
         z_min, z_max = min_max_projection(0)
         y_min, y_max = min_max_projection(1)
         x_min, x_max = min_max_projection(2)
-        
+
         return (
             volume[z_min:z_max, y_min:y_max, x_min:x_max],
             mask[z_min:z_max, y_min:y_max, x_min:x_max],
@@ -96,7 +85,6 @@ class ResizeSample(object):
             cval=0,
             anti_aliasing=False,
         )
-        out_shape = out_shape + (v_shape[3],)
         volume = resize(
             volume,
             output_shape=out_shape,
@@ -118,7 +106,6 @@ class NormalizeVolume(object):
         s = np.std(volume, axis=(0, 1, 2))
         volume = (volume - m) / s
         return volume, mask
-    
 
 class DataloaderImg(Dataset):
     """
@@ -148,8 +135,13 @@ class DataloaderImg(Dataset):
     ----------
     root_dir : str
         The root directory of the dataset
-    transforms : list[object], optional
-        List of transforms to apply to the data, by default [CropSample(), PadSample(), ResizeSample(), NormalizeVolume()]
+    custom_transforms : list[object], optional
+        List of transforms to apply to the data, by default
+        [CropSample(), PadSample(), ResizeSample(), NormalizeVolume()]
+    transforms: list[object], optional
+        List of transforms (standard torchvision.transforms) 
+        to apply to the data, by default
+        None
     subset : str, optional
         The subset of the dataset to load, by default "train"
     random_sampling : bool, optional
@@ -173,16 +165,9 @@ class DataloaderImg(Dataset):
     def __init__(
         self,
         root_dir: str,
-        transforms: list[object]
-        | None = [
-            GreyToRGB(),
-            # ChannelSwitchBST(),
-            CropSample(),
-            PadSample(),
-            ResizeSample(),
-            NormalizeVolume(),
-            # FixChannelDimension(),
-        ],
+        custom_transforms: list[object]
+        | None = None,
+        transforms: list[object] | None=None,
         subset: str = "train",
         random_sampling: bool = True,
         validation_cases: int = 10,
@@ -192,7 +177,8 @@ class DataloaderImg(Dataset):
             raise ValueError("subset must be one of train, validation, or all")
 
         self.root_dir = root_dir
-        self.transforms = tfms.Compose(transforms)
+        self.custom_transforms = tfms.Compose(custom_transforms) if custom_transforms is not None else None
+        self.transforms = tfms.Compose(transforms) if transforms is not None else None
         self.subject_pattern = op.join(
             self.root_dir,
             "sub-*",
@@ -200,14 +186,21 @@ class DataloaderImg(Dataset):
             "ses-*",
             "run-*",
         )
+        self.subject_pattern
         self.volume = glob(op.join(self.subject_pattern, "petra_.nii.gz"))
+        self.volume.sort()
         self.mask = glob(
             op.join(self.subject_pattern, "cylinder_plus_plug_ROI_FN.nii.gz")
         )  # TODO: change file name
-
+        self.mask.sort()
+        
+        if len(self.volume) != len(self.mask):
+            raise ValueError("Number of volumes and masks must be the same")
+      
         if not subset == "all":
             random.seed(seed)
             validation_volumes = random.sample(self.volume, k=validation_cases)
+            # TODO: also sample masks
             if subset == "validation":
                 self.volume = validation_volumes
             else:
@@ -226,7 +219,6 @@ class DataloaderImg(Dataset):
         # TODO: create a sub index
 
     def __len__(self):
-        # TODO: change so that it returns the actual number of files not number of subjects
         return len(self.volume)
 
     def __getitem__(self, idx):
@@ -247,22 +239,33 @@ class DataloaderImg(Dataset):
 
         print(f"mask Size: {mask.size}")
 
-        if self.transforms is not None:
-            volume, mask = self.transforms((volume, mask))
+        if self.custom_transforms is not None:
+            volume, mask = self.custom_transforms((volume, mask))
 
         if self.random_sampling:
             slice_weights = mask.sum(axis=(1, 2))
             slice_weights = (
-                slice_weights + (slice_weights.sum() * 0.1 / len(slice_weights))
+                slice_weights
+                + (slice_weights.sum() * 0.1 / len(slice_weights))
             ) / (slice_weights.sum() * 1.1)
 
-            slice_n = np.random.choice(np.arange(len(slice_weights)), p=slice_weights)
+            slice_n = np.random.choice(
+                np.arange(len(slice_weights)), p=slice_weights
+            )
 
         volume = volume[slice_n]
         mask = mask[slice_n]
+        
+        volume = np.swapaxes(volume, 0, 2)
+        mask = mask[..., np.newaxis]
+        mask = np.swapaxes(mask, 0, 2)
 
-        image_tensor = torch.from_numpy(volume)
+        image_tensor = torch.from_numpy(
+            volume
+        )  # might be torch.squeeze(torch.from_numpy(volume, 0))
         mask_tensor = torch.from_numpy(mask)
+        
+        if self.transforms is not None:
+            image_tensor, mask_tensor = self.transforms(image_tensor, mask_tensor)
 
         return image_tensor, mask_tensor
-
