@@ -199,13 +199,19 @@ class DataloaderImg(Dataset):
       
         if not subset == "all":
             random.seed(seed)
-            validation_volumes = random.sample(self.volume, k=validation_cases)
+            subset_idx = np.random.choice(np.arange(len(self.volume)), size=validation_cases, replace=False)
+            validation_volumes = [i for idx, i in enumerate(self.volume) if idx in subset_idx]
+            validation_masks = [i for idx, i in enumerate(self.mask) if idx in subset_idx]
             # TODO: also sample masks
             if subset == "validation":
                 self.volume = validation_volumes
+                self.mask = validation_masks
             else:
                 self.volume = sorted(
                     list(set(self.volume).difference(validation_volumes))
+                )
+                self.mask = sorted(
+                    list(set(self.mask).difference(validation_masks))
                 )
 
         self.sub_ses_run_idx = [
