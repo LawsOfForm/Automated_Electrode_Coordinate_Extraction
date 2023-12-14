@@ -33,7 +33,7 @@ for sub_dir in alive_it(sub_dirs):
     cylinder_mask_plus_plug = op.join(sub_dir, "cylinder_plus_plug_ROI.nii.gz")
     final_mask_path = op.join(sub_dir, "finalmask.nii.gz")
 
-    sub, ses, run = re.findall(r"([0-9]+)", sub_dir)
+    sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
 
     if not op.exists(final_mask_path):
         continue
@@ -50,18 +50,17 @@ for sub_dir in alive_it(sub_dirs):
 
     if not n_coords == 24:
         logging.warning(
-            f"sub-{sub} has {mricoords.shape[0]} electrode coordinates "
-            + f"in ses-{ses}, run-{run}. Expected 24.\n"
+            f"{sub} has {mricoords.shape[0]} electrode coordinates "
+            + f"in {ses}, {run}. Expected 24.\n"
             + "Will skip subject. \n"
         )
         continue
 
-    logging.info(f"Creating cylinder ROI for sub-{sub}, ses-{ses}, run-{run}")
+    logging.info(f"Creating cylinder ROI for {sub}, {ses}, {run}")
 
     mid = centroid(mricoords, n_electrodes)
-    print(mid)
 
-    np.savetxt(op.join(sub_dir, "mid.txt"), mid, delimiter=",")
+    np.savetxt(op.join(sub_dir, "mid.txt"), mid, delimiter=",", fmt="%i")
 
     centres_ind = np.arange(0, n_coords, coords_per_electrode, dtype="int8")
     centres = mid

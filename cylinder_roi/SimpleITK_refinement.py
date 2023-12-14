@@ -72,7 +72,7 @@ if __name__ == "__main__":
         masked_petra = op.join(sub_dir, "petra_masked.nii.gz")
         refined_mask = op.join(sub_dir, "refined_electrode_ROI.nii.gz")
 
-        sub, ses, run = re.findall(r"([0-9]+)", sub_dir)
+        sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
 
         if not op.exists(masked_petra):
             continue
@@ -82,7 +82,7 @@ if __name__ == "__main__":
             continue
 
         logging.info(
-            f"Refining cylinder ROI for sub-{sub}, ses-{ses}, run-{run}"
+            f"Refining cylinder ROI for {sub}, {ses}, {run}"
         )
 
         petra = sitk.ReadImage(masked_petra, sitk.sitkFloat32)
