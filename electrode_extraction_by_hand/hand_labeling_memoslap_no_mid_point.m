@@ -13,7 +13,7 @@
 clear all; close all;
 
 sub_to_analyse = 'sub-010'; %insert here
-session =2; % and here
+session = 2; % and here
 run = 1; % and here
 
 if ~ismember(session, 1:4) 
@@ -44,7 +44,7 @@ end
 if isfile('config.m')
     config
     path_output = fullfile(derivatives, sub_to_analyse, ...
-        'electrode-extraction', strcat('ses-', num2str(session)), ...
+        'electrode_extraction', strcat('ses-', num2str(session)), ...
         strcat('run-0', num2str(run), '/'));
 else
     path_output = strcat(sub_dir, 'electrode_extraction/', 'ses-', ...
@@ -61,7 +61,8 @@ end
 %    'T7','C5','C3','C1','CZ','C2','C4','C6','T8','TP10','TP8','CP6','CP4','CP2','CPZ','CP1','CP3','CP5','TP7','TP9','P7','P5','P3','P1','PZ','P2','P4','P6','P8',...
 %    'PO8','PO4','POZ','PO3','PO7','O1','OZ','O2'} ;
 
-elecorder = {'_1','_2','_3','_4','_5','_6','_1','_2','_3', '_4','_5','_6' ,'_1','_2','_3','_4','_5','_6','_1','_2','_3','_4','_5','_6'};
+elecorder = {'_1','_2','_3','_4','_5','_6','_1','_2','_3', '_4','_5', ...
+    '_6' ,'_1','_2','_3','_4','_5','_6','_1','_2','_3','_4','_5','_6'};
 
 % get the raw UTE, and the mask
 disp('loading raw data...');
