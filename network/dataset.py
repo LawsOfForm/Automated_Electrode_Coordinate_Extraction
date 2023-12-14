@@ -107,6 +107,8 @@ class NormalizeVolume(object):
         volume = (volume - m) / s
         return volume, mask
 
+    
+
 class DataloaderImg(Dataset):
     """
     Dataset class for loading nifti files and masks for electrode extraction
@@ -187,12 +189,11 @@ class DataloaderImg(Dataset):
             "run-*",
         )
         self.subject_pattern
-        self.volume = glob(op.join(self.subject_pattern, "petra_.nii.gz"))
-        self.volume.sort()
-        self.mask = glob(
-            op.join(self.subject_pattern, "cylinder_plus_plug_ROI_FN.nii.gz")
-        )  # TODO: change file name
-        self.mask.sort()
+        volume = glob(op.join(self.subject_pattern, "petra_.nii.gz"))
+        volume.sort()
+        masks = [op.join(op.dirname(i), "cylinder_plus_plug_ROI.nii.gz")  for i in volume]
+        self.mask = [m for m in masks if op.exists(m)]  # TODO: change file name
+        self.volume = [v for v,m in zip(volume, masks) if op.exists(m)]
         
         if len(self.volume) != len(self.mask):
             raise ValueError("Number of volumes and masks must be the same")
@@ -231,19 +232,10 @@ class DataloaderImg(Dataset):
         volume_name = self.volume[idx]
         mask_name = self.mask[idx]
         volume = nib.load(volume_name)
-        # change to numpy
         volume = np.asarray(volume.dataobj, dtype=np.float32)
-        # change to PIL
-
-        print(f"volume Size: {volume.size}")
 
         mask = nib.load(mask_name)
-        # change to numpy
         mask = np.asarray(mask.dataobj, dtype=np.float32)
-        # change to PIL
-        # mask = Image.fromarray(mask.astype("uint8"), "L")
-
-        print(f"mask Size: {mask.size}")
 
         if self.custom_transforms is not None:
             volume, mask = self.custom_transforms((volume, mask))
