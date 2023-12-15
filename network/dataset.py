@@ -199,7 +199,7 @@ class DataloaderImg(Dataset):
             raise ValueError("Number of volumes and masks must be the same")
       
         if not subset == "all":
-            random.seed(seed)
+            np.random.seed(seed)
             subset_idx = np.random.choice(np.arange(len(self.volume)), size=validation_cases, replace=False)
             validation_volumes = [i for idx, i in enumerate(self.volume) if idx in subset_idx]
             validation_masks = [i for idx, i in enumerate(self.mask) if idx in subset_idx]
@@ -208,19 +208,14 @@ class DataloaderImg(Dataset):
                 self.volume = validation_volumes
                 self.mask = validation_masks
             else:
-                self.volume = sorted(
-                    list(set(self.volume).difference(validation_volumes))
-                )
-                self.mask = sorted(
-                    list(set(self.mask).difference(validation_masks))
-                )
-
+                self.volume = [i for i in self.volume if i not in validation_volumes] 
+                self.mask = [i for i in self.mask if i not in validation_masks] 
+        
         self.sub_ses_run_idx = [
             "_".join(re.findall(r"(sub-[0-9]+|ses-[0-9]|run-[0-9]+)", x))
             for x in self.volume
         ]
-        print(self.sub_ses_run_idx)
-
+        
         self.random_sampling = random_sampling
 
         # TODO: create a sub index
