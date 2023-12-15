@@ -83,7 +83,7 @@ for sub_dir in alive_it(sub_dirs):
             )
 
     height = 4
-    radius = 15
+    radius = 12
     empty_img = np.zeros(nifti.shape)
     cylinder_masks = [cylinder(nifti, c, radius, height) for c in centres]
 
