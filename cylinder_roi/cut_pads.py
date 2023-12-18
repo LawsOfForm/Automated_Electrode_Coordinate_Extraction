@@ -7,7 +7,7 @@ from paths import root_dir
 from paths_funcs import glob_sub_dir
 from util.io import load_nifti, save_nifti
 
-DILATION_RADIUS = 4
+DILATION_RADIUS = 8
 
 sub_dirs = glob_sub_dir(root_dir)
 
