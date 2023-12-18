@@ -22,21 +22,20 @@ if not op.exists(report_dir):
     os.mkdir(report_dir)
 
 for sub_dir in alive_it(sub_dirs):
+    sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
+
+    report = op.join(report_dir, f"{sub}_{ses}_{run}.png")
+
+    if op.isfile(report):
+        continue
+
     masks = glob(op.join(sub_dir, "mask_*.nii.gz"))
 
     if not masks:
         continue
 
     petra_nii, petra = load_nifti(op.join(sub_dir, "petra_.nii.gz"))
-    petra_min, petra_max = petra.min(), petra.max()
-    # Compute center of mass for masks
-
-    sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
-
-    report = op.join(report_dir, f"{sub}_{ses}_{run}.png")
-
-    # if op.exists(report):
-    #     continue
+    petra_max = petra.max()
 
     _, ax = plt.subplots(len(masks), 3, figsize=(12, 12))
     for i, mask in enumerate(masks):
