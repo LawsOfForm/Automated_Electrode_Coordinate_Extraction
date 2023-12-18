@@ -1,16 +1,20 @@
 import os.path as op
 
 import numpy as np
+import SimpleITK as sitk
+from alive_progress import alive_it
 from paths import root_dir
 from paths_funcs import glob_sub_dir
 from util.io import load_nifti, save_nifti
+
+DILATION_RADIUS = 4
 
 sub_dirs = glob_sub_dir(root_dir)
 
 if sub_dirs is None:
     raise FileNotFoundError("No subdirectories found in root directory.")
 
-for sub_dir in sub_dirs:
+for sub_dir in alive_it(sub_dirs):
     petra_path = op.join(sub_dir, "petra_.nii.gz")
     finalmask_path = op.join(sub_dir, "finalmask.nii.gz")
     layers_path = op.join(sub_dir, "layers_binarized.nii.gz")
@@ -22,8 +26,19 @@ for sub_dir in sub_dirs:
     _, finalmask_img = load_nifti(finalmask_path)
     _, layers_img = load_nifti(layers_path)
 
-    combined_maks = np.where((finalmask_img + layers_img) > 0, 1, 0)
+    finalmask_img = np.where(finalmask_img == 1, 1, 0)
+    combined_mask = np.where((finalmask_img + layers_img) == 1, 1, 0)
 
-    cut_pads = np.where(combined_maks == 0, 0, petra_img)
+    combined_mask = sitk.GetImageFromArray(combined_mask)
+    dilation = sitk.BinaryDilateImageFilter()
+    dilation.SetKernelRadius(DILATION_RADIUS)
+    dilation.SetForegroundValue(1)
+    combined_mask = dilation.Execute(combined_mask)
 
-    save_nifti(cut_pads, petra, op.join(sub_dir, "petra_cut_pads.nii.gz"))
+    combined_mask = sitk.GetArrayFromImage(combined_mask)
+
+    cut_pads = np.where(combined_mask == 0, 0, petra_img)
+
+    save_nifti(
+        img=cut_pads, path=op.join(sub_dir, "petra_cut_pads.nii.gz"), ref=petra
+    )
