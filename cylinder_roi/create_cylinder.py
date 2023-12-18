@@ -2,19 +2,17 @@ import logging
 import os.path as op
 import re
 
-import nibabel as nib
 import numpy as np
 from alive_progress import alive_it
 from paths import root_dir
 from paths_funcs import glob_sub_dir
-from util.io import read_mricoords, save_nifti
+from util.io import load_nifti, read_mricoords, save_nifti
 from util.roi import centroid, cylinder
 from util.transform import (
     fill_holes,
     get_normal_component,
     get_rotation_matrix,
     img_insert_value_at_ind,
-    project_onto_plane,
     rotate_img_obj,
 )
 
@@ -31,17 +29,17 @@ for sub_dir in alive_it(sub_dirs):
     # logging.basicConfig(level=logging.INFO)
     cylinder_mask_path = op.join(sub_dir, "cylinder_ROI.nii.gz")
     cylinder_mask_plus_plug = op.join(sub_dir, "cylinder_plus_plug_ROI.nii.gz")
-    final_mask_path = op.join(sub_dir, "finalmask.nii.gz")
+    finalmask_path = op.join(sub_dir, "finalmask.nii.gz")
+    layers_path = op.join(sub_dir, "layers_binarized.nii.gz")
 
     sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
 
-    if not op.exists(final_mask_path):
+    if not op.exists(finalmask_path):
         continue
     # if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
     #    continue
 
-    nifti = nib.load(final_mask_path)
-
+    nifti, finalmaks_img = load_nifti(finalmask_path)
     mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
     n_coords = mricoords.shape[0]
@@ -50,13 +48,17 @@ for sub_dir in alive_it(sub_dirs):
 
     if not n_coords == 24:
         logging.warning(
-            f"{sub} has {mricoords.shape[0]} electrode coordinates "
-            + f"in {ses}, {run}. Expected 24.\n"
-            + "Will skip subject. \n"
+            "%s has %d electrode coordinates "
+            + "in %s, %s. Expected 24.\n"
+            + "Will skip subject.\n",
+            sub,
+            n_coords,
+            ses,
+            run,
         )
         continue
 
-    logging.info(f"Creating cylinder ROI for {sub}, {ses}, {run}")
+    logging.info("Creating cylinder ROI for %s, %s, %s", sub, ses, run)
 
     mid = centroid(mricoords, n_electrodes)
 
@@ -72,15 +74,19 @@ for sub_dir in alive_it(sub_dirs):
     ]
     point_on_plane = mricoords[first_non_centre_ind]
 
-    for normal_vector in range(0, len(normal_components)):
-        x = normal_components[normal_vector][0]
-        y = normal_components[normal_vector][1]
-        z = normal_components[normal_vector][2]
+    # check normal comp direction
 
-        if np.sum(np.array([x, y, z])) < 0:
-            normal_components[normal_vector] = (
-                normal_components[normal_vector] * -1
-            )
+    mask_coordinates = np.vstack(np.where(finalmaks_img)).T
+    for idx, (normal_vector, centre) in enumerate(
+        zip(normal_components, centres)
+    ):
+        scaled_normal = normal_vector / np.linalg.norm(normal_vector)
+
+        normal_direction = np.round(centre + scaled_normal)
+
+        if normal_direction not in mask_coordinates:
+            continue
+        normal_components[idx] = normal_vector * -1
 
     height = 4
     radius = 12
