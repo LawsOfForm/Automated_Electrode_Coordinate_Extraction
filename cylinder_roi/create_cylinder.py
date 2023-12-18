@@ -77,7 +77,6 @@ for sub_dir in alive_it(sub_dirs):
         get_normal_component(mricoords[i : i + (coords_per_electrode - 1)])
         for i in (first_non_centre_ind)
     ]
-    point_on_plane = mricoords[first_non_centre_ind]
 
     # check normal comp direction
 
