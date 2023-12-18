@@ -35,8 +35,8 @@ for sub_dir in alive_it(sub_dirs):
 
     report = op.join(report_dir, f"{sub}_{ses}_{run}.png")
 
-    if op.exists(report):
-        continue
+    # if op.exists(report):
+    #     continue
 
     _, ax = plt.subplots(len(masks), 3, figsize=(12, 12))
     for i, mask in enumerate(masks):

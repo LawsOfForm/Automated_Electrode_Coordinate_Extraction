@@ -44,7 +44,7 @@ for sub_dir in alive_it(sub_dirs):
 
     n_coords = mricoords.shape[0]
     n_electrodes = 4
-    coords_per_electrode = n_coords / n_electrodes
+    coords_per_electrode = int(n_coords / n_electrodes)
 
     if not n_coords == 24:
         logging.warning(
@@ -69,7 +69,7 @@ for sub_dir in alive_it(sub_dirs):
 
     first_non_centre_ind = centres_ind + 1
     normal_components = [
-        get_normal_component(mricoords[i : i + 5])
+        get_normal_component(mricoords[i : i + (coords_per_electrode - 1)])
         for i in (first_non_centre_ind)
     ]
     point_on_plane = mricoords[first_non_centre_ind]
@@ -80,7 +80,7 @@ for sub_dir in alive_it(sub_dirs):
     for idx, (normal_vector, centre) in enumerate(
         zip(normal_components, centres)
     ):
-        scaled_normal = normal_vector / np.linalg.norm(normal_vector)
+        scaled_normal = (normal_vector / np.linalg.norm(normal_vector)) * 10
 
         normal_direction = np.round(centre + scaled_normal)
 
