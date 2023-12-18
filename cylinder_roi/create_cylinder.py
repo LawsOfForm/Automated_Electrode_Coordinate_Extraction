@@ -24,6 +24,12 @@ if sub_dirs is None:
 # Use this filter if you want to have only one subject with specific session and run
 # sub_dirs = [sub_dir for sub_dir in sub_dirs if "010" in sub_dir if 'ses-2' in sub_dir if 'run-01' in sub_dir]
 
+ELECTRODE_HEIGHT = 4
+ELECTRODE_RADIUS = 12
+plug_height = ELECTRODE_HEIGHT + 10
+plug_radius = ELECTRODE_RADIUS / 2
+
+N_ELECTRODES = 4
 
 for sub_dir in alive_it(sub_dirs):
     # logging.basicConfig(level=logging.INFO)
@@ -43,8 +49,7 @@ for sub_dir in alive_it(sub_dirs):
     mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
     n_coords = mricoords.shape[0]
-    n_electrodes = 4
-    coords_per_electrode = int(n_coords / n_electrodes)
+    coords_per_electrode = int(n_coords / N_ELECTRODES)
 
     if not n_coords == 24:
         logging.warning(
@@ -60,7 +65,7 @@ for sub_dir in alive_it(sub_dirs):
 
     logging.info("Creating cylinder ROI for %s, %s, %s", sub, ses, run)
 
-    mid = centroid(mricoords, n_electrodes)
+    mid = centroid(mricoords, N_ELECTRODES)
 
     np.savetxt(op.join(sub_dir, "mid.txt"), mid, delimiter=",", fmt="%i")
 
@@ -88,10 +93,10 @@ for sub_dir in alive_it(sub_dirs):
             continue
         normal_components[idx] = normal_vector * -1
 
-    height = 4
-    radius = 12
     empty_img = np.zeros(nifti.shape)
-    cylinder_masks = [cylinder(nifti, c, radius, height) for c in centres]
+    cylinder_masks = [
+        cylinder(nifti, c, ELECTRODE_RADIUS, ELECTRODE_HEIGHT) for c in centres
+    ]
 
     rotation_matrices = [
         get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
@@ -119,9 +124,6 @@ for sub_dir in alive_it(sub_dirs):
     save_nifti(img=rotated_cylinder, path=cylinder_mask_path, ref=nifti)
 
     # add plug
-
-    plug_height = height + 10
-    plug_radius = radius / 2
 
     plug_masks = [
         cylinder(nifti, c, plug_radius, plug_height) for c in centres
