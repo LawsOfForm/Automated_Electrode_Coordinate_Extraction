@@ -84,7 +84,7 @@ for sub_dir in alive_it(sub_dirs):
 
         normal_direction = np.round(centre + scaled_normal)
 
-        if normal_direction not in mask_coordinates:
+        if not any(np.equal(mask_coordinates, normal_direction).all(1)):
             continue
         normal_components[idx] = normal_vector * -1
 
