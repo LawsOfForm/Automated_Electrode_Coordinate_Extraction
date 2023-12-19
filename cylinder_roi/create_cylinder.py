@@ -77,7 +77,9 @@ for sub_dir in alive_it(sub_dirs):
     # check normal comp direction
 
     mask_coordinates = np.vstack(np.where(finalmaks_img)).T
-    for idx, (normal_vector, centre) in enumerate(zip(normal_components, centres)):
+    for idx, (normal_vector, centre) in enumerate(
+        zip(normal_components, centres)
+    ):
         scaled_normal = (normal_vector / np.linalg.norm(normal_vector)) * 10
 
         normal_direction = np.round(centre + scaled_normal)
@@ -86,7 +88,6 @@ for sub_dir in alive_it(sub_dirs):
             continue
         normal_components[idx] = normal_vector * -1
 
-    empty_img = np.zeros(nifti.shape)
     cylinder_masks = [
         cylinder(nifti, c, ELECTRODE_RADIUS, ELECTRODE_HEIGHT) for c in centres
     ]
@@ -104,7 +105,7 @@ for sub_dir in alive_it(sub_dirs):
         ]
     )
 
-    emtpy_img = np.zeros((nifti.shape))
+    empty_img = np.zeros(nifti.shape)
 
     rotated_cylinder = img_insert_value_at_ind(
         img=empty_img,
@@ -118,7 +119,9 @@ for sub_dir in alive_it(sub_dirs):
 
     # add plug
 
-    plug_masks = [cylinder(nifti, c, plug_radius, plug_height) for c in centres]
+    plug_masks = [
+        cylinder(nifti, c, plug_radius, plug_height) for c in centres
+    ]
 
     rotated_plugs_inds = np.vstack(
         [
@@ -137,4 +140,6 @@ for sub_dir in alive_it(sub_dirs):
 
     rotated_cyl_plus_plugs = fill_holes(rotated_cyl_plus_plugs)
 
-    save_nifti(img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti)
+    save_nifti(
+        img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti
+    )
