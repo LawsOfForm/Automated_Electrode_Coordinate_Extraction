@@ -93,12 +93,15 @@ def centroid(vertexes, n_electrodes):
 
 def centroid_(vertexes, n_electrodes):
     """
-    Calculate the centroid of a set of vertexes.
+    Calculate the centroid of a set of vertexes. The vertexes are assumed to be
+    ordered in the following way: vertexes for electrode 1, vertexes for
+    electrode 2, ..., vertexes for electrode n.
 
     Parameters
     ----------
     vertexes : np.ndarray
-        The vertexes.
+        The vertexes. Shape: (n_electrodes * number of verteces per electrodes, 3)
+        last dimension: x, y, z.
     n_electrodes : int
         The number of electrodes.
 
