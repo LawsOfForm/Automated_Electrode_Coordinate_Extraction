@@ -65,25 +65,19 @@ for sub_dir in alive_it(sub_dirs):
 
     logging.info("Creating cylinder ROI for %s, %s, %s", sub, ses, run)
 
-    mid = centroid(mricoords, N_ELECTRODES)
+    centres = centroid(mricoords, N_ELECTRODES)
 
-    np.savetxt(op.join(sub_dir, "mid.txt"), mid, delimiter=",", fmt="%i")
+    np.savetxt(op.join(sub_dir, "mid.txt"), centres, delimiter=",", fmt="%i")
 
-    centres_ind = np.arange(0, n_coords, coords_per_electrode, dtype="int8")
-    centres = mid
-
-    first_non_centre_ind = centres_ind + 1
     normal_components = [
-        get_normal_component(mricoords[i : i + (coords_per_electrode - 1)])
-        for i in (first_non_centre_ind)
+        get_normal_component(mricoords[i : i + coords_per_electrode])
+        for i in (np.arange(0, n_coords, coords_per_electrode))
     ]
 
     # check normal comp direction
 
     mask_coordinates = np.vstack(np.where(finalmaks_img)).T
-    for idx, (normal_vector, centre) in enumerate(
-        zip(normal_components, centres)
-    ):
+    for idx, (normal_vector, centre) in enumerate(zip(normal_components, centres)):
         scaled_normal = (normal_vector / np.linalg.norm(normal_vector)) * 10
 
         normal_direction = np.round(centre + scaled_normal)
@@ -124,9 +118,7 @@ for sub_dir in alive_it(sub_dirs):
 
     # add plug
 
-    plug_masks = [
-        cylinder(nifti, c, plug_radius, plug_height) for c in centres
-    ]
+    plug_masks = [cylinder(nifti, c, plug_radius, plug_height) for c in centres]
 
     rotated_plugs_inds = np.vstack(
         [
@@ -145,6 +137,4 @@ for sub_dir in alive_it(sub_dirs):
 
     rotated_cyl_plus_plugs = fill_holes(rotated_cyl_plus_plugs)
 
-    save_nifti(
-        img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti
-    )
+    save_nifti(img=rotated_cyl_plus_plugs, path=cylinder_mask_plus_plug, ref=nifti)
