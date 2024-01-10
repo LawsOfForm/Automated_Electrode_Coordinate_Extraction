@@ -24,6 +24,12 @@ if sub_dirs is None:
 # Use this filter if you want to have only one subject with specific session and run
 # sub_dirs = [sub_dir for sub_dir in sub_dirs if "010" in sub_dir if 'ses-2' in sub_dir if 'run-01' in sub_dir]
 
+ELECTRODE_HEIGHT = 4
+ELECTRODE_RADIUS = 12
+plug_height = ELECTRODE_HEIGHT + 10
+plug_radius = ELECTRODE_RADIUS / 2
+
+N_ELECTRODES = 4
 
 for sub_dir in alive_it(sub_dirs):
     # logging.basicConfig(level=logging.INFO)
@@ -43,8 +49,7 @@ for sub_dir in alive_it(sub_dirs):
     mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))
 
     n_coords = mricoords.shape[0]
-    n_electrodes = 4
-    coords_per_electrode = n_coords / n_electrodes
+    coords_per_electrode = int(n_coords / N_ELECTRODES)
 
     if not n_coords == 24:
         logging.warning(
@@ -60,19 +65,14 @@ for sub_dir in alive_it(sub_dirs):
 
     logging.info("Creating cylinder ROI for %s, %s, %s", sub, ses, run)
 
-    mid = centroid(mricoords, n_electrodes)
+    centres = centroid(mricoords, N_ELECTRODES)
 
-    np.savetxt(op.join(sub_dir, "mid.txt"), mid, delimiter=",", fmt="%i")
+    np.savetxt(op.join(sub_dir, "mid.txt"), centres, delimiter=",", fmt="%i")
 
-    centres_ind = np.arange(0, n_coords, coords_per_electrode, dtype="int8")
-    centres = mid
-
-    first_non_centre_ind = centres_ind + 1
     normal_components = [
-        get_normal_component(mricoords[i : i + 5])
-        for i in (first_non_centre_ind)
+        get_normal_component(mricoords[i : i + coords_per_electrode])
+        for i in (np.arange(0, n_coords, coords_per_electrode))
     ]
-    point_on_plane = mricoords[first_non_centre_ind]
 
     # check normal comp direction
 
@@ -80,18 +80,17 @@ for sub_dir in alive_it(sub_dirs):
     for idx, (normal_vector, centre) in enumerate(
         zip(normal_components, centres)
     ):
-        scaled_normal = normal_vector / np.linalg.norm(normal_vector)
+        scaled_normal = (normal_vector / np.linalg.norm(normal_vector)) * 10
 
         normal_direction = np.round(centre + scaled_normal)
 
-        if normal_direction not in mask_coordinates:
+        if not any(np.equal(mask_coordinates, normal_direction).all(1)):
             continue
         normal_components[idx] = normal_vector * -1
 
-    height = 4
-    radius = 12
-    empty_img = np.zeros(nifti.shape)
-    cylinder_masks = [cylinder(nifti, c, radius, height) for c in centres]
+    cylinder_masks = [
+        cylinder(nifti, c, ELECTRODE_RADIUS, ELECTRODE_HEIGHT) for c in centres
+    ]
 
     rotation_matrices = [
         get_rotation_matrix(np.array([0, 0, 1]), n) for n in normal_components
@@ -106,7 +105,7 @@ for sub_dir in alive_it(sub_dirs):
         ]
     )
 
-    emtpy_img = np.zeros((nifti.shape))
+    empty_img = np.zeros(nifti.shape)
 
     rotated_cylinder = img_insert_value_at_ind(
         img=empty_img,
@@ -119,9 +118,6 @@ for sub_dir in alive_it(sub_dirs):
     save_nifti(img=rotated_cylinder, path=cylinder_mask_path, ref=nifti)
 
     # add plug
-
-    plug_height = height + 10
-    plug_radius = radius / 2
 
     plug_masks = [
         cylinder(nifti, c, plug_radius, plug_height) for c in centres

@@ -7,9 +7,11 @@ import nibabel as nib
 import numpy as np
 import torch
 import torchvision.transforms.v2 as tfms
+from torchvision.tv_tensors import Mask
 from skimage.exposure import rescale_intensity
 from skimage.transform import resize
 from torch.utils.data import Dataset
+
 
 
 class GreyToRGB(object):
@@ -166,7 +168,7 @@ class DataloaderImg(Dataset):
 
     def __init__(
         self,
-        root_dir: str,
+        root_dir: str | None = None,
         custom_transforms: list[object]
         | None = None,
         transforms: list[object] | None=None,
@@ -189,7 +191,7 @@ class DataloaderImg(Dataset):
             "run-*",
         )
         self.subject_pattern
-        volume = glob(op.join(self.subject_pattern, "petra_.nii.gz"))
+        volume = glob(op.join(self.subject_pattern, "petra_cut_pads.nii.gz"))
         volume.sort()
         masks = [op.join(op.dirname(i), "cylinder_plus_plug_ROI.nii.gz")  for i in volume]
         self.mask = [m for m in masks if op.exists(m)]  # TODO: change file name
@@ -256,7 +258,7 @@ class DataloaderImg(Dataset):
         image_tensor = torch.from_numpy(
             volume
         )  # might be torch.squeeze(torch.from_numpy(volume, 0))
-        mask_tensor = torch.from_numpy(mask)
+        mask_tensor = Mask(torch.from_numpy(mask))
         
         if self.transforms is not None:
             image_tensor, mask_tensor = self.transforms(image_tensor, mask_tensor)

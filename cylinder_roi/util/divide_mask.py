@@ -2,7 +2,6 @@ import logging
 from itertools import product
 
 import numpy as np
-from tqdm import tqdm
 from util.io import load_nifti, save_nifti
 
 
@@ -130,10 +129,10 @@ def slow_divide_mask(mask_to_div, max_element_size: int):
     mask_idx = np.vstack(np.where(mask_to_div == 1)).T
 
     dist = np.zeros(len(mask_idx) ** 2)
-    print("Calculating distance between all points...")
-    for idx, (coord1, coord2) in tqdm(
-        enumerate(product(mask_idx, mask_idx)), total=len(mask_idx) ** 2
-    ):
+    print(
+        "Calculating distance between all points...\nThis will take some time."
+    )
+    for idx, (coord1, coord2) in enumerate(product(mask_idx, mask_idx)):
         dist[idx] = np.linalg.norm(coord1 - coord2)
 
     distr = dist.reshape(len(mask_idx), len(mask_idx))
