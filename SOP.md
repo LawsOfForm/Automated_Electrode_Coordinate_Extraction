@@ -1,18 +1,19 @@
 # Electrode extraction by hand: "Pancake Method"
 
 ## Tabel of Contents
+
 1. [Matlab](#matlab)
-2. [Python](#python)</br>
+2. [Python](#python)
     2.1. [Adjustments](#adjustments)
 
-## Matlab 
+## Matlab
 
 1. open Matlab 2019 </br>
-    ... by typing `matlab_2019` into the terminal 
-    
-    or 
-    
-    ... by using matlab icon in the application launcher: 
+    ... by typing `matlab_2019` into the terminal
+
+    or
+
+    ... by using matlab icon in the application launcher:
 
     1. open the application launcher:
 
@@ -22,7 +23,7 @@
 
         ![Matlab 2019a Icon](./sop/images/matlab2019a.png)
 
-    The scripts will only work with Matlab 2019 and not with other Matlab versions installed on this machine. If you are not sure which version is open just type `version` in the Command Window (pink box in the image below) and press `Enter` 
+    The scripts will only work with Matlab 2019 and not with other Matlab versions installed on this machine. If you are not sure which version is open just type `version` in the Command Window (pink box in the image below) and press `Enter`
 
 2. When matlab is open select the correct path to your working directory. I.e., the path to your Thesis directory (either [/media/Data03/Thesis/Dabelstein/code/electrode_extraction_by_hand](/media/Data03/Thesis/Dabelstein/code/electrode_extraction_by_hand) or [/media/Data03/Thesis/Hering/code/electrode_extraction_by_hand](/media/Data03/Thesis/Hering/code/electrode_extraction_by_hand)). This path should shown in the matlab window (red box image below)
 
@@ -37,6 +38,7 @@
     session = 1; % and here
     run = 1; % and here
     ```
+
     These are the only lines you have to adjust.
 
 5. Run the script by pressing **Run** (green box) or pressing `F5`. This will run the script and after a pancake view of a structural brain scan will pop-up. Here every electrode is extracted with 6 points near the rim of the electrode. Be careful to place the points on the electrode, as the placement of the electrode otherwise will be off. The first electrode you mark has always to be the anode, i.e., the electrode in the middle of the montage. The other electrodes do not have to be extracted in a specific order. </br> </br> If you missplace any point, just close the window and run the script again. This will also delete all previously made markings. When you marked all electrodes just close the window with the pancake view. The script will continue to run and output some coordinates in the command window (pink box).
@@ -124,7 +126,6 @@ The main reason to run these commands is to get the centre of the extracted elec
 
     This script will also create a textfile called `mid.txt`. This textfile centres of the electrodes in the format (electrodes x dimensions) (rows x columns), i.e., the first row contains the x,y,z coordinate of the first electrode. The coordinate dimensions are separated by commas, thus this format is called comma separated values (csv).
 
-
 4. After this command, run the `mask_separation.py` script. This should create a single nifti image for every electrode extracted. However, this script will take some time to run:
 
     ```bash
@@ -144,6 +145,8 @@ The main reason to run these commands is to get the centre of the extracted elec
 Some adjustments can be made to make the python scripts run faster
 
 #### `create_cylinder.py`
+
+Python code can be commented with `#` at the start of the line. Commented code is not executed and normally this is used to write explanations for the code.
 
 The script `create_cylinder.py` can be adjusted to only run if the electrodes are newly extracted by opening the script with a text editor and delete the `#` signs in front of these lines:
 
@@ -165,8 +168,36 @@ This checks in the output directory `cylinder_ROI.nii.gz` and `cylinder_plus_plu
 
 #### `mask_separation.py`
 
-TODO
+`mask_separation.py` has a similar code section that is commented out, i.e., a section that checks if the product of the script is already present and does not rerun the code if it is. You can activate this feature by removing the `#` at the following lines:
+
+before:
+
+```python
+# if glob(op.join(sub_dir, "*mask_*.nii.gz")):
+#     continue
+```
+
+after:
+
+```python
+if glob(op.join(sub_dir, "*mask_*.nii.gz")):
+    continue
+```
 
 #### `report.py`
 
-TODO
+The same goes for the `report.py` script.
+
+before:
+
+```python
+# if op.isfile(report):
+#     continue
+```
+
+after:
+
+```python
+if op.isfile(report):
+    continue
+```
