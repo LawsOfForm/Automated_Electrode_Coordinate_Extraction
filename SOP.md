@@ -65,7 +65,7 @@
    The script will continue to run and output some coordinates in the command
    window (pink box).
 
-   ![pancake view](/media/MeinzerShare/05_Zwischenablage/pancake_view.png)
+   ![pancake view](/media/MeinzerShare/05_Zwischenablagen/pancake_view.png)
 
 6. Control the outputs of the script in the derivatives directory (either
    [/media/Data03/Thesis/Dabelstein/derivatives/automated_electrode_extraction](/media/Data03/Thesis/Dabelstein/derivatives/automated_electrode_extraction)
