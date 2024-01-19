@@ -50,16 +50,16 @@
 
    These are the only lines you have to adjust.
 
-5. Run the script by pressing `Run` (green box) or pressing `F5`. This will run
-   the script and after a while the pancake view of a structural brain scan will
-   pop-up. Here every electrode is extracted with 6 points near the rim of the
+5. Run the script by pressing `Run` (green box) or `F5`. This will run
+   the script and after a while, the pancake view of a structural brain scan will
+   pop up. Here every electrode is extracted with 6 points near the rim of the
    electrode. Be careful to place the points as close to the rim of the
    electrode as possible, but still **on** the electrode not beside the
    electrode, as the computation of the electrode centre otherwise will be
    imprecise. The first electrode you mark has always to be the anode, i.e., the
    electrode in the middle of the montage. The other electrodes do not have to
-   be extracted in a specific order. </br> </br> If you missplace any point,
-   just close the window and run the script again. This will also delete all
+   be extracted in a specific order. </br> </br> If you misplace any point,
+   close the window and rerun the script. This will also delete all
    previously made markings. When you marked all electrodes (i.e., made 6
    markings on all 4 electrodes) just close the window with the pancake view.
    The script will continue to run and output some coordinates in the command
@@ -71,7 +71,7 @@
    [/media/Data03/Thesis/Dabelstein/derivatives/automated_electrode_extraction](/media/Data03/Thesis/Dabelstein/derivatives/automated_electrode_extraction)
    or
    [/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction](/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction))
-   </br></br> According to the subject info you provided to the matlab script
+   </br></br> According to the subject info you provided the Matlab script
    directories are created with the subject-id, session, and run. The bottom
    directory should be populated with the files shown below in the file tree
    (i.e., 30 mricoords files, finalmask.nii.gz, handextracted_electrode_pos.csv,
@@ -137,7 +137,7 @@ sub-010/
 
 ## Python
 
-The python scripts in the cylinder-roi directory (either
+The Python scripts in the cylinder-roi directory (either
 [/media/Data03/Thesis/Dabelstein/code/cylinder_roi](/media/Data03/Thesis/Dabelstein/code/cylinder_roi)
 or
 [/media/Data03/Thesis/Hering/code/cylinder_roi](/media/Data03/Thesis/Hering/code/cylinder_roi))
@@ -146,10 +146,10 @@ allow you to check how precise your electrode placement was.
 The main reason to run these commands is to get the centre of the extracted
 electrode and to get a visual report to control the electrode placement.
 
-1. Open a terminal in the cylinder-roi directory (right click anywhere in the
+1. Open a terminal in the cylinder-roi directory (right-click anywhere in the
    directory and select `Open in terminal`)
 
-2. The packages to run the python scripts are installed into a virtual
+2. The packages to run the Python scripts are installed into a virtual
    environment. If this environment is not active, the scripts will throw a
    "ModuleNotFound" error. Activate the virtual environment by typing the
    following command in the terminal and execute the command by pressing
@@ -168,12 +168,12 @@ electrode and to get a visual report to control the electrode placement.
    python create_cylinder.py
    ```
 
-   This script will also create a textfile called `mid.txt`. This textfile
+   This script will also create a text file called `mid.txt`. This textfile
    centres of the electrodes in the format (electrodes x dimensions), i.e., the
-   first row contains the x,y,z coordinate of the first electrode, the second
+   first row contains the x,y,z coordinates of the first electrode, the second
    row contains the x,y,z coordinates of the second electrode and so on. The
    coordinate dimensions are separated by commas, thus this file format is
-   called comma separated values (csv).
+   called comma-separated values (CSV).
 
 4. After this command, run the `mask_separation.py` script. This should create a
    single nifti image for every electrode extracted. Depending on how hard it is
@@ -195,11 +195,11 @@ electrode and to get a visual report to control the electrode placement.
    or
    [/media/Data03/Thesis/Hering/code/cylinder_roi](/media/Data03/Thesis/Hering/code/cylinder_roi)).
    The script will create an image for every processed subject with the naming
-   scheme `sub-<id>_ses-<num>_run-<num>.png`. This image shows the subjects
+   scheme `sub-<id>_ses-<num>_run-<num>.png`. This image shows the subject's
    structural image overlayed with the segmented electrodes created by the
-   `mask_separation.py` script. This allows to check the precision of the
+   `mask_separation.py` script. This allows us to check the precision of the
    electrode extraction, i.e., if the electrode, which can be seen in the
-   structural image, is enclosed by extracted electrode and if the real and the
+   structural image, is enclosed by an extracted electrode and if the real and the
    extracted electrode have similar tilt.
 
    Run this step to control if your electrode extraction with the Matlab script
@@ -208,8 +208,8 @@ electrode and to get a visual report to control the electrode placement.
 
 ### Adjustments
 
-Some adjustments can be made to make the python scripts run faster. To make
-these adjustments in the scripts, just open the script file by double clicking
+Some adjustments can be made to make the Python scripts run faster. To make
+these adjustments in the scripts, just open the script file by double-clicking
 it and change the parts described below.
 
 #### `create_cylinder.py`
@@ -218,7 +218,7 @@ Python code can be commented with `#` at the start of the line. Commented code
 is not executed and normally this is used to write explanations for the code.
 
 The script `create_cylinder.py` can be adjusted to only run if the electrodes
-are newly extracted by opening the script with a text editor and delete the `#`
+are newly extracted by opening the script with a text editor and deleting the `#`
 signs in front of these lines:
 
 before:
@@ -237,7 +237,7 @@ if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
 
 This checks in the output directory `cylinder_ROI.nii.gz` and
 `cylinder_plus_plug_ROI.nii.gz` exists. The script is not run for subjects, if
-these files exists. This will make the execution of the script much faster.
+these files exist. This will make the execution of the script much faster.
 
 #### `mask_separation.py`
 
