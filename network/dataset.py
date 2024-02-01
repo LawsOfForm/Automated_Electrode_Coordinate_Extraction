@@ -7,11 +7,10 @@ import nibabel as nib
 import numpy as np
 import torch
 import torchvision.transforms.v2 as tfms
-from torchvision.tv_tensors import Mask
 from skimage.exposure import rescale_intensity
 from skimage.transform import resize
 from torch.utils.data import Dataset
-
+from torchvision.tv_tensors import Mask
 
 
 class GreyToRGB(object):
@@ -109,7 +108,6 @@ class NormalizeVolume(object):
         volume = (volume - m) / s
         return volume, mask
 
-    
 
 class DataloaderImg(Dataset):
     """
@@ -143,7 +141,7 @@ class DataloaderImg(Dataset):
         List of transforms to apply to the data, by default
         [CropSample(), PadSample(), ResizeSample(), NormalizeVolume()]
     transforms: list[object], optional
-        List of transforms (standard torchvision.transforms) 
+        List of transforms (standard torchvision.transforms)
         to apply to the data, by default
         None
     subset : str, optional
@@ -168,21 +166,34 @@ class DataloaderImg(Dataset):
 
     def __init__(
         self,
-        root_dir: str | None = None,
-        custom_transforms: list[object]
-        | None = None,
-        transforms: list[object] | None=None,
+        root_dir: str,
+        volume_suffix: str = "petra_cut_pads.nii.gz",
+        mask_suffix: str = "cylinder_plus_plug_ROI.nii.gz",
+        custom_transforms: list[object] | None = None,
+        transforms: list[object] | None = None,
         subset: str = "train",
-        random_sampling: bool = True,
+        weighted_sampling: bool = True,
+        all_slices: bool = False,
         validation_cases: int = 10,
         seed: int = 42,
     ):
         if subset not in ["train", "validation", "all"]:
             raise ValueError("subset must be one of train, validation, or all")
 
+        if weighted_sampling == all_slices:
+            raise ValueError(
+                "weighted_sampling and all_slices cannot be both True"
+            )
+
         self.root_dir = root_dir
-        self.custom_transforms = tfms.Compose(custom_transforms) if custom_transforms is not None else None
-        self.transforms = tfms.Compose(transforms) if transforms is not None else None
+        self.custom_transforms = (
+            tfms.Compose(custom_transforms)
+            if custom_transforms is not None
+            else None
+        )
+        self.transforms = (
+            tfms.Compose(transforms) if transforms is not None else None
+        )
         self.subject_pattern = op.join(
             self.root_dir,
             "sub-*",
@@ -190,42 +201,73 @@ class DataloaderImg(Dataset):
             "ses-*",
             "run-*",
         )
-        self.subject_pattern
-        volume = glob(op.join(self.subject_pattern, "petra_cut_pads.nii.gz"))
+        volume = glob(op.join(self.subject_pattern, volume_suffix))
         volume.sort()
-        masks = [op.join(op.dirname(i), "cylinder_plus_plug_ROI.nii.gz")  for i in volume]
-        self.mask = [m for m in masks if op.exists(m)]  # TODO: change file name
-        self.volume = [v for v,m in zip(volume, masks) if op.exists(m)]
-        
+        masks = [op.join(op.dirname(i), mask_suffix) for i in volume]
+        self.mask = [m for m in masks if op.exists(m)]
+        self.volume = [v for v, m in zip(volume, masks) if op.exists(m)]
+
         if len(self.volume) != len(self.mask):
             raise ValueError("Number of volumes and masks must be the same")
-      
-        if not subset == "all":
+
+        if subset != "all":
             np.random.seed(seed)
-            subset_idx = np.random.choice(np.arange(len(self.volume)), size=validation_cases, replace=False)
-            validation_volumes = [i for idx, i in enumerate(self.volume) if idx in subset_idx]
-            validation_masks = [i for idx, i in enumerate(self.mask) if idx in subset_idx]
-            # TODO: also sample masks
+            subset_idx = np.random.choice(
+                np.arange(len(self.volume)),
+                size=validation_cases,
+                replace=False,
+            )
+            validation_volumes = [
+                i for idx, i in enumerate(self.volume) if idx in subset_idx
+            ]
+            validation_masks = [
+                i for idx, i in enumerate(self.mask) if idx in subset_idx
+            ]
             if subset == "validation":
                 self.volume = validation_volumes
                 self.mask = validation_masks
             else:
-                self.volume = [i for i in self.volume if i not in validation_volumes] 
-                self.mask = [i for i in self.mask if i not in validation_masks] 
-        
-        self.sub_ses_run_idx = [
+                self.volume = [
+                    i for i in self.volume if i not in validation_volumes
+                ]
+                self.mask = [i for i in self.mask if i not in validation_masks]
+
+        self.subset = subset
+
+        self.weighted_sampling = weighted_sampling
+        self.all_slices = all_slices
+
+        sub_ses_run_idx = [
             "_".join(re.findall(r"(sub-[0-9]+|ses-[0-9]|run-[0-9]+)", x))
             for x in self.volume
         ]
+        self.sub_ses_run_idx = sub_ses_run_idx
+        n_slices = nib.load(self.volume[0]).shape[2]
+        self.n_slices = n_slices
+        self.sub_ses_run_slice_idx = [
+            "_".join([i, str(j)])
+            for i in self.sub_ses_run_idx
+            for j in range(n_slices)
+        ]
         
-        self.random_sampling = random_sampling
-
-        # TODO: create a sub index
+        self.val_slice = 0
 
     def __len__(self):
         return len(self.volume)
 
     def __getitem__(self, idx):
+        slice_n = None
+
+        if self.all_slices:
+            sub_ses_run_slice = self.sub_ses_run_slice_idx[idx]
+            sub_ses_run_idx, slice_n = sub_ses_run_slice.rsplit("_", 1)
+            idx = self.sub_ses_run_idx.index(sub_ses_run_idx)
+            
+        if self.subset == "validation":
+            slice_n = self.val_slice
+            self.val_slice += 1
+            
+
         volume_name = self.volume[idx]
         mask_name = self.mask[idx]
         volume = nib.load(volume_name)
@@ -237,7 +279,7 @@ class DataloaderImg(Dataset):
         if self.custom_transforms is not None:
             volume, mask = self.custom_transforms((volume, mask))
 
-        if self.random_sampling:
+        if self.weighted_sampling and not self.subset == "validation":
             slice_weights = mask.sum(axis=(1, 2))
             slice_weights = (
                 slice_weights
@@ -250,17 +292,17 @@ class DataloaderImg(Dataset):
 
         volume = volume[slice_n]
         mask = mask[slice_n]
-        
+
         volume = np.swapaxes(volume, 0, 2)
         mask = mask[..., np.newaxis]
         mask = np.swapaxes(mask, 0, 2)
 
-        image_tensor = torch.from_numpy(
-            volume
-        )  # might be torch.squeeze(torch.from_numpy(volume, 0))
+        image_tensor = torch.from_numpy(volume)
         mask_tensor = Mask(torch.from_numpy(mask))
-        
+
         if self.transforms is not None:
-            image_tensor, mask_tensor = self.transforms(image_tensor, mask_tensor)
+            image_tensor, mask_tensor = self.transforms(
+                image_tensor, mask_tensor
+            )
 
         return image_tensor, mask_tensor
