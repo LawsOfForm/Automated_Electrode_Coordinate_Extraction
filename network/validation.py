@@ -24,3 +24,17 @@ def main(
         # add loss to tensorboard
 
         ...
+
+
+def get_validation_loop_len(validation_dataset, bs):
+    n_slices = validation_dataset.n_slices
+    val_slice = validation_dataset.val_slice
+    n_subs = len(validation_dataset)
+
+    if n_subs % bs != 0:
+        print(
+            f"Warning: validation dataset size ({n_subs}) is not divisible by batch size ({bs})."
+            "There might be more efficient ways to handle this."
+        )
+
+    return (n_slices - val_slice) * (n_subs // bs or 1)
