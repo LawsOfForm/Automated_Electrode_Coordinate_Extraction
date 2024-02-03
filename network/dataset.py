@@ -181,19 +181,13 @@ class DataloaderImg(Dataset):
             raise ValueError("subset must be one of train, validation, or all")
 
         if weighted_sampling == all_slices:
-            raise ValueError(
-                "weighted_sampling and all_slices cannot be both True"
-            )
+            raise ValueError("weighted_sampling and all_slices cannot be both True")
 
         self.root_dir = root_dir
         self.custom_transforms = (
-            tfms.Compose(custom_transforms)
-            if custom_transforms is not None
-            else None
+            tfms.Compose(custom_transforms) if custom_transforms is not None else None
         )
-        self.transforms = (
-            tfms.Compose(transforms) if transforms is not None else None
-        )
+        self.transforms = tfms.Compose(transforms) if transforms is not None else None
         self.subject_pattern = op.join(
             self.root_dir,
             "sub-*",
@@ -227,9 +221,7 @@ class DataloaderImg(Dataset):
                 self.volume = validation_volumes
                 self.mask = validation_masks
             else:
-                self.volume = [
-                    i for i in self.volume if i not in validation_volumes
-                ]
+                self.volume = [i for i in self.volume if i not in validation_volumes]
                 self.mask = [i for i in self.mask if i not in validation_masks]
 
         self.subset = subset
@@ -242,14 +234,12 @@ class DataloaderImg(Dataset):
             for x in self.volume
         ]
         self.sub_ses_run_idx = sub_ses_run_idx
-        n_slices = nib.load(self.volume[0]).shape[2]
+        n_slices = nib.load(self.volume[0]).shape[0]
         self.n_slices = n_slices
         self.sub_ses_run_slice_idx = [
-            "_".join([i, str(j)])
-            for i in self.sub_ses_run_idx
-            for j in range(n_slices)
+            "_".join([i, str(j)]) for i in self.sub_ses_run_idx for j in range(n_slices)
         ]
-        
+
         self.val_slice = 0
 
     def __len__(self):
@@ -262,11 +252,9 @@ class DataloaderImg(Dataset):
             sub_ses_run_slice = self.sub_ses_run_slice_idx[idx]
             sub_ses_run_idx, slice_n = sub_ses_run_slice.rsplit("_", 1)
             idx = self.sub_ses_run_idx.index(sub_ses_run_idx)
-            
+
         if self.subset == "validation":
             slice_n = self.val_slice
-            self.val_slice += 1
-            
 
         volume_name = self.volume[idx]
         mask_name = self.mask[idx]
@@ -282,13 +270,10 @@ class DataloaderImg(Dataset):
         if self.weighted_sampling and not self.subset == "validation":
             slice_weights = mask.sum(axis=(1, 2))
             slice_weights = (
-                slice_weights
-                + (slice_weights.sum() * 0.1 / len(slice_weights))
+                slice_weights + (slice_weights.sum() * 0.1 / len(slice_weights))
             ) / (slice_weights.sum() * 1.1)
 
-            slice_n = np.random.choice(
-                np.arange(len(slice_weights)), p=slice_weights
-            )
+            slice_n = np.random.choice(np.arange(len(slice_weights)), p=slice_weights)
 
         volume = volume[slice_n]
         mask = mask[slice_n]
@@ -301,8 +286,6 @@ class DataloaderImg(Dataset):
         mask_tensor = Mask(torch.from_numpy(mask))
 
         if self.transforms is not None:
-            image_tensor, mask_tensor = self.transforms(
-                image_tensor, mask_tensor
-            )
+            image_tensor, mask_tensor = self.transforms(image_tensor, mask_tensor)
 
         return image_tensor, mask_tensor
