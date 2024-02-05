@@ -129,14 +129,14 @@ def slow_divide_mask(mask_to_div, max_element_size: int):
     mask_idx = np.vstack(np.where(mask_to_div == 1)).T
 
     # dist = np.zeros(len(mask_idx) ** 2)
-    # print(
-    #   "Calculating distance between all points...\n"
-    #   "This will take some time."
-    # )
+    print(
+        "Calculating distance between all points...\n"
+        "This will take some time."
+    )
     # for idx, (coord1, coord2) in enumerate(product(mask_idx, mask_idx)):
     #     dist[idx] = np.linalg.norm(coord1 - coord2)
 
-    dist_mat_idx = np.vstack(np.triu_indices(mask_idx, k=1)).T
+    dist_mat_idx = np.vstack(np.triu_indices(mask_idx.shape[0], k=1)).T
     dist_vec = np.linalg.norm(
         mask_idx[dist_mat_idx[:, 0]] - mask_idx[dist_mat_idx[:, 1]], axis=1
     )
