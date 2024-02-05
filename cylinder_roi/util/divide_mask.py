@@ -143,6 +143,7 @@ def slow_divide_mask(mask_to_div, max_element_size: int):
 
     distr = np.zeros((len(mask_idx), len(mask_idx)))
     distr[dist_mat_idx[:, 0], dist_mat_idx[:, 1]] = dist_vec
+    distr += distr.T
 
     def get_elms(distr, elms=None, indices=None, thresversion="max"):
         """
