@@ -137,7 +137,7 @@ class DataloaderImg(Dataset):
     ----------
     root_dir : str
         The root directory of the dataset
-    custom_transforms : list[object], optional
+    preprocessing : list[object], optional
         List of transforms to apply to the data, by default
         [CropSample(), PadSample(), ResizeSample(), NormalizeVolume()]
     transforms: list[object], optional
@@ -169,7 +169,7 @@ class DataloaderImg(Dataset):
         root_dir: str,
         volume_suffix: str = "petra_cut_pads.nii.gz",
         mask_suffix: str = "cylinder_plus_plug_ROI.nii.gz",
-        custom_transforms: list[object] | None = None,
+        preprocessing: list[object] | None = None,
         transforms: list[object] | None = None,
         subset: str = "train",
         weighted_sampling: bool = True,
@@ -177,15 +177,15 @@ class DataloaderImg(Dataset):
         validation_cases: int = 10,
         seed: int = 42,
     ):
-        if subset not in ["train", "validation", "all"]:
-            raise ValueError("subset must be one of train, validation, or all")
+        if subset not in ["train", "validation", "inference"]:
+            raise ValueError("subset must be one of train, validation, or inference")
 
         if weighted_sampling == all_slices:
             raise ValueError("weighted_sampling and all_slices cannot be both True")
 
         self.root_dir = root_dir
-        self.custom_transforms = (
-            tfms.Compose(custom_transforms) if custom_transforms is not None else None
+        self.preprocessing = (
+            tfms.Compose(preprocessing) if preprocessing is not None else None
         )
         self.transforms = tfms.Compose(transforms) if transforms is not None else None
         self.subject_pattern = op.join(
@@ -197,14 +197,18 @@ class DataloaderImg(Dataset):
         )
         volume = glob(op.join(self.subject_pattern, volume_suffix))
         volume.sort()
-        masks = [op.join(op.dirname(i), mask_suffix) for i in volume]
-        self.mask = [m for m in masks if op.exists(m)]
-        self.volume = [v for v, m in zip(volume, masks) if op.exists(m)]
+        if subset != "inference":
+            masks = [op.join(op.dirname(i), mask_suffix) for i in volume]
+            self.mask = [m for m in masks if op.exists(m)]
+            self.volume = [v for v, m in zip(volume, masks) if op.exists(m)]
+        else:
+            masks = [None] * len(volume)
+            
 
         if len(self.volume) != len(self.mask):
-            raise ValueError("Number of volumes and masks must be the same")
+            raise ValueError("Number of volumes and masks must be the same for training or validation")
 
-        if subset != "all":
+        if subset != "inference":
             np.random.seed(seed)
             subset_idx = np.random.choice(
                 np.arange(len(self.volume)),
@@ -234,8 +238,9 @@ class DataloaderImg(Dataset):
             for x in self.volume
         ]
         self.sub_ses_run_idx = sub_ses_run_idx
-        n_slices = nib.load(self.volume[0]).shape[0]
-        self.n_slices = n_slices
+        n_slices = nib.load(self.volume[0]).shape
+        self.n_slices = n_slices[0]
+        self.img_dim = n_slices[1:]
         self.sub_ses_run_slice_idx = [
             "_".join([i, str(j)]) for i in self.sub_ses_run_idx for j in range(n_slices)
         ]
@@ -253,21 +258,23 @@ class DataloaderImg(Dataset):
             sub_ses_run_idx, slice_n = sub_ses_run_slice.rsplit("_", 1)
             idx = self.sub_ses_run_idx.index(sub_ses_run_idx)
 
-        if self.subset == "validation":
+        if self.subset in ["validation", "inference"]:
             slice_n = self.val_slice
 
         volume_name = self.volume[idx]
         mask_name = self.mask[idx]
         volume = nib.load(volume_name)
         volume = np.asarray(volume.dataobj, dtype=np.float32)
+        if self.subset != "inference":
+            mask = nib.load(mask_name)
+            mask = np.asarray(mask.dataobj, dtype=np.float32)
+        else:
+            mask = np.zeros_like(volume)
 
-        mask = nib.load(mask_name)
-        mask = np.asarray(mask.dataobj, dtype=np.float32)
+        if self.preprocessing is not None:
+            volume, mask = self.preprocessing((volume, mask))
 
-        if self.custom_transforms is not None:
-            volume, mask = self.custom_transforms((volume, mask))
-
-        if self.weighted_sampling and not self.subset == "validation":
+        if self.weighted_sampling and not self.subset in ["validation", "inference"]:
             slice_weights = mask.sum(axis=(1, 2))
             slice_weights = (
                 slice_weights + (slice_weights.sum() * 0.1 / len(slice_weights))
