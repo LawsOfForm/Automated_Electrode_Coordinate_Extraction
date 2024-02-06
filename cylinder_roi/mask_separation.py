@@ -42,7 +42,7 @@ for sub_dir in alive_it(sub_dirs):
     masks = fast_divide_mask(
         mask
     )  # BUG: sometimes returnes a list of lists, fix with recursive_flatten
-    if not isinstance(masks, list)
+    if not isinstance(masks, list):
             "ROIs in mask %s are too close to be separated", sub_dir
         )
         continue
