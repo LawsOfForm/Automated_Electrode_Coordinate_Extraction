@@ -43,6 +43,7 @@ for sub_dir in alive_it(sub_dirs):
         mask
     )  # BUG: sometimes returnes a list of lists, fix with recursive_flatten
     if not isinstance(masks, list):
+        logging.warning(
             "ROIs in mask %s are too close to be separated", sub_dir
         )
         continue
@@ -54,6 +55,7 @@ for sub_dir in alive_it(sub_dirs):
             sep_mask_path = op.join(sub_dir, f"mask_{i}.nii.gz")
             save_nifti(m, sep_mask_path, mask_nifti)
             continue
+
         separate_masks = slow_divide_mask(m, MAX_ELEMENT_SIZE)
         for j, separate_mask in enumerate(separate_masks):
             sub_sep_mask_path = op.join(sub_dir, f"mask_{i}_{j}.nii.gz")
