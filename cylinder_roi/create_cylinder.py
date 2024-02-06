@@ -42,8 +42,8 @@ for sub_dir in alive_it(sub_dirs):
 
     if not op.exists(finalmask_path):
         continue
-    # if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
-    #    continue
+    if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
+        continue
 
     nifti, finalmaks_img = load_nifti(finalmask_path)
     mricoords = read_mricoords(op.join(sub_dir, "mricoords_1.mat"))

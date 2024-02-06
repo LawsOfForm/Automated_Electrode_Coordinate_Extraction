@@ -44,11 +44,14 @@ if not op.exists(report_dir):
 for sub_dir in alive_it(sub_dirs):
     sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
 
+    if sub == "sub-016" and ses == "ses-1" and run == "run-01":
+        continue
+
     report = op.join(report_dir, f"{sub}_{ses}_{run}.png")
 
-    # if op.isfile(report):
-    #     continue
-    #
+    if op.isfile(report):
+        continue
+    
     masks = glob(op.join(sub_dir, "mask_*.nii.gz"))
 
     if not masks:
