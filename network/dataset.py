@@ -203,10 +203,11 @@ class DataloaderImg(Dataset):
             self.volume = [v for v, m in zip(volume, masks) if op.exists(m)]
         else:
             masks = [None] * len(volume)
-            
 
         if len(self.volume) != len(self.mask):
-            raise ValueError("Number of volumes and masks must be the same for training or validation")
+            raise ValueError(
+                "Number of volumes and masks must be the same for training or validation"
+            )
 
         if subset != "inference":
             np.random.seed(seed)
@@ -237,12 +238,21 @@ class DataloaderImg(Dataset):
             "_".join(re.findall(r"(sub-[0-9]+|ses-[0-9]|run-[0-9]+)", x))
             for x in self.volume
         ]
+
+        if subset == "training":
+            np.savetxt(
+                f"sub_ses_run_idx_{subset}.txt",
+                sub_ses_run_idx,
+            )
+
         self.sub_ses_run_idx = sub_ses_run_idx
         n_slices = nib.load(self.volume[0]).shape
         self.n_slices = n_slices[0]
         self.img_dim = n_slices[1:]
         self.sub_ses_run_slice_idx = [
-            "_".join([i, str(j)]) for i in self.sub_ses_run_idx for j in range(n_slices)
+            "_".join([i, str(j)])
+            for i in self.sub_ses_run_idx
+            for j in range(self.n_slices)
         ]
 
         self.val_slice = 0

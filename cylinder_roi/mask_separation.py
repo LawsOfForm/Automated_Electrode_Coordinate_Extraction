@@ -26,8 +26,8 @@ for sub_dir in alive_it(sub_dirs):
     if not op.exists(cylinder_masks_path):
         continue
 
-    if glob(op.join(sub_dir, "*mask_*.nii.gz")):
-        continue
+    # if glob(op.join(sub_dir, "*mask_*.nii.gz")):
+    #     continue
 
     sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
     print(sub, ses, run)

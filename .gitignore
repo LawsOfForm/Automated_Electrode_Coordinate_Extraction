@@ -5,3 +5,4 @@ paths.py
 reports/*
 reports
 runs/
+*.txt
