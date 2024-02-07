@@ -26,77 +26,6 @@ class GreyToRGB(object):
         return ret, mask
 
 
-class CropSample(object):
-    def __call__(self, volume_mask):
-        volume, mask = volume_mask
-
-        def min_max_projection(axis: int):
-            axis = [i for i in range(3) if i != axis]
-            axis = tuple(axis)
-            projection = np.max(volume, axis=axis)
-            non_zero = np.nonzero(projection)
-            return np.min(non_zero), np.max(non_zero) + 1
-
-        z_min, z_max = min_max_projection(0)
-        y_min, y_max = min_max_projection(1)
-        x_min, x_max = min_max_projection(2)
-
-        return (
-            volume[z_min:z_max, y_min:y_max, x_min:x_max],
-            mask[z_min:z_max, y_min:y_max, x_min:x_max],
-        )
-
-
-class PadSample(object):
-    def __call__(self, volume_mask):
-        volume, mask = volume_mask
-        a = volume.shape[1]
-        b = volume.shape[2]
-
-        if a == b:
-            return volume, mask
-        diff = (max(a, b) - min(a, b)) / 2.0
-        padding_insert = (
-            int(np.floor(diff)),
-            int(np.ceil(diff)),
-        )
-        if a > b:
-            padding = ((0, 0), (0, 0), padding_insert)
-        else:
-            padding = ((0, 0), padding_insert, (0, 0))
-        mask = np.pad(mask, padding, mode="constant", constant_values=0)
-        padding = padding + ((0, 0),)
-        volume = np.pad(volume, padding, mode="constant", constant_values=0)
-        return volume, mask
-
-
-class ResizeSample(object):
-    def __init__(self, size=256):
-        self.size = size
-
-    def __call__(self, volume_mask):
-        volume, mask = volume_mask
-        v_shape = volume.shape
-        out_shape = (v_shape[0], self.size, self.size)
-        mask = resize(
-            mask,
-            output_shape=out_shape,
-            order=0,
-            mode="constant",
-            cval=0,
-            anti_aliasing=False,
-        )
-        volume = resize(
-            volume,
-            output_shape=out_shape,
-            order=2,
-            mode="constant",
-            cval=0,
-            anti_aliasing=False,
-        )
-        return volume, mask
-
-
 class NormalizeVolume(object):
     def __call__(self, volume_mask):
         volume, mask = volume_mask
@@ -178,17 +107,28 @@ class DataloaderImg(Dataset):
         seed: int = 42,
         val_slice: int = 0,
     ):
-        if subset not in ["train", "validation", "validation_whole_brain", "inference"]:
-            raise ValueError("subset must be one of train, validation, or inference")
+        if subset not in [
+            "train",
+            "validation",
+            "validation_whole_brain",
+            "inference",
+        ]:
+            raise ValueError(
+                "subset must be one of train, validation, or inference"
+            )
 
         if weighted_sampling == all_slices:
-            raise ValueError("weighted_sampling and all_slices cannot be both True")
+            raise ValueError(
+                "weighted_sampling and all_slices cannot be both True"
+            )
 
         self.root_dir = root_dir
         self.preprocessing = (
             tfms.Compose(preprocessing) if preprocessing is not None else None
         )
-        self.transforms = tfms.Compose(transforms) if transforms is not None else None
+        self.transforms = (
+            tfms.Compose(transforms) if transforms is not None else None
+        )
         self.subject_pattern = op.join(
             self.root_dir,
             "sub-*",
@@ -227,7 +167,9 @@ class DataloaderImg(Dataset):
                 self.volume = validation_volumes
                 self.mask = validation_masks
             else:
-                self.volume = [i for i in self.volume if i not in validation_volumes]
+                self.volume = [
+                    i for i in self.volume if i not in validation_volumes
+                ]
                 self.mask = [i for i in self.mask if i not in validation_masks]
 
         self.subset = subset
@@ -292,10 +234,13 @@ class DataloaderImg(Dataset):
         ]:
             slice_weights = mask.sum(axis=(1, 2))
             slice_weights = (
-                slice_weights + (slice_weights.sum() * 0.1 / len(slice_weights))
+                slice_weights
+                + (slice_weights.sum() * 0.1 / len(slice_weights))
             ) / (slice_weights.sum() * 1.1)
 
-            slice_n = np.random.choice(np.arange(len(slice_weights)), p=slice_weights)
+            slice_n = np.random.choice(
+                np.arange(len(slice_weights)), p=slice_weights
+            )
 
         volume = volume[slice_n]
         mask = mask[slice_n]
@@ -308,7 +253,9 @@ class DataloaderImg(Dataset):
         mask_tensor = Mask(torch.from_numpy(mask))
 
         if self.transforms is not None:
-            image_tensor, mask_tensor = self.transforms(image_tensor, mask_tensor)
+            image_tensor, mask_tensor = self.transforms(
+                image_tensor, mask_tensor
+            )
 
         return image_tensor, mask_tensor
 
