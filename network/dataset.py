@@ -176,8 +176,9 @@ class DataloaderImg(Dataset):
         all_slices: bool = False,
         validation_cases: int = 10,
         seed: int = 42,
+        val_slice: int = 0,
     ):
-        if subset not in ["train", "validation", "inference"]:
+        if subset not in ["train", "validation", "validation_whole_brain", "inference"]:
             raise ValueError("subset must be one of train, validation, or inference")
 
         if weighted_sampling == all_slices:
@@ -222,7 +223,7 @@ class DataloaderImg(Dataset):
             validation_masks = [
                 i for idx, i in enumerate(self.mask) if idx in subset_idx
             ]
-            if subset == "validation":
+            if subset in ["validation", "validation_whole_brain"]:
                 self.volume = validation_volumes
                 self.mask = validation_masks
             else:
@@ -239,10 +240,11 @@ class DataloaderImg(Dataset):
             for x in self.volume
         ]
 
-        if subset == "training":
+        if subset == "train":
             np.savetxt(
                 f"sub_ses_run_idx_{subset}.txt",
                 sub_ses_run_idx,
+                fmt="%s",
             )
 
         self.sub_ses_run_idx = sub_ses_run_idx
@@ -255,7 +257,7 @@ class DataloaderImg(Dataset):
             for j in range(self.n_slices)
         ]
 
-        self.val_slice = 0
+        self.val_slice = val_slice
 
     def __len__(self):
         return len(self.volume)
@@ -268,7 +270,7 @@ class DataloaderImg(Dataset):
             sub_ses_run_idx, slice_n = sub_ses_run_slice.rsplit("_", 1)
             idx = self.sub_ses_run_idx.index(sub_ses_run_idx)
 
-        if self.subset in ["validation", "inference"]:
+        if self.subset in ["validation_whole_brain", "inference"]:
             slice_n = self.val_slice
 
         volume_name = self.volume[idx]
@@ -284,7 +286,10 @@ class DataloaderImg(Dataset):
         if self.preprocessing is not None:
             volume, mask = self.preprocessing((volume, mask))
 
-        if self.weighted_sampling and not self.subset in ["validation", "inference"]:
+        if self.weighted_sampling and not self.subset in [
+            "validation_whole_brain",
+            "inference",
+        ]:
             slice_weights = mask.sum(axis=(1, 2))
             slice_weights = (
                 slice_weights + (slice_weights.sum() * 0.1 / len(slice_weights))
@@ -306,3 +311,6 @@ class DataloaderImg(Dataset):
             image_tensor, mask_tensor = self.transforms(image_tensor, mask_tensor)
 
         return image_tensor, mask_tensor
+
+    def set_val_slice(self, val_slice):
+        self.val_slice = val_slice
