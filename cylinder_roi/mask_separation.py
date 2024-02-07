@@ -1,6 +1,6 @@
+import logging
 import os.path as op
 import re
-from glob import glob
 
 import numpy as np
 from alive_progress import alive_it
@@ -36,6 +36,14 @@ for sub_dir in alive_it(sub_dirs):
     masks = fast_divide_mask(
         mask
     )  # BUG: sometimes returnes a list of lists, fix with recursive_flatten
+    if isinstance(masks, list):
+        logging.warning(
+            (
+                "ROIs are to close to each other in %s."
+                "Could not separate ROI mask."
+            ),
+            sub_dir,
+        )
     masks = recursive_flatten(masks)
 
     for i, m in enumerate(masks):
