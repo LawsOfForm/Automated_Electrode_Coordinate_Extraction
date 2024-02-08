@@ -2,6 +2,7 @@ import nibabel as nib
 import numpy as np
 import torch
 from tqdm import tqdm
+import os.path as op
 
 
 def load_nifti(path):
@@ -36,14 +37,24 @@ def main():
         init_features=32,
         pretrained=False,
     )
-    unet = torch.load("unet_epochs_1000_batchsize_15.pt")
+    unet = torch.load(op.join(op.dirname(__file__), "unet_epochs_1000_batchsize_15.pt"))
+    unet.load_state_dict(torch.load(op.join(op.dirname(__file__), "best_model.pth")))
 
     unet.eval()
     unet.to(device)
 
-    nifti, img = load_nifti(
-        "/media/MeMoSLAP_Subjects/SUBJECTS_XNAT/sub-4012/ses-1/anat/sub-4012_ses-1_acq-petra_run-01_PDw.nii.gz"
-    )  # TODO: path as input
+    # nifti, img = load_nifti(
+    #     "/media/MeMoSLAP_Subjects/SUBJECTS_XNAT/sub-4012/ses-1/anat/sub-4012_ses-1_acq-petra_run-01_PDw.nii.gz"
+    # )  # TODO: path as input
+    base_dir = "/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction/"
+    nifti_path = op.join(
+        base_dir,
+        "sub-064",
+        "unzipped",
+        "rsub-064_ses-1_acq-petra_run-02_PDw.nii",
+    )
+
+    nifti, img = load_nifti(op.join(nifti_path))
 
     img_tensor = niimg2tensor(img)
 
@@ -53,7 +64,7 @@ def main():
     img_inf = torch.unsqueeze(img_inf, dim=1)
 
     with torch.set_grad_enabled(False):
-        for i, x in tqdm(enumerate(img_tensor)):
+        for i, x in tqdm(enumerate(img_tensor), total=len(img_tensor)):
             x = torch.unsqueeze(x, dim=0)
             x = x.to(device, dtype=torch.float32)
             y_inf = unet(x)
@@ -70,7 +81,9 @@ def main():
         nifti.header,
     )
 
-    nib.save(inf_nifti, "inference.nii.gz")  # TODO: sensible default
+    outname = op.splitext(nifti_path)[0] + "_inference.nii.gz"
+
+    nib.save(inf_nifti, outname)  # TODO: sensible default
 
 
 if __name__ == "__main__":
