@@ -19,6 +19,7 @@ for sub_dir in alive_it(sub_dirs):
     finalmask_path = op.join(sub_dir, "finalmask.nii.gz")
     layers_path = op.join(sub_dir, "layers_binarized.nii.gz")
 
+     
     if not op.exists(petra_path):
         continue
 
