@@ -47,53 +47,81 @@ for subfolder_subject=1:length(SubFolderNames)
         end       
 end
 
-%% loop through struct and create unzipped files
+dummy_folder_list={'sesbase','ses-1','ses-2','ses-3','ses-4'};
+all_session={'sesbase','ses-1','ses-2','ses3','ses4'};
 All_Subjects=fieldnames(filelist);
+%% loop through struct and create unzipped files
+%uncomment this part if you only want to coregister
 for sub =1:length(All_Subjects)
-    dummy_folder_list={'ses-1','ses-2','ses-3','ses-4'};
-    if exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped'),'dir')
-        fprintf('Unzipped done for %s\n', All_Subjects{sub}, 'check number of session')
-    
-
-        %% unzip data in new folder folder
-    else
-        all_session = fieldnames(filelist.(All_Subjects{sub}).Session);
+        %all_session = fieldnames(filelist.(All_Subjects{sub}).Session);
         for session_num = 1:length(all_session)
-            if isfield(filelist.(All_Subjects{sub}).Session, "sesbase")
-                    try
-                    T1_folder=fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1.folder);
-                    T1_name = fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1.name);
-                    T1_path = fullfile(T1_folder, T1_name);
-                    Petra_Pre_folder=fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.folder);
-                    Petra_Pre_name=fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.name);
-                    Petra_Pre_path=fullfile(Petra_Pre_folder, Petra_Pre_name);
-                    catch
-                        fprintf('couldnt load struct field subject %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
-                    end
+            if ((isfield(filelist.(All_Subjects{sub}).Session, "sesbase")) && all_session{session_num}=="sesbase")
                 %% sesbase T1 unzip will only be in sesbase
-                    if contains(all_session{session_num} ,'sesbase') && ...
-                       ~exist(T1_path,'file')
-        
-                    gunzip(T1_path,fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped'))
-                    filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', [SubFolderNames{sub},'*mprage_T1w.nii']));
+                    %try
+                    if exist("T1_path","var")
+                       clear T1_path
+                    end
+                    if ~isempty(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1)
+                        T1_folder=fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1.folder);
+                        T1_name = fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1.name);
+                        T1_path = fullfile(T1_folder, T1_name);
+                        T1_path_nii=fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', T1_name(1:end-3));
                     
-                    %% all other sessions contain Petra_Post and Petra_Pre unziped files
-                    elseif ~exist(Petra_Pre_path,'file')
-                        try  % there might be corrupted folder      
-                        gunzip(fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.folder,filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.name),fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped'))
-                        gunzip(fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post.folder,filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post.name),fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped'))
-                        
-                        filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', ['sub*',dummy_folder_list{session_num},'*petra_run-01_PDw.nii']));
-                        filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', ['sub*',dummy_folder_list{session_num},'*petra_run-02_PDw.nii']));
-                        catch
-                        fprintf('something wrong subject %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
+
+
+                        if exist(T1_path,'file') && ...
+                        ~exist(T1_path_nii,'file') 
+                        fprintf('T1 unzipping running subject %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
+                        gunzip(T1_path,fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped'))
+                        filelist.(All_Subjects{sub}).Session.(all_session{session_num}).T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', [SubFolderNames{sub},'*mprage_T1w.nii']));
                         end
-                     end
+                    else
+                        fprintf('T1 not found for subject %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
+                    end
+                    %catch
+                    %    fprintf('something went wrong unzipping T1 subject %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
+                    %end
+                    
+            end
+                    %% all other sessions contain Petra_Post and Petra_Pre unziped files
+            if  isfield(filelist.(All_Subjects{sub}).Session, "sesbase") && all_session{session_num} ~= "sesbase" && ...
+                ((isfield(filelist.(All_Subjects{sub}).Session,'ses1') && all_session{session_num}=="ses1" )|| ...  
+                (isfield(filelist.(All_Subjects{sub}).Session,'ses2') && all_session{session_num}=="ses2" ) || ...  
+                (isfield(filelist.(All_Subjects{sub}).Session,'ses3') && all_session{session_num}=="ses3" ) || ...  
+                (isfield(filelist.(All_Subjects{sub}).Session,'ses4') && all_session{session_num}=="ses4" ))  
+
+                %try  % there might be corrupted folder
+                if exist("Petra_Pre_path","var")
+                   clear Petra_Pre_path
                 end
-                  
+
+                if ~isempty(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre) 
+                Petra_Pre_folder=fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.folder);
+                Petra_Pre_name=fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.name);
+                Petra_Pre_path=fullfile(Petra_Pre_folder, Petra_Pre_name);
+                Petra_Pre_path_nii=fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', Petra_Pre_name(1:end-3));
+
+
+                    if exist(Petra_Pre_path,'file') && ...
+                      ~exist(Petra_Pre_path_nii,'file') %delete .gz from nii.gz file appendix
+                    fprintf('gunzip running for Petra subjectct %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
+                    gunzip(fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.folder,filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre.name),fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped'))
+                    gunzip(fullfile(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post.folder,filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post.name),fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped'))
+                    
+                    filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', ['sub*',dummy_folder_list{session_num},'*petra_run-01_PDw.nii']));
+                    filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', ['sub*',dummy_folder_list{session_num},'*petra_run-02_PDw.nii']));
+                    end
+                else 
+                    fprintf('something wrong with Petra subject %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
+                end
+                    %catch
+                %fprintf('something wrong for Petra conversion subject %s at Session %s \n', All_Subjects{sub}, all_session{session_num})
+                %end
+             end
         end
-    end
 end
+
+%% comment above part if you just want to segment and coregister, unzipping will take a while
 
 %% loop through all subjects and create matlabbatch
 for sub =1:length(All_Subjects)
@@ -104,7 +132,9 @@ for sub =1:length(All_Subjects)
             if isfield(filelist.(All_Subjects{sub}).Session, "sesbase")
                 all_session = {'ses1','ses2','ses3','ses4'};
                 for session_num = 1:length(all_session)
-                    if isfield(filelist.(All_Subjects{sub}).Session, all_session(session_num))
+                    if isfield(filelist.(All_Subjects{sub}).Session, all_session(session_num)) && ...
+                       ~isempty(filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre) && ...
+                       ~isempty(filelist.(All_Subjects{sub}).Session.sesbase.T1)    
                             
                         try
                         filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', [SubFolderNames{sub},'*mprage_T1w.nii']));
@@ -128,10 +158,10 @@ for sub =1:length(All_Subjects)
                             fprintf('Path problem with session %s for subject %s\n', all_session{session_num},All_Subjects{sub})
                         end
 
-                        if ~exist(source_image_path_cor,'file') 
+                        if ~exist("source_image_path_cor",'file') 
 
                             try
-                            fprintf('Segmentation for session %s for subject %s\n', all_session{session_num},All_Subjects{sub})
+                            fprintf('Coregistration for session %s for subject %s\n', all_session{session_num},All_Subjects{sub})
                             matlabbatch{session_num} = create_batch_cor(ref_image_path, source_image_path,additional_image_path);
                             catch
                             fprintf('Error in session %s for subject %s\n', all_session{session_num},All_Subjects{sub})
@@ -148,7 +178,7 @@ for sub =1:length(All_Subjects)
                 end
                 try
                 coregistr_batch = fullfile(coregistration_path, SubFolderNames{sub},'coregistr_batch.mat');
-                    if ~exist("coregistr_batch",'file')
+                    if ~exist(coregistr_batch,'file')
                     save(coregistr_batch,'matlabbatch');
                     spm_jobman('run',matlabbatch);
                     end
@@ -162,7 +192,10 @@ end
 %% create segmentation for all T1 files
 for sub =1:length(All_Subjects)
     
-    if (exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped'),'dir') && isfield(filelist.(All_Subjects{sub}).Session, "sesbase") && ~exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped',['c1',sub,'_ses-base_acq-mprage_T1w.nii']),'file'))
+    if (exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped'),'dir') && ...
+        isfield(filelist.(All_Subjects{sub}).Session, "sesbase") && ...
+        ~exist(fullfile(coregistration_path, SubFolderNames{sub},'unzipped',['c1',SubFolderNames{sub},'_ses-base_acq-mprage_T1w.nii']),'file')) && ...
+        ~isempty(filelist.(All_Subjects{sub}).Session.sesbase.T1)
         filelist.(All_Subjects{sub}).Session.sesbase.T1_unzip = dir(fullfile(coregistration_path, SubFolderNames{sub}, 'unzipped', [SubFolderNames{sub},'*mprage_T1w.nii']));
 
         
