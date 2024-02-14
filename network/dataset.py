@@ -106,6 +106,7 @@ class DataloaderImg(Dataset):
         validation_cases: int = 10,
         seed: int = 42,
         val_slice: int = 0,
+        experimental: bool = False,
     ):
         if subset not in [
             "train",
@@ -147,7 +148,8 @@ class DataloaderImg(Dataset):
 
         if len(self.volume) != len(self.mask):
             raise ValueError(
-                "Number of volumes and masks must be the same for training or validation"
+                "Number of volumes and masks must be the same for"
+                "training or validation"
             )
 
         if subset != "inference":
@@ -188,6 +190,21 @@ class DataloaderImg(Dataset):
                 sub_ses_run_idx,
                 fmt="%s",
             )
+
+        if experimental:
+            # some extra approach to loading the data and getting training
+            # data.
+            sub_slices_gt_zero = []
+            for i, vol in enumerate(self.volume):
+                img = nib.load(vol)
+                img = np.asarray(img.dataobj, dtype=np.float32)
+                img = np.sum(img, axis=0)
+                slices_gt_zero = np.argwhere(img > 0)
+                sub_slices_gt_zero.append(
+                    np.array(
+                        [f"{sub_ses_run_idx[i]}_{j}" for j in slices_gt_zero]
+                    )
+                )
 
         self.sub_ses_run_idx = sub_ses_run_idx
         n_slices = nib.load(self.volume[0]).shape
