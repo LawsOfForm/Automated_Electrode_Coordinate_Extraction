@@ -80,8 +80,9 @@ class DataloaderImg(Dataset):
     validation_cases : int, optional
         The number of cases to use for validation, by default 10
     seed : int, optional
-        The random seed to use for sampling, by default 42. Only used if random_sampling is True
-        Should be the same for train and validation dataset.
+        The random seed to use for sampling, by default 42. Only used
+        if random_sampling is True. Should be the same for train and
+        validation dataset.
 
 
     Returns
@@ -191,6 +192,7 @@ class DataloaderImg(Dataset):
                 fmt="%s",
             )
 
+        self.experimental = experimental
         if experimental:
             # some extra approach to loading the data and getting training
             # data.
@@ -205,6 +207,7 @@ class DataloaderImg(Dataset):
                         [f"{sub_ses_run_idx[i]}_{j}" for j in slices_gt_zero]
                     )
                 )
+            self.sub_ses_run_idx = sub_ses_run_idx
 
         self.sub_ses_run_idx = sub_ses_run_idx
         n_slices = nib.load(self.volume[0]).shape
@@ -219,10 +222,19 @@ class DataloaderImg(Dataset):
         self.val_slice = val_slice
 
     def __len__(self):
+        if self.experimental:
+            return len(self.sub_slices_gt_zero)
+        if self.all_slices:
+            return len(self.sub_ses_run_slice_idx)
         return len(self.volume)
 
     def __getitem__(self, idx):
         slice_n = None
+
+        if self.experimental:
+            sub_ses_run_slice = self.sub_ses_run_slice_idx[idx]
+            sub_ses_run_idx, slice_n = sub_ses_run_slice.rsplit("_", 1)
+            idx = self.sub_ses_run_idx.index(sub_ses_run_idx)
 
         if self.all_slices:
             sub_ses_run_slice = self.sub_ses_run_slice_idx[idx]
@@ -245,7 +257,7 @@ class DataloaderImg(Dataset):
         if self.preprocessing is not None:
             volume, mask = self.preprocessing((volume, mask))
 
-        if self.weighted_sampling and not self.subset in [
+        if self.weighted_sampling and self.subset not in [
             "validation_whole_brain",
             "inference",
         ]:
