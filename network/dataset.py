@@ -200,8 +200,8 @@ class DataloaderImg(Dataset):
             for i, vol in enumerate(self.volume):
                 img = nib.load(vol)
                 img = np.asarray(img.dataobj, dtype=np.float32)
-                img = np.sum(img, axis=0)
-                slices_gt_zero = np.argwhere(img > 0)
+                img_slices = np.sum(img, axis=0)
+                slices_gt_zero = np.argwhere(img_slices > 0)
                 sub_slices_gt_zero.append(
                     np.array(
                         [f"{sub_ses_run_idx[i]}_{j}" for j in slices_gt_zero]
