@@ -6,3 +6,4 @@ reports/*
 reports
 runs/
 *.txt
+*unet*.pt*
