@@ -1,0 +1,98 @@
+---
+output: html_document
+---
+```{r, eval = requireNamespace("tidyverse", quietly = TRUE)}
+
+#install.packages("car")
+library(dplyr)
+library(ggpubr)
+library(lme4)
+library(car)
+library(patchwork)
+library(gridExtra)
+library(cowplot)
+library(tidyverse)
+library(grid)
+library(lattice)
+library(ggplot2)
+library(arrow)
+library(dplyr)
+library(rstatix)
+library(emmeans)
+library(knitr)
+library(lme4)
+library(afex)
+library(tidyr)
+library(sjmisc)
+#install.packages("lmerTest")
+library(lmerTest)
+library(httpgd)
+library(r2glmm)
+library(see)
+
+```
+
+
+
+```{r}
+path <- "/media/Data03/Studies/MeMoSLAP/code/Automated_Electrode_Coordinate_Extraction/electrode_extraction_from_network/Coordinates"
+df_dim_norm <- read.csv(file.path(path, "df_dim_norm_diff_Sophie.csv"))
+dplyr::sample_n(df_dim_norm, 10)
+View(df_dim_norm)
+
+df_dim_norm <- df_dim_norm[grepl("Anode", df_dim_norm$Electrode), ]
+#df_dim_norm <- df_dim_norm[!grepl("baseline", df_dim_norm$run), ]
+df_dim_norm <- df_dim_norm[!grepl("2", df_dim_norm$Subject), ]
+#df_dim_norm <- df_dim_norm[!grepl("sub-021", df_dim_norm$Subject), ]
+df_dim_norm <- transform(df_dim_norm, Subject = as.numeric(Subject))
+View(df_dim_norm)
+```
+
+
+## Onew way Anova Norm
+
+```{r}
+colnames(df_dim_norm)
+```
+
+```{r}
+norm <- aov(Diff_Norm ~ run, data = df_dim_norm)
+summary(norm)
+```
+
+```{r}
+TukeyHSD(norm)
+```
+
+
+## 3x3 Anova between Experiment within run
+
+### Non working example
+
+- error ! Each row of output must be identified by a unique combination of keys.
+  Keys are shared for 131 rows
+- what is wrong with the column Subject as wid
+- for other veriations of subject and other columns to generate unique key see columns ind, ind_1, ... ind_4 
+- may gues was ind_3 should be correct because it combines subject and run and mark the within subject factor of run subject_run
+- https://rpubs.com/mhanauer/300976
+```{r}
+
+result <- anova_test(data = df_dim_norm, 
+    dv = Diff_Norm, 
+    wid = Subject, 
+    within = run,
+    between = Experiment)
+get_anova_table(result)
+``` 
+
+### Working example but nor sure how to make sure that run is labeled as within and Experiment as between factor
+
+```{r}
+norm_rep <- aov(Diff_Norm ~ run * Experiment + (1 | Subject), data = df_dim_norm)
+summary(norm_rep)
+```
+
+```{r}
+#https://rpubs.com/mhanauer/300976
+TukeyHSD(norm_rep)
+```

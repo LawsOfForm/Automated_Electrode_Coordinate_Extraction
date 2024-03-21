@@ -1,0 +1,248 @@
+---
+output: html_document
+---
+```{r, eval = requireNamespace("tidyverse", quietly = TRUE)}
+
+#install.packages("insight")
+update.packages(insight)
+library(dplyr)
+library(ggpubr)
+library(lme4)
+library(car)
+library(patchwork)
+library(gridExtra)
+library(cowplot)
+library(tidyverse)
+library(grid)
+library(lattice)
+library(ggplot2)
+library(arrow)
+library(dplyr)
+library(rstatix)
+library(emmeans)
+library(knitr)
+library(lme4)
+library(afex)
+library(tidyr)
+library(sjmisc)
+#install.packages("lmerTest")
+library(lmerTest)
+library(httpgd)
+library(r2glmm)
+library(see)
+library(report)
+
+```
+
+```{r}
+update.packages(ask = FALSE)
+library(report)
+```
+
+## Code style
+
+```{r}
+path <- "/media/Data03/Studies/MeMoSLAP/code/Automated_Electrode_Coordinate_Extraction/electrode_extraction_from_network/Coordinates"
+df <- read.csv(file.path(path, "df_concat_a_diff_long_.csv"))
+dplyr::sample_n(df, 10)
+levels(df$Subject)
+```
+```{r}
+path <- "/media/Data03/Studies/MeMoSLAP/code/Automated_Electrode_Coordinate_Extraction/electrode_extraction_from_network/Coordinates"
+df_dim <- read.csv(file.path(path, "concat_Sophie.csv"))
+dplyr::sample_n(df, 10)
+View(df_dim)
+```
+
+```{r}
+path <- "/media/Data03/Studies/MeMoSLAP/code/Automated_Electrode_Coordinate_Extraction/electrode_extraction_from_network/Coordinates"
+#df_dim_norm <- read.csv(file.path(path, "df_dim_norm_diff_Sophie.csv"))
+df_dim_norm <- read.csv(file.path(path, "df_dim_compl.csv"))
+dplyr::sample_n(df_dim_norm, 10)
+View(df_dim_norm)
+
+df_dim_norm <- df_dim_norm[grepl("Anode", df_dim_norm$Electrode), ]
+#df_dim_norm <- df_dim_norm[!grepl("baseline", df_dim_norm$run), ]
+df_dim_norm <- df_dim_norm[!grepl("sub-002", df_dim_norm$Subject), ]
+#df_dim_norm <- df_dim_norm[!grepl("sub-021", df_dim_norm$Subject), ]
+View(df_dim_norm)
+```
+
+```{r}
+colnames(df_dim)
+View(df_dim)
+```
+
+```{r}
+df_dim <- df_dim[!grepl("run-02", df_dim$run), ]
+df_dim <- df_dim[!grepl("sub-002", df_dim$Subject), ]
+df_dim <- df_dim[grepl("Anode", df_dim$Electrode), ]
+View(df_dim)
+```
+
+
+```{r}
+colnames(df)
+```
+
+```{r}
+ggboxplot(df, x = "Dimension", y = "Coordinate.difference.in.mm", color = "Dimension")
+
+```
+
+# ANOVA
+## Onew way Anova Coordinate differences
+```{r}
+a1 <- aov(Coordinate.difference.in.mm ~ run, data = df)
+summary(a1)
+```
+
+```{r}
+pairwise.t.test(Coordinate.difference.in.mm, run, p.adj = "bonf", data = df)
+```
+
+```{r}
+TukeyHSD(a1)
+```
+
+```{r}
+a2 <- aov(Coordinate.difference.in.mm ~ Session, data = df)
+summary(a2)
+```
+
+## Onew way Anova Norm
+
+```{r}
+colnames(df_dim_norm)
+```
+
+```{r}
+norm <- aov(Diff_Norm ~ run, data = df_dim_norm)
+summary(norm)
+```
+
+```{r}
+TukeyHSD(norm)
+```
+
+
+## 3x3 Anova between Experiment within run
+```{r}
+ggboxplot(df_dim_norm, x = "run", y = "Diff_Norm", color = "Experiment")
+```
+
+```{r}
+ggline(df_dim_norm, x = "run", y = "Diff_Norm", color = "Experiment", 
+        add = c("mean_se", "dotplot"))
+```
+
+
+```{r}
+norm_rep <- aov(Diff_Norm ~ run * Experiment +(1|Subject), data = df_dim_norm)
+summary(norm_rep)
+```
+
+```{r}
+#https://rpubs.com/mhanauer/300976
+result <- anova_test(data=df_dim_norm, 
+    dv = Diff_Norm, 
+    wid = ind_4, 
+    within = run,
+    between = Region)
+get_anova_table(result)
+```
+
+```{r}
+#https://rpubs.com/mhanauer/300976
+TukeyHSD(norm_rep)
+```
+
+## 3x5 Way Anovae
+
+```{r}
+bxp <- ggboxplot(df_dim_norm, x = "Session", y = "Coordinates", color = "Experiment")
+bxp
+```
+
+```{r}
+library(hrbrthemes)
+ggplot(df_dim, aes(x = "Session", y = "Coordinates", color = "Experiment")) +
+geom_point(size = 6) +
+theme_ipsum()
+```
+
+## identify outliers
+```{r}
+df_dim %>% group_by(Session, Experiment) %>% identify_outliers(Coordinates)
+```
+
+## Normality assumptions
+
+```{r}
+df_dim %>% group_by(Session, Experiment) %>% shapiro_test(Coordinates)
+```
+
+```{r}
+ggqqplot(df_dim, "Coordinates", ggtheme = theme_bw()) + facet_grid(Session ~ Experiment)
+```
+
+## Homogneity of variance assumption
+```{r}
+df_dim %>% group_by(Experiment) %>% levene_test(Coordinates ~ Session)
+```
+
+
+## Homogeneity of covariances assumption
+
+```{r}
+box_m(df_dim[, "Coordinates", drop = FALSE], df_dim$Experiment)
+```
+
+## Assumption of sphericity
+
+
+
+## ANOVA
+```{r}
+a2 <- anova_test(data = df_dim, 
+            dv = Coordinates,
+            wid = Subject, 
+            between = Dimension,
+            within = Session)
+get_anova_table(a2)
+```
+
+# LLM
+
+# choose factor, first factor values dummy coded as 0
+
+```{r}
+df$Dimension <- factor(df$Dimension, levels = c("X", "Z", "X"))
+df$Experiment <- factor(df$Experiment, levels = c("P1", "P3", "P7"))
+df$Session <- factor(df$Session, levels = c("ses-0", "ses-1", "ses-2", "ses-3", "ses-4"))
+df$run <- factor(df$run, levels = c("baseline", "run-01", "run-02"))
+
+
+#df_new <- na.omit(df_new)
+View(df)
+```
+
+# xtabs zeig Anzahl an Wiederholungen
+
+```{r plot1}
+xtabs(~ Experiment + Dimension, data = df)
+```
+
+```{r plot1}
+df %>% drop_na()
+```
+
+# create mixed model
+```{r}
+lmer_model <- lmer(Coordinate.difference.in.mm ~ 1 + Experiment* Dimension + Session * run + (1 | Subject), data = df)
+summary(lmer_model)
+```
+
+```{r}
+sjPlot::tab_model(lmer_model, show.ci = 0.95, show.p = TRUE, show.df = TRUE)
+```
