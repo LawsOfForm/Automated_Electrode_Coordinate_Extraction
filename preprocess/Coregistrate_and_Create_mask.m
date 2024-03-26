@@ -180,7 +180,8 @@ for sub =1:length(All_Subjects)
                             try
                             fprintf('Coregistration for session %s for subject %s\n', all_session{session_num},All_Subjects{sub})
                             coregistr_batch = fullfile(coregistration_path, SubFolderNames{sub},[all_session{session_num},'coregistr_batch.mat']);
-                            matlabbatch{session_num} = create_batch_cor(ref_image_path, source_image_path,additional_image_path);
+                            %matlabbatch{session_num} = create_batch_cor(ref_image_path, source_image_path,additional_image_path);
+                            matlabbatch{1} = create_batch_cor(ref_image_path, source_image_path,additional_image_path);
                             save(coregistr_batch,'matlabbatch');
                             spm_jobman('run',matlabbatch);
                             catch
