@@ -162,7 +162,8 @@ for sub =1:length(All_Subjects)
                         source_image_folder = filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre_unzip.folder;
                         source_image_name = filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Pre_unzip.name;
                         source_image_path = fullfile(source_image_folder, source_image_name);
-                        source_image_path_cor=fullfile(source_image_folder, ['r',source_image_name,'.gz']);
+                        %source_image_path_cor=fullfile(source_image_folder, ['r',source_image_name,'.gz']);
+                        source_image_path_cor=fullfile(source_image_folder, ['r',source_image_name]);
                         
                         additional_image_folder = filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post_unzip.folder;
                         additional_image_name = filelist.(All_Subjects{sub}).Session.(all_session{session_num}).Petra_Post_unzip.name;
@@ -174,11 +175,14 @@ for sub =1:length(All_Subjects)
                             fprintf(fileID,'Coregistration Path problem with session %s for subject %s\n', all_session{session_num},All_Subjects{sub});
                         end
 
-                        if ~exist("source_image_path_cor","var") 
+                        if exist("source_image_path_cor","var") && ~exist(source_image_path_cor,'file')  
 
                             try
                             fprintf('Coregistration for session %s for subject %s\n', all_session{session_num},All_Subjects{sub})
+                            coregistr_batch = fullfile(coregistration_path, SubFolderNames{sub},[all_session{session_num},'coregistr_batch.mat']);
                             matlabbatch{session_num} = create_batch_cor(ref_image_path, source_image_path,additional_image_path);
+                            save(coregistr_batch,'matlabbatch');
+                            spm_jobman('run',matlabbatch);
                             catch
                             fprintf('Coregistration error in session %s for subject %s\n', all_session{session_num},All_Subjects{sub})
                             fprintf(fileID,'Coregistration error in session %s for subject %s\n', all_session{session_num},All_Subjects{sub});
@@ -196,6 +200,7 @@ for sub =1:length(All_Subjects)
                 try
                 coregistr_batch = fullfile(coregistration_path, SubFolderNames{sub},'coregistr_batch.mat');
                     if ~exist(coregistr_batch,'file')
+                    %if ~exist(coregistr_batch,'file')
                     save(coregistr_batch,'matlabbatch');
                     spm_jobman('run',matlabbatch);
                     end
