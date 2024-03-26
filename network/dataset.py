@@ -38,6 +38,14 @@ class NormalizeVolume(object):
         return volume, mask
 
 
+class ResizeSample(object):
+    def __call__(self, volume_mask):
+        volume, mask = volume_mask
+        volume = resize(volume, (256, 256, volume.shape[2]), anti_aliasing=True)
+        mask = resize(mask, (256, 256), anti_aliasing=True)
+        return volume, mask
+
+
 class DataloaderImg(Dataset):
     """
     Dataset class for loading nifti files and masks for electrode extraction
@@ -115,22 +123,16 @@ class DataloaderImg(Dataset):
             "validation_whole_brain",
             "inference",
         ]:
-            raise ValueError(
-                "subset must be one of train, validation, or inference"
-            )
+            raise ValueError("subset must be one of train, validation, or inference")
 
         if weighted_sampling == all_slices:
-            raise ValueError(
-                "weighted_sampling and all_slices cannot be both True"
-            )
+            raise ValueError("weighted_sampling and all_slices cannot be both True")
 
         self.root_dir = root_dir
         self.preprocessing = (
             tfms.Compose(preprocessing) if preprocessing is not None else None
         )
-        self.transforms = (
-            tfms.Compose(transforms) if transforms is not None else None
-        )
+        self.transforms = tfms.Compose(transforms) if transforms is not None else None
         self.subject_pattern = op.join(
             self.root_dir,
             "sub-*",
@@ -170,9 +172,7 @@ class DataloaderImg(Dataset):
                 self.volume = validation_volumes
                 self.mask = validation_masks
             else:
-                self.volume = [
-                    i for i in self.volume if i not in validation_volumes
-                ]
+                self.volume = [i for i in self.volume if i not in validation_volumes]
                 self.mask = [i for i in self.mask if i not in validation_masks]
 
         self.subset = subset
@@ -203,9 +203,7 @@ class DataloaderImg(Dataset):
                 img_slices = np.sum(img, axis=0)
                 slices_gt_zero = np.argwhere(img_slices > 0)
                 sub_slices_gt_zero.append(
-                    np.array(
-                        [f"{sub_ses_run_idx[i]}_{j}" for j in slices_gt_zero]
-                    )
+                    np.array([f"{sub_ses_run_idx[i]}_{j}" for j in slices_gt_zero])
                 )
             self.sub_ses_run_idx = sub_ses_run_idx
 
@@ -263,13 +261,10 @@ class DataloaderImg(Dataset):
         ]:
             slice_weights = mask.sum(axis=(1, 2))
             slice_weights = (
-                slice_weights
-                + (slice_weights.sum() * 0.1 / len(slice_weights))
+                slice_weights + (slice_weights.sum() * 0.1 / len(slice_weights))
             ) / (slice_weights.sum() * 1.1)
 
-            slice_n = np.random.choice(
-                np.arange(len(slice_weights)), p=slice_weights
-            )
+            slice_n = np.random.choice(np.arange(len(slice_weights)), p=slice_weights)
 
         volume = volume[slice_n]
         mask = mask[slice_n]
@@ -282,9 +277,7 @@ class DataloaderImg(Dataset):
         mask_tensor = Mask(torch.from_numpy(mask))
 
         if self.transforms is not None:
-            image_tensor, mask_tensor = self.transforms(
-                image_tensor, mask_tensor
-            )
+            image_tensor, mask_tensor = self.transforms(image_tensor, mask_tensor)
 
         return image_tensor, mask_tensor
 
