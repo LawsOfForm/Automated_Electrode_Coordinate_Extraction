@@ -4,3 +4,11 @@ config.m
 paths.py
 reports/*
 reports
+Images/*
+Images
+Tables/*
+Tables
+reports_inference/*
+reports_inference
+
+

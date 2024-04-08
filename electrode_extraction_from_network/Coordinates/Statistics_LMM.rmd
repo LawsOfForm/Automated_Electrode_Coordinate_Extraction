@@ -1,0 +1,285 @@
+---
+output: html_document
+---
+```{r, eval = requireNamespace("tidyverse", quietly = TRUE)}
+
+#install.packages("ggeffects")
+#update.packages(insight)
+library(ggeffects)
+library(dplyr)
+library(ggpubr)
+library(lme4)
+library(car)
+library(patchwork)
+library(gridExtra)
+library(cowplot)
+library(tidyverse)
+library(grid)
+library(lattice)
+library(ggplot2)
+library(arrow)
+library(dplyr)
+library(rstatix)
+library(emmeans)
+library(knitr)
+library(lme4)
+library(afex)
+library(tidyr)
+library(sjmisc)
+#install.packages("lmerTest")
+library(lmerTest)
+library(httpgd)
+library(r2glmm)
+library(see)
+#library(report)
+
+```
+
+
+## Code style
+### read in for LMM
+```{r}
+path <- "/media/Data03/Studies/MeMoSLAP/code/Automated_Electrode_Coordinate_Extraction/electrode_extraction_from_network/Coordinates"
+#df <- read.csv(file.path(path, "df_concat_a_diff_long_.csv"))
+df <- read.csv(file.path(path, "df_dim_norm_diff_Sophie.csv")) # original
+df <- df[!grepl(2, df$Subject), ]
+View(df)
+```
+
+
+```{r}
+keeps <- c("Subject","Region","Session","run","Diff_Norm")
+df <- df[keeps]
+#df %>% drop_na()
+df <- df[!is.na(df$Diff_Norm),] 
+View(df)
+```
+
+```{r}
+ggboxplot(df, x = "run", y = "Diff_Norm", color = "Session")
+
+```
+
+## identify outliers
+```{r}
+df %>% group_by(run, Region) %>% identify_outliers(Diff_Norm)
+```
+
+```{r}
+unique(df$Region)
+```
+
+## count number of datapoints
+```{r}
+a = length(unique(df$Subject))
+print(a)
+
+count(df %>% filter(run == 'post fMRI'))
+count(df %>% filter(run == 'pre fMRI'))
+count(df %>% filter(run == 'baseline'))
+
+count(df %>% filter(run == 'post fMRI', Region == 'rOTC'))
+count(df %>% filter(run == 'pre fMRI', Region == 'rOTC'))  #"rOTC", "rDLPFC", "lTPC"
+count(df %>% filter(run == 'post fMRI', Region == 'rDLPFC'))
+count(df %>% filter(run == 'pre fMRI', Region == 'rDLPFC'))
+count(df %>% filter(run == 'pre fMRI', Region == 'lTPC'))
+count(df %>% filter(run == 'post fMRI', Region == 'lTPC'))
+
+```
+
+```{r}
+#df %>% filter(Region == 'rDLPFC') %>% n_distinct(Subject) 
+
+df %>%
+  group_by(Region) %>%
+  summarise(count = n_distinct(Subject))
+
+```
+
+```{r}
+#df %>% filter(Region == 'rDLPFC') %>% n_distinct(Subject) 
+
+df %>%
+  group_by(Region) %>%
+  summarise(count = n_distinct(Session))
+
+```
+
+## Normality assumptions
+
+```{r}
+df %>% group_by(run, Region) %>% shapiro_test(Diff_Norm)
+```
+
+```{r}
+ggqqplot(df_dim, "Coordinates", ggtheme = theme_bw()) + facet_grid(Session ~ Experiment)
+```
+
+## Homogneity of variance assumption
+```{r}
+df%>% group_by(Region) %>% levene_test(Diff_Norm ~ run)
+```
+
+
+
+
+
+
+
+# choose factor, first factor values dummy coded as 0
+
+```{r}
+#df$Dimension <- factor(df$Dimension, levels = c("X", "Z", "X"))
+df$Experiment <- factor(df$Experiment, levels = c("rOTC", "rDLPFC", "lTPC"))
+df$Session <- factor(df$Session, levels = c("ses-0", "ses-1", "ses-2", "ses-3", "ses-4"))
+df$run <- factor(df$run, levels = c("baseline", "pre fMRI", "post fMRI"))
+
+
+#df_new <- na.omit(df_new)
+View(df)
+```
+
+# xtabs zeig Anzahl an Wiederholungen
+
+```{r plot1}
+xtabs(~ Region + run, data = df)
+```
+
+
+
+# create mixed model
+```{r}
+# help define within and between factor
+# https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2015.00002/full
+lmer_model_1 <- lmer(Diff_Norm ~ 1 + run * Region + (1 | Subject), data = df)
+lmer_model_2 <- lmer(Diff_Norm ~ 1 + run + (1 | Subject), data = df)
+lmer_model_3 <- lmer(Diff_Norm ~ 1 + Region + (1 | Subject), data = df)
+lmer_model_4 <- lmer(Diff_Norm ~ 1 + run * Region + (1 + run| Subject), data = df)
+lmer_model_5 <- lmer(Diff_Norm ~ 1 + run + Region + (1 | Subject), data = df)
+lmer_model_6 <- lmer(Diff_Norm ~ 1 + run + Region + (1 + run | Subject), data = df)
+
+#summary(lmer_model_1)
+```
+
+```{r}
+anova(lmer_model_1,lmer_model_2,lmer_model_3,lmer_model_4,lmer_model_5, lmer_model_6)
+```
+
+
+```{r}
+# Anova of winning model
+sjPlot::tab_model(lmer_model_1, show.ci = 0.95, show.p = TRUE, show.df = TRUE, file = file.path(path,"model5.docx"))
+```
+
+```{r}
+r.squaredGLMM(lmer_model_1)
+```
+
+```{r}
+# Anova of winning model
+(EMM.Region <- emmeans(lmer_model_1, "Region"))
+```
+```{r}
+# Anova of winning model
+(EMM.run <- emmeans(lmer_model_1, "run"))
+```
+
+```{r}
+emmip(lmer_model_1, ~ run | Region, CIs = TRUE, type='response') +
+    geom_point(aes(x = run, y = Diff_Norm), data = df, pch = 1, color = "blue", size=1.5)
+```
+```{r}
+# Given summary statistics for 4 cells in a 2 x 2 layout, obtain
+# marginal means and comparisons thereof. Assume heteroscedasticity
+# and use the Satterthwaite method
+emmeans(lmer_model_1, pairwise ~ Region|run)
+
+```
+
+```{r}
+# Given summary statistics for 4 cells in a 2 x 2 layout, obtain
+# marginal means and comparisons thereof. Assume heteroscedasticity
+# and use the Satterthwaite method
+emmeans(lmer_model_1, pairwise ~ run|Region)
+
+```
+
+```{r}
+emmip(lmer_model_1, ~ run, CIs = TRUE) +
+    geom_point(aes(x = run, y = Diff_Norm), data = df, pch = 1, color = "#5b5ba1", size=5.5) + 
+    theme(text = element_text(size = 45),
+    axis.text.x = element_text(angle = 0, hjust = 1)) + 
+    labs(y= "EEMs L² Norm (intended - actual) in |mm|", x = "Time point")
+
+```
+
+```{r}
+emmeans(lmer_model_1, pairwise ~ run)
+```
+
+```{r}
+emmip(lmer_model_1, ~ Region, CIs = TRUE) +
+    geom_point(aes(x = Region, y = Diff_Norm), data = df, pch = 1, color = "#5b5ba1", size=5.5) + 
+    theme(text = element_text(size = 45),
+    axis.text.x = element_text(angle = 0, hjust = 1)) + 
+    labs(y = "EEMs L² Norm (intended - actual) in |mm|", x = "Time point")
+
+```
+
+```{r}
+emmeans(lmer_model_1, pairwise ~ Region)
+```
+
+```{r}
+emmip(lmer_model_1, ~ run | Region, CIs = TRUE) +
+    geom_point(aes(x = run, y = Diff_Norm), data = df, pch = 1, color = "#0707ec", size=5.5) + 
+    theme(text = element_text(size = 45),
+    axis.text.x = element_text(angle = 0, hjust = 1)) + 
+    labs(y = "EEMs L² Norm (intended - actual) in |mm|", x = "Time point")
+```
+
+
+
+```{r}
+p1 <- emmip(lmer_model_1, ~ run, CIs = TRUE) +
+    geom_point(aes(x = run, y = Diff_Norm), data = df, pch = 1, color = "#15b7e9", size=1.5) + 
+    theme(text = element_text(size = 22),
+        axis.text.x = element_text(angle = 0, hjust = 1)) + 
+        labs(y = "EMMs L² Norm (intended - actual) in |mm|", x = "Time point")
+png(file.path(path, "Figure_6_R.png"))
+print(p1)
+dev.off()  
+```
+
+```{r}
+p2 <- emmip(lmer_model_1, ~ Region | run, CIs = TRUE) +
+    geom_point(aes(x = Region, y = Diff_Norm), data = df, pch = 1, color = "#15b7e9", size=1.5) + 
+    theme(text = element_text(size = 22),
+        axis.text.x = element_text(angle = 90, hjust = 1)) + 
+        labs(y = "EMMs L² Norm (intended - actual) in |mm|", x = "Time point")
+png(file.path(path, "Figure_7_R.png"))
+print(p2)
+dev.off()         
+```
+
+```{r}
+p3 <- emmip(lmer_model_1, ~  run | Region, CIs = TRUE) +
+    geom_point(aes(x = run, y = Diff_Norm), data = df, pch = 1, color = "#15b7e9", size=1.5) + 
+    theme(text = element_text(size = 22),
+        axis.text.x = element_text(angle = 0, hjust = 1)) + 
+        labs(y = "EMMs L² Norm (intended - actual) in |mm|", x = "Time point")
+png(file.path(path, "Figure_8_R.png"))
+print(p3)
+dev.off()         
+```
+
+```{r}
+p4 <- emmip(lmer_model_1, ~  Region, CIs = TRUE) +
+    geom_point(aes(x = Region, y = Diff_Norm), data = df, pch = 1, color = "#15b7e9", size=1.5) + 
+    theme(text = element_text(size = 22),
+        axis.text.x = element_text(angle = 0, hjust = 1)) + 
+        labs(y = "EMMs L² Norm (intended - actual) in |mm|", x = "Time point")
+png(file.path(path, "Figure_9_R.png"))
+print(p4)
+dev.off()         
+```
