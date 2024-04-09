@@ -88,7 +88,11 @@ if __name__ == "__main__":
         petra = sitk.ReadImage(masked_petra, sitk.sitkFloat32)
         mask = sitk.ReadImage(cylinder_mask_path, sitk.sitkUInt8)
 
-        masked_petra = mask_image(petra, mask)
+        try:
+            masked_petra = mask_image(petra, mask)
+        except RuntimeError:
+            logging.error(f"Error in masking {masked_petra}")
+            continue
 
         thresholded_petra = huang_threshold(masked_petra)
 
