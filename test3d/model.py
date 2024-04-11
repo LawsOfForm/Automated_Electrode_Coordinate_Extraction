@@ -250,6 +250,18 @@ def main():
         f" at iteration: {global_step_best}"
     )
 
+    plt.figure("train", (12, 6))
+    plt.subplot(1, 2, 1)
+    plt.title("Average Loss per Iteration")
+    x = [eval_num * (i + 1) for i in range(len(epoch_loss_values))]
+    plt.xlabel("Iteration")
+    plt.plot(x, epoch_loss_values)
+    plt.subplot(1, 2, 2)
+    plt.title("Validation Mean Dice")
+    x = [eval_num * (i + 1) for i in range(len(metric_values))]
+    plt.xlable("Iteration")
+    plt.plot(x, y)
+    plt.show()
 
 if __name__ == "__main__":
     main()
