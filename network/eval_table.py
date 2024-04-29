@@ -20,7 +20,7 @@ eval_table = eval_table.assign(
     ses="ses-" + eval_table.path.str.extract(r"ses-([0-9]+)"),
     run="run-" + eval_table.path.str.extract(r"run-([0-9]+)"),
     vol="volume-" + eval_table.path.str.extract(r"volume-([0-9]+)"),
-    good_segmentation=True,
+    good_segmentation=False,
     n_electrodes=0,
 )
 
