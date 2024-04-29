@@ -8,6 +8,8 @@ from paths_funcs import glob_sub_dir
 from util.io import load_nifti, save_nifti
 
 DILATION_RADIUS = 8
+EROSION_RADIUS = 4
+CUT_BRAIN = True
 
 sub_dirs = glob_sub_dir(root_dir)
 
@@ -20,6 +22,9 @@ for sub_dir in alive_it(sub_dirs):
     layers_path = op.join(sub_dir, "layers_binarized.nii.gz")
 
     if not op.exists(petra_path):
+        continue
+
+    if not op.exists(finalmask_path):
         continue
 
     petra, petra_img = load_nifti(petra_path)
@@ -39,6 +44,19 @@ for sub_dir in alive_it(sub_dirs):
 
     cut_pads = np.where(combined_mask == 0, 0, petra_img)
 
-    save_nifti(
-        img=cut_pads, path=op.join(sub_dir, "petra_cut_pads.nii.gz"), ref=petra
-    )
+    save_nifti(img=cut_pads, path=op.join(sub_dir, "petra_cut_pads.nii.gz"), ref=petra)
+
+    if CUT_BRAIN:
+        brain_mask = np.where(finalmask_img > 0, 1, 0)
+        brain_mask = sitk.GetImageFromArray(brain_mask)
+
+        erosion = sitk.BinaryErodeImageFilter()
+        erosion.SetKernelRadius(EROSION_RADIUS)
+        erosion.SetForegroundValue(1)
+
+        brain_mask = erosion.Execute(brain_mask)
+        brain_mask = sitk.GetArrayFromImage(brain_mask)
+        brain = np.where(brain_mask > 0, 0, cut_pads)
+        save_nifti(
+            img=brain, path=op.join(sub_dir, "petra_cut_brain.nii.gz"), ref=petra
+        )

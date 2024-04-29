@@ -4,3 +4,6 @@ config.m
 paths.py
 reports/*
 reports
+runs/
+*.txt
+*unet*.pt*

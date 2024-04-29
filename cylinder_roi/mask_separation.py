@@ -1,3 +1,4 @@
+import logging
 import os.path as op
 import re
 
@@ -25,6 +26,9 @@ for sub_dir in alive_it(sub_dirs):
     if not op.exists(cylinder_masks_path):
         continue
 
+    # if glob(op.join(sub_dir, "*mask_*.nii.gz")):
+    #     continue
+
     sub, ses, run = re.findall(r"(sub-[0-9]+|ses-[0-9]+|run-[0-9]+)", sub_dir)
     print(sub, ses, run)
     mask_nifti, mask = load_nifti(cylinder_masks_path)
@@ -32,6 +36,14 @@ for sub_dir in alive_it(sub_dirs):
     masks = fast_divide_mask(
         mask
     )  # BUG: sometimes returnes a list of lists, fix with recursive_flatten
+    if isinstance(masks, list):
+        logging.warning(
+            (
+                "ROIs are to close to each other in %s."
+                "Could not separate ROI mask."
+            ),
+            sub_dir,
+        )
     masks = recursive_flatten(masks)
 
     for i, m in enumerate(masks):
