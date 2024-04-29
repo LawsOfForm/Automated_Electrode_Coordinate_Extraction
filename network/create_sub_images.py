@@ -11,6 +11,21 @@ from alive_progress import alive_it
 from get_project_data import get_project
 
 
+def __read_electrode_pkl(fname_pkl: str) -> dict:
+    with open(fname_pkl, "rb") as pklfile:
+        data = pickle.load(pklfile)
+
+    return data
+
+
+def __check_pkl_size(data: dict):
+    if len(data[2]) > 1:
+        raise ValueError(
+            "Surround positions for more than one surround radius found.\n"
+            "Not sure which radius to use"
+        )
+
+
 def read_centre_surround(fname_pkl: str) -> tuple[np.ndarray, np.ndarray]:
     """
     Read the MeMoSlap pkl file which stores the
@@ -25,20 +40,40 @@ def read_centre_surround(fname_pkl: str) -> tuple[np.ndarray, np.ndarray]:
     tuple(np.ndarray, np.ndarray):
         anode and first cathode position
     """
-    with open(fname_pkl, "rb") as pklfile:
-        data = pickle.load(pklfile)
+    data = __read_electrode_pkl(fname_pkl)
 
     centre_pos = data[1]
-    if len(data[2]) > 1:
-        raise ValueError(
-            "Surround positions for more than one surround radius found.\n"
-            "Not sure which radius to use"
-        )
+    __check_pkl_size(data)
 
     keyname = list(data[2].keys())[0]
     surround_pos = data[2][keyname][0]
 
     return centre_pos, surround_pos
+
+
+def read_centre_surround_all(fname_pkl: str) -> np.ndarray:
+    """
+    Read the MeMoSlap pkl file which stores the
+    anode and cathode positions
+
+    Parameter
+    ----------
+    fname_pkl(str): path to the pickle file
+
+    Returns
+    ----------
+    np.ndarray:
+        anode and all cathode positions
+    """
+    data = __read_electrode_pkl(fname_pkl)
+
+    centre_pos = data[1]
+    __check_pkl_size(data)
+
+    keyname = list(data[2].keys())[0]
+    surround_pos = [data[2][keyname][i] for i in range(3)]
+
+    return np.vstack((centre_pos, surround_pos))
 
 
 def ras2ijk(qform: np.ndarray, ras_coord: np.ndarray) -> np.ndarray:
@@ -199,6 +234,8 @@ if __name__ == "__main__":
         )
 
         base_out = op.dirname(file)
+
+        break
 
         nib.save(  # pyright: ignore [reportPrivateImportUsage]
             img=cropped_nifti,
