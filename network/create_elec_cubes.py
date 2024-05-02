@@ -7,16 +7,26 @@ from glob import glob
 import nibabel as nib
 import numpy as np
 from alive_progress import alive_it
-from create_sub_images import (
-    create_crop,
-    get_sub_project,
-    ras2ijk,
-    read_centre_surround_all,
-)
+from create_sub_images import (create_crop, get_sub_project, ras2ijk,
+                               read_centre_surround_all)
 from get_project_data import get_project
 
 
-def cut_cubes(img: np.ndarray, cut_coords: np.ndarray):
+def cut_cubes(img: np.ndarray, cut_coords: np.ndarray) -> list[np.ndarray]:
+    """
+    Create Cubes from the image according to the margins provided
+    via cut_coords.
+
+    Parameters
+    ----------
+    img(np.ndarray): 3d image to cut as np.array
+    cut_coords(np.ndarray[int]): 3d array with (n_cubes, dim, upper-lower-thres)
+        with the information where to cut the img array
+
+    Returns
+    ----------
+    list of cubical images
+    """
 
     return [
         img[
@@ -28,14 +38,70 @@ def cut_cubes(img: np.ndarray, cut_coords: np.ndarray):
     ]
 
 
+def restore_projects(sub_id: str, ses_id: str) -> str:
+    """
+    Check if subjects were reassigned during the measurements.
+    Returns the project assignment before reassignment.
+
+    Parameters
+    ----------
+    sub_id(str): identifier of the subject
+    ses_id(str): session of the measurement
+
+    Returns
+    ----------
+    str: If reassignment was done, returns the Project id before reassignment
+        otherwise raises KeyError
+
+    Example
+    ---------
+
+    ```{python}
+
+    > try:
+    >     project = restore_projects("sub-002", "ses-3")
+    > except KeyError:
+    >     project = project
+    >
+    > print(project)
+    "P3"
+
+    ```
+
+    """
+    reassignments = {
+        "sub-002": {"ses-1": "P3", "ses-2": "P3", "ses-3": "P3", "ses-4": "P1"},
+        "sub-004": {"ses-1": "P1", "ses-2": "P1", "ses-3": "P1", "ses-4": "P1"},
+        "sub-012": {"ses-2": "P3", "ses-3": "P3", "ses-4": "P3"},
+        "sub-025": {"ses-1": "P1", "ses-2": "P1", "ses-3": "P1", "ses-4": "P1"},
+    }
+
+    return reassignments[sub_id][ses_id]
+
+
 if __name__ == "__main__":
 
     logging.basicConfig(level=logging.DEBUG, filename="create_sub_images.log")
     CUBE_SIZE = 32
 
+    # petra_path = op.join(
+    #     "/media",
+    #     "MeMoSLAP_Subjects",
+    #     "derivatives",
+    #     "automated_electrode_extraction",
+    #     "sub-*",
+    #     "electrode_extraction",
+    #     "ses-*",
+    #     "run-*",
+    #     "petra_cut_brain.nii.gz",
+    # )
+
     petra_path = op.join(
         "/media",
-        "MeMoSLAP_Subjects",
+        "MeinzerMRI",
+        "Studien",
+        "backup",
+        "Hering",
         "derivatives",
         "automated_electrode_extraction",
         "sub-*",
@@ -59,6 +125,11 @@ if __name__ == "__main__":
             continue
 
         project = get_sub_project(sub_id=sub, assignment=project_assignment)
+
+        try:
+            project = restore_projects(sub_id=sub, ses_id=ses)
+        except KeyError:
+            logging.info("%s %s was not reassigned", sub, ses)
 
         pkl_path = op.join(
             "/media",
@@ -124,10 +195,14 @@ if __name__ == "__main__":
         #     affine=petra.affine,  # pyright: ignore [reportAttributeAccessIssue]
         # )
 
-        base_out = op.join(op.dirname(file), "cut_cubes")
+        # base_out = op.join(op.dirname(file), "cut_cubes")
+
+        base_out = op.join("/media", "data01", "sriemann", "MeMoSlap", "cubes")
 
         if not op.exists(base_out):
             os.mkdir(base_out)
+
+        sub_prefix = "_".join([sub, ses, run])
 
         for idx, (img, mask) in enumerate(zip(cropped_imgs, cropped_mask)):
 
@@ -135,11 +210,15 @@ if __name__ == "__main__":
             print(f"vol shape:\n{img.shape}")
             nib.save(  # pyright: ignore [reportPrivateImportUsage]
                 img=nib.Nifti1Image(mask, header=petra.header, affine=petra.affine),
-                filename=op.join(base_out, f"mask_{idx + 1}.nii.gz"),
+                filename=op.join(
+                    base_out, "_".join([sub_prefix, f"mask-{idx + 1}.nii.gz"])
+                ),
             )
             nib.save(  # pyright: ignore [reportPrivateImportUsage]
                 img=nib.Nifti1Image(img, header=petra.header, affine=petra.affine),
-                filename=op.join(base_out, f"volume_{idx + 1}.nii.gz"),
+                filename=op.join(
+                    base_out, "_".join([sub_prefix, f"volume-{idx + 1}.nii.gz"])
+                ),
             )
 
         # nib.save(  # pyright: ignore [reportPrivateImportUsage]
