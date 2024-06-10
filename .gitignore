@@ -7,3 +7,4 @@ reports
 runs/
 *.txt
 *unet*.pt*
+Networks
