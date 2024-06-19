@@ -1,4 +1,33 @@
 # Electrode extraction by hand: "Pancake Method"
+(written for Ubuntu)
+
+0. Choose a folder in which you like to clone the github repository
+   
+- in this folder open a terminal and clone the repository
+  
+```bash
+git clone https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction.git
+```
+
+- if the command "git" is not working install github on your computer  
+  
+```bash  
+    sudo apt-get install git
+```
+
+- change directory into the Automated_Electrode_Coordinate_Extraction folder
+
+```bash
+cd  Automated_Electrode_Coordinate_Extraction
+```
+
+- change to the clean branch of the repository with the command
+
+```bash
+git checkout cleaned
+```
+
+- no you should be in the correct branch and repositories should be up to date
 
 ## Tabel of Contents
 
@@ -27,18 +56,12 @@
    just type `version` in the Command Window (pink box in the image below) and
    press `Enter`
 
-2. When matlab is open select the correct path to your working directory, i.e.,
-   the path to your Thesis directory (either
-   [/media/Data03/Thesis/Dabelstein/code/electrode_extraction_by_hand](/media/Data03/Thesis/Dabelstein/code/electrode_extraction_by_hand)
-   or
-   [/media/Data03/Thesis/Hering/code/electrode_extraction_by_hand](/media/Data03/Thesis/Hering/code/electrode_extraction_by_hand)).
-   This path should shown in the matlab window (red box image below)
+2. use the script `Coregistrate_and_Create_mask.m ` in the `01_preprocess` folder to coregistrate the PETRA images onto the first T1 baseline
 
-   ![Matlab after path adjustment](./sop/images/matlab_adjust_path.png)
+   - for clearer instructions read the README.md in the folder.
 
-3. If you correctly adjusted the path, you should see the
-   `hand_labeling_memoslap_no_mid_point.m` script on the left side under
-   **Current Folder** (blue box). Open this script by double clicking it.
+3. Get electrode coordinates -> use the script in the `02_electrode_extraction_by_hand` folder
+   `hand_labeling_memoslap_no_mid_point.m`
 
 4. Adjust the first lines of the matlab script
 
@@ -48,9 +71,13 @@
    run = 1; % and here
    ```
 
+5. Adjust also the path of `electrode_dir` to the path created in point 2 with script `Coregistrate_and_Create_mask.m `
+
+   -(something like `**/derivative/automated_electrode_extraction`)
+
    These are the only lines you have to adjust.
 
-5. Run the script by pressing `Run` (green box) or `F5`. This will run
+6. Run the script by pressing `Run` (green box) or `F5`. This will run
    the script and after a while, the pancake view of a structural brain scan will
    pop up. Here every electrode is extracted with 6 points near the rim of the
    electrode. Be careful to place the points as close to the rim of the
@@ -65,18 +92,16 @@
    The script will continue to run and output some coordinates in the command
    window (pink box).
 
-   ![pancake view](/media/MeinzerShare/05_Zwischenablagen/pancake_view.png)
-
-6. Control the outputs of the script in the derivatives directory (either
-   [/media/Data03/Thesis/Dabelstein/derivatives/automated_electrode_extraction](/media/Data03/Thesis/Dabelstein/derivatives/automated_electrode_extraction)
-   or
-   [/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction](/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction))
+7. Control the outputs of the script in the derivatives directory (
+   [**/derivatives/automated_electrode_extraction](**/derivatives/automated_electrode_extraction))
    </br></br> According to the subject info you provided the Matlab script
    directories are created with the subject-id, session, and run. The bottom
    directory should be populated with the files shown below in the file tree
    (i.e., 30 mricoords files, finalmask.nii.gz, handextracted_electrode_pos.csv,
    ...). If you also processed the other MRI data of the subjects for all
    processed sessions and runs the same files should be available.
+
+8. coordinates will be written into `handextracted_electrode_pos.csv`
 
 ```file-tree
 sub-010/
@@ -133,147 +158,4 @@ sub-010/
 ┃ ┗ ses-4/
 ┃   ┗ run-01/
 ...
-```
-
-## Python
-
-The Python scripts in the cylinder-roi directory (either
-[/media/Data03/Thesis/Dabelstein/code/cylinder_roi](/media/Data03/Thesis/Dabelstein/code/cylinder_roi)
-or
-[/media/Data03/Thesis/Hering/code/cylinder_roi](/media/Data03/Thesis/Hering/code/cylinder_roi))
-allow you to check how precise your electrode placement was.
-
-The main reason to run these commands is to get the centre of the extracted
-electrode and to get a visual report to control the electrode placement.
-
-1. Open a terminal in the cylinder-roi directory (right-click anywhere in the
-   directory and select `Open in terminal`)
-
-2. The packages to run the Python scripts are installed into a virtual
-   environment. If this environment is not active, the scripts will throw a
-   "ModuleNotFound" error. Activate the virtual environment by typing the
-   following command in the terminal and execute the command by pressing
-   **Enter**.
-
-   ```bash
-   conda activate electrode_extraction
-   ```
-
-3. run the `create_cylinder.py` script. This script will a electrode shaped
-   region of interest using the coordinates extracted with the matlab script.
-   You can run the script by writing the following command in the terminal and
-   pressing **Enter**:
-
-   ```bash
-   python create_cylinder.py
-   ```
-
-   This script will also create a text file called `mid.txt`. This textfile
-   centres of the electrodes in the format (electrodes x dimensions), i.e., the
-   first row contains the x,y,z coordinates of the first electrode, the second
-   row contains the x,y,z coordinates of the second electrode and so on. The
-   coordinate dimensions are separated by commas, thus this file format is
-   called comma-separated values (CSV).
-
-4. After this command, run the `mask_separation.py` script. This should create a
-   single nifti image for every electrode extracted. Depending on how hard it is
-   to separate the electrodes the script will take a long time to run for a
-   single participant (see [adjustments](#Adjustments)).
-
-   ```bash
-   python mask_separation.py
-   ```
-
-5. Finally, run `report.py`:
-
-   ```bash
-   python report.py
-   ```
-
-   This script will create a `reports` directory in you code directory (either
-   [/media/Data03/Thesis/Dabelstein/code/cylinder_roi](/media/Data03/Thesis/Dabelstein/code/cylinder_roi)
-   or
-   [/media/Data03/Thesis/Hering/code/cylinder_roi](/media/Data03/Thesis/Hering/code/cylinder_roi)).
-   The script will create an image for every processed subject with the naming
-   scheme `sub-<id>_ses-<num>_run-<num>.png`. This image shows the subject's
-   structural image overlayed with the segmented electrodes created by the
-   `mask_separation.py` script. This allows us to check the precision of the
-   electrode extraction, i.e., if the electrode, which can be seen in the
-   structural image, is enclosed by an extracted electrode and if the real and the
-   extracted electrode have similar tilt.
-
-   Run this step to control if your electrode extraction with the Matlab script
-   was precise and repeat the extraction, and all the following steps if
-   necessary.
-
-### Adjustments
-
-Some adjustments can be made to make the Python scripts run faster. To make
-these adjustments in the scripts, just open the script file by double-clicking
-it and change the parts described below.
-
-#### `create_cylinder.py`
-
-Python code can be commented with `#` at the start of the line. Commented code
-is not executed and normally this is used to write explanations for the code.
-
-The script `create_cylinder.py` can be adjusted to only run if the electrodes
-are newly extracted by opening the script with a text editor and deleting the `#`
-signs in front of these lines:
-
-before:
-
-```python
-# if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
-#    continue
-```
-
-after:
-
-```python
-if op.exists(cylinder_mask_path) and op.exists(cylinder_mask_plus_plug):
-    continue
-```
-
-This checks in the output directory `cylinder_ROI.nii.gz` and
-`cylinder_plus_plug_ROI.nii.gz` exists. The script is not run for subjects, if
-these files exist. This will make the execution of the script much faster.
-
-#### `mask_separation.py`
-
-`mask_separation.py` has a similar code section that is commented out, i.e., a
-section that checks if the product of the script is already present and does not
-rerun the code if it is. You can activate this feature by removing the `#` at
-the following lines:
-
-before:
-
-```python
-# if glob(op.join(sub_dir, "*mask_*.nii.gz")):
-#     continue
-```
-
-after:
-
-```python
-if glob(op.join(sub_dir, "*mask_*.nii.gz")):
-    continue
-```
-
-#### `report.py`
-
-The same goes for the `report.py` script.
-
-before:
-
-```python
-# if op.isfile(report):
-#     continue
-```
-
-after:
-
-```python
-if op.isfile(report):
-    continue
 ```
