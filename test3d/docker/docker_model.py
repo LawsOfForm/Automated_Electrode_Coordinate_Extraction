@@ -1,23 +1,57 @@
+import logging
 import os.path as op
 from glob import glob
 
 import matplotlib.pyplot as plt
 import monai.transforms as tfms
 import numpy as np
-<<<<<<< HEAD
-import torch, gc
-from monai.data import ArrayDataset, DataLoader, decollate_batch
-from monai.losses import DiceLoss, DiceFocalLoss, GeneralizedDiceFocalLoss, TverskyLoss
-from monai.metrics import DiceMetric
-from monai.networks.nets import UNet, AttentionUnet
-=======
 import torch
+from fileconfig import (INPUT_DIR, MASK_SUFFIX, OUTPUT_DIR, SUBJECT_PATTERN,
+                        VOLUME_SUFFIX)
 from monai.data import ArrayDataset, DataLoader, decollate_batch
 from monai.losses import DiceLoss
 from monai.metrics import DiceMetric
 from monai.networks.nets import UNet
->>>>>>> b8eb2c7 (added docker and scripts to create a singularity file to run on the HPC)
 from tqdm import tqdm
+
+logging.basicConfig(
+    level=logging.INFO,
+    filename=f"{OUTPUT_DIR}/docker_model.log",
+    filemode="w",
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%d-%b-%y %H:%M:%S",
+)
+
+
+def debug_paths() -> None:
+    """
+    Some utility function that is used to debug the paths and files. Especially
+    to check if docker is available to mount the volumes and masks, and write
+    to the output directory.
+
+    Returns
+    ----------
+    None
+    """
+
+    print(f"INPUT_DIR: {op.exists(INPUT_DIR)}")
+    print(f"OUTPUT_DIR: {op.exists(OUTPUT_DIR)}")
+
+    vol_list = glob(op.join(INPUT_DIR, VOLUME_SUFFIX))
+    mask_list = glob(op.join(INPUT_DIR, MASK_SUFFIX))
+    print(f"Volumes: {vol_list}")
+    print(f"Masks: {mask_list}")
+
+    print(f"N volumes: {len(vol_list)}")
+    print(f"N masks: {len(mask_list)}")
+
+
+def check_paths() -> None:
+    for path in [INPUT_DIR, OUTPUT_DIR]:
+        if op.exists(path):
+            continue
+        logging.error(f"Path {path} does not exist.")
+        raise ValueError(f"Path {path} does not exist.")
 
 
 def subsetting(
@@ -51,6 +85,10 @@ def subsetting(
     np.random.seed(seed)
 
     train_cases = len(vols) - (validation_cases + test_cases)
+
+    if train_cases <= 0:
+        raise ValueError(f"Not enough data for training: {train_cases}")
+
     sampling_array = np.hstack(
         [
             np.array(np.repeat("train", train_cases)),
@@ -89,30 +127,10 @@ def create_dataset(
     ValueError: No MRI-volumes in the current path
 
     """
-<<<<<<< HEAD
-    volume_suffix: str = "petra_cut_*.nii.gz"
-    #mask_suffix: str = "cylinder_plus_*.nii.gz"
-    mask_suffix: str = "cylinder_ROI.nii.gz"
-    #root_dir = "./data"
-    #root_dir = "automated_electrode_extraction"
-    #subject_pattern = op.join(root_dir, "heads_true")
-
-    #automated_electrode_extraction"
-    root_dir= "/home/jovyan/automated_electrode_extraction/heads_true_no_plugs"
-    subject_pattern = op.join(
-        root_dir,
-        "sub-*",
-        "electrode_extraction",
-        "ses-*",
-        "run-*",
-    )
-
-=======
-    volume_suffix: str = "*volume_*.nii.gz"
-    mask_suffix: str = "*mask_*.nii.gz"
-    root_dir = "./data"
-    subject_pattern = op.join(root_dir, "tmp")
->>>>>>> b8eb2c7 (added docker and scripts to create a singularity file to run on the HPC)
+    volume_suffix: str = VOLUME_SUFFIX
+    mask_suffix: str = MASK_SUFFIX
+    root_dir = INPUT_DIR
+    subject_pattern = op.join(root_dir, SUBJECT_PATTERN)
 
     volumes = glob(op.join(subject_pattern, volume_suffix))
     volumes.sort()
@@ -120,10 +138,17 @@ def create_dataset(
     masks.sort()
 
     if not volumes:
-        raise ValueError("No MRI-volumes found.")
+        msg = "No MRI-volumes found."
+        logging.error(msg)
+        raise ValueError(msg)
 
     masks = [m for m in masks if op.exists(m)]
     volumes = [v for v, m in zip(volumes, masks) if op.exists(m)]
+
+    if len(masks) != len(volumes):
+        msg = "Number of masks and volumes do not match."
+        logging.error(msg)
+        raise ValueError(msg)
 
     volumes, masks = subsetting(
         subset=subset,
@@ -150,11 +175,7 @@ def create_dataset(
             tfms.RandAffine(
                 prob=1, rotate_range=0.5, shear_range=0.5, padding_mode="zeros"
             ),
-<<<<<<< HEAD
-            tfms.Resize((256, 256, 256)),
-=======
             tfms.Resize((64, 64, 64)),
->>>>>>> b8eb2c7 (added docker and scripts to create a singularity file to run on the HPC)
             tfms.SignalFillEmpty(),
         ]
     )
@@ -174,11 +195,7 @@ def create_dataset(
             tfms.RandAffine(
                 prob=1, rotate_range=0.5, shear_range=0.5, padding_mode="zeros"
             ),
-<<<<<<< HEAD
-            tfms.Resize((256, 256, 256)),
-=======
             tfms.Resize((64, 64, 64)),
->>>>>>> b8eb2c7 (added docker and scripts to create a singularity file to run on the HPC)
             tfms.SignalFillEmpty(),
         ]
     )
@@ -187,7 +204,6 @@ def create_dataset(
 
 
 class Network:
-
     def __init__(
         self,
         net,
@@ -237,7 +253,7 @@ class Network:
                 logit_map = self.net(x)
                 loss = self.loss_function(logit_map, y)
 
-            with open("loss.txt", "a") as f:
+            with open(f"{OUTPUT_DIR}/loss.txt", "a") as f:
                 f.write(f"{str(loss.item())}\n")
 
             self.opt.zero_grad()
@@ -260,12 +276,12 @@ class Network:
                 continue
             dice_val = self.validation()
             epoch_loss /= step
-            with open("epoch_loss.txt", "a") as f:
+            with open(f"{OUTPUT_DIR}/epoch_loss.txt", "a") as f:
                 f.write(f"{str(loss.item())}\n")
             self.epoch_loss_values.append(epoch_loss)
             self.metric_values.append(dice_val)
             if dice_val < self.dice_val_best:
-                print(
+                logging.info(
                     "Model Was Not Saved! Current Best Avg. Dice: "
                     f"{self.dice_val_best} Current Avg. Dice: {dice_val}"
                 )
@@ -275,9 +291,10 @@ class Network:
             self.dice_val_best = dice_val
             self.global_step_best = self.global_step
             torch.save(
-                self.net.state_dict(), op.join(self.root_dir, "best_metric_model.pth")
+                self.net.state_dict(),
+                op.join(OUTPUT_DIR, "best_metric_model.pth"),
             )
-            print(
+            logging.info(
                 f"Model Was Saved! Current Best Avg. Dice: {self.dice_val_best}"
                 f" Current Avg. Dice: {dice_val}"
             )
@@ -316,20 +333,31 @@ class Network:
                 "Validate (%d / %d Steps)" % (self.global_step, 10.0)
             )
         mean_dice_val = self.dice_metric.aggregate().item()
-        with open("mean_dice_val.txt", "a") as f:
+        with open(f"{OUTPUT_DIR}/mean_dice_val.txt", "a") as f:
             f.write(f"{str(mean_dice_val)}\n")
         self.dice_metric.reset()
         return mean_dice_val
 
 
-def alt_main() -> None:
-    vc, tc = 8, 8
-<<<<<<< HEAD
-    #bs = 32    # for complete 3d images choose smaller batch sizes
-    bs = 1
-=======
-    bs = 32
->>>>>>> b8eb2c7 (added docker and scripts to create a singularity file to run on the HPC)
+def plot_training(network: Network) -> plt.Axes:
+    _, axes = plt.subplots(nrows=1, ncols=2)
+
+    for data, ax in zip(
+        [network.epoch_loss_values, network.metric_values],
+        axes.flatten(),
+    ):
+        x = [network.eval_num * (i + 1) for i in range(len(data))]
+        ax.plot(x, data)
+        plt.xlabel("Iteration")
+
+    axes
+
+
+def main() -> None:
+    check_paths()
+
+    vc, tc = 2, 2
+    bs = 8
     seed = 1001
     train_dataset = create_dataset(
         subset="train", validation_cases=vc, test_cases=tc, seed=seed
@@ -345,63 +373,18 @@ def alt_main() -> None:
         subset="validation", validation_cases=vc, test_cases=tc, seed=seed
     )
     val_loader = DataLoader(
-        val_dataset, batch_size=bs, num_workers=2, pin_memory=torch.cuda.is_available()
+        val_dataset,
+        batch_size=bs,
+        num_workers=2,
+        pin_memory=torch.cuda.is_available(),
     )
     device = torch.device("cuda:0")
-<<<<<<< HEAD
-    #net = UNet(
-    #    spatial_dims=3,
-    #    in_channels=1,
-    #    out_channels=2,
-    #    channels=(32, 64, 128, 256, 512),
-    #    strides=(2, 2, 2, 2),
-    #    num_res_units=2,
-    #    act="RELU",
-    #    act="PRELU",
-    #).to(device)
-    
-    net = AttentionUnet(
-=======
     net = UNet(
->>>>>>> b8eb2c7 (added docker and scripts to create a singularity file to run on the HPC)
         spatial_dims=3,
         in_channels=1,
         out_channels=2,
         channels=(32, 64, 128, 256, 512),
         strides=(2, 2, 2, 2),
-<<<<<<< HEAD
-        kernel_size = 3,
-        up_kernel_size = 3
-    ).to(device)
-    
-
-    network = Network(
-        net=net,
-        scaler=torch.cuda.amp.GradScaler(), # default 1e-3
-        opt=torch.optim.Adam(net.parameters(), lr=1e-4), # default SR
-        #opt = torch.optim.ASGD(net.parameters(), lr=1e-4, lambd=0.0001, alpha=0.75, t0=1000000.0, weight_decay=0.001,),
-        #opt=torch.optim.SGD(
-        #    net.parameters(),
-        #    lr=1e-4,
-        #    momentum=0.9
-        # ),
-        #loss_function=DiceLoss(to_onehot_y=True, softmax=True), #default SR
-        
-        #loss_function = DiceLoss(sigmoid=True)
-        #loss_function = GeneralizedDiceFocalLoss(sigmoid=True)
-        #lambda_dice, labda focal L_unified_focal = λ * L_dice + (1 - λ) * L_focal  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8785124/
-    
-    # include_background = False: When the non-background segmentations are small compared to the total image size. Using include_background=False in a two-class scenario can underestimate the actual loss, as the Dice loss may not properly capture the importance of the smaller foreground regions. 1  (https://github.com/Project-MONAI/MONAI/issues/2509)
-            
-        #loss_function = DiceFocalLoss(include_background = False, lambda_dice=0.4, lambda_focal=0.6, reduction = 'mean',to_onehot_y=True, softmax=True),
-        loss_function = TverskyLoss(include_background = True, alpha=0.7, beta=0.3,reduction = 'mean',to_onehot_y=True, softmax=True, batch = True),
-        #loss_function = DiceFocalLoss(include_background = True, lambda_dice=0.4, lambda_focal=0.6,to_onehot_y=True, softmax=True),
-        #dice_metric = DiceMetric(reduction="mean"),
-        train_loader=train_loader,
-        val_loader=val_loader,
-        dice_metric=DiceMetric(reduction="mean", include_background=False),
-        #dice_metric=DiceMetric(include_background=False),
-=======
         num_res_units=2,
         act="RELU",
     ).to(device)
@@ -419,28 +402,23 @@ def alt_main() -> None:
         train_loader=train_loader,
         val_loader=val_loader,
         dice_metric=DiceMetric(reduction="mean", include_background=False),
->>>>>>> b8eb2c7 (added docker and scripts to create a singularity file to run on the HPC)
         eval_num=500,
         max_iterations=30_000,
-        root_dir=op.dirname(op.abspath(__file__)),
+        root_dir=INPUT_DIR,
     )
 
     while network.global_step < network.max_iterations:
         network.train()
 
-    print(
+    logging.info(
         f"train completed, best_metric: {network.dice_val_best:.4f}"
         f" at iteration: {network.global_step_best}"
     )
 
-    _, axes = plt.subplots(nrows=1, ncols=2)
+    ax = plot_training(network)
+    plt.save(f"{OUTPUT_DIR}/training_plot.png", ax)
 
-    for data, ax in zip(
-        [network.epoch_loss_values, network.metric_values],
-        axes.flatten(),
-    ):
-        x = [network.eval_num * (i + 1) for i in range(len(data))]
-        ax.plot(x, data)
-        plt.xlabel("Iteration")
 
-    plt.show()
+if __name__ == "__main__":
+    main()
+    # debug_paths()

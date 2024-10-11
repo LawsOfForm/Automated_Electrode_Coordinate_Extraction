@@ -1,0 +1,5 @@
+SUBJECT_PATTERN = "sub-*/electrode_extraction/ses-*/run-*"
+VOLUME_SUFFIX = "petra_.nii.gz"
+MASK_SUFFIX = "petra_masked.nii.gz"
+INPUT_DIR = "/data"
+OUTPUT_DIR = "/results"

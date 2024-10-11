@@ -14,10 +14,12 @@
 # most recent version of that image when you build your Dockerfile.
 # If reproducibility is important, consider using a versioned tag
 # (e.g., alpine:3.17.2) or SHA (e.g., alpine@sha256:c41ab5c992deb4fe7e5da09f67a8804a46bd0592bfdf0b1847dde0e0889d2bff).
-FROM ubuntu:22.04 as base
+# We need Ubuntu to get CUDA running
+FROM ubuntu:22.04 AS base
 
 RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
-  && localedef -i de_DE -c -f UTF-8 -A /usr/share/locale/locale.alias de_DE.UTF-8
+    && localedef -i de_DE -c -f UTF-8 -A /usr/share/locale/locale.alias de_DE.UTF-8
+
 ENV LANG de_DE.utf8
 
 FROM nvidia/cuda:12.0.1-cudnn8-runtime-ubuntu22.04
@@ -36,11 +38,16 @@ FROM python:3.10
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
-RUN pip3 install --upgrade pip
-RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY ./model.py .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
-# ENTRYPOINT ["/bin/bash"]
-# ENTRYPOINT ["python", "model.py"] # add arguments to the call
-ENTRYPOINT ["python", "-c", "import torch; print(torch.cuda.is_available())"]
+COPY ./docker_model.py ./
+COPY ./fileconfig.py ./
+
+# Other possiblility to not use the full path
+# COPY ./runscript.sh ./
+# RUN chmod +x ./runscript.sh
+# CMD ["./runscript.sh"]
+
+ENTRYPOINT ["python", "/usr/src/app/docker_model.py"]

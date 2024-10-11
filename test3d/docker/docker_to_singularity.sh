@@ -1,5 +1,5 @@
 #!/bin/bash
-IMAGE_NAME="test/model:0.0"
+IMAGE_NAME="test/model:0.1"
 SINGULARITY_NAME="model.sif"
 
 docker build -t $IMAGE_NAME .
