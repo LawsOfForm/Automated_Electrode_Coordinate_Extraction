@@ -52,6 +52,9 @@ def debug_paths() -> None:
 
 
 def check_paths() -> None:
+    """
+    Check if INPUT_DIR and OUTPUT_DIR exist. Otherwise, raise a ValueError.
+    """
     for path in [INPUT_DIR, OUTPUT_DIR]:
         if op.exists(path):
             continue
@@ -209,6 +212,49 @@ def create_dataset(
 
 
 class Network:
+    """
+    A class used to represent the neural network training and validation process.
+
+    Attributes
+    ----------
+    net : torch.nn.Module
+        The neural network model to be trained and validated.
+    scaler : torch.cuda.amp.GradScaler
+        The gradient scaler for mixed precision training.
+    opt : torch.optim.Optimizer
+        The optimizer used for training the model.
+    loss_function : torch.nn.Module
+        The loss function used to compute the training loss.
+    train_loader : torch.utils.data.DataLoader
+        The DataLoader for the training dataset.
+    val_loader : torch.utils.data.DataLoader
+        The DataLoader for the validation dataset.
+    dice_metric : monai.metrics.DiceMetric
+        The metric used to evaluate the model performance.
+    eval_num : int
+        The number of iterations between each evaluation.
+    max_iterations : int
+        The maximum number of training iterations.
+    epoch_loss_values : list
+        A list to store the loss values for each epoch.
+    metric_values : list
+        A list to store the metric values for each evaluation.
+    dice_val_best : float
+        The best Dice metric value achieved during training.
+    global_step_best : int
+        The global step at which the best Dice metric value was achieved.
+    global_step : int
+        The current global step of the training process.
+    root_dir : str
+        The root directory for input data.
+
+    Methods
+    -------
+    train():
+        Executes the training loop for the neural network.
+    validation():
+        Executes the validation loop for the neural network.
+    """
     def __init__(
         self,
         net,
