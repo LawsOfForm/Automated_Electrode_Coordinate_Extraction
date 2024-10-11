@@ -23,13 +23,13 @@ docker image save test/model:0.1 test_model.tar
 sudo singularity build test_model.tar docker-archive://test_model.tar
 ```
 
-# Run the Docker skript
+## Run the Docker skript
 
 ```bash
 docker run --rm -it -v /path/to/input/data:/data:ro -v /output/path/to/store/results/:/results test/model:0.1
 ```
 
-# Run the Singularity skript
+## Run the Singularity skript
 
 ```bash
 singularity run --nv -B /path/to/input/data:/data:ro -B /output/path/to/store/results/:/results test_model.tar
