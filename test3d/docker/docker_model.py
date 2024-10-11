@@ -35,12 +35,15 @@ def debug_paths() -> None:
     ----------
     None
     """
+    import os
 
     print(f"INPUT_DIR: {op.exists(INPUT_DIR)}")
     print(f"OUTPUT_DIR: {op.exists(OUTPUT_DIR)}")
 
-    vol_list = glob(op.join(INPUT_DIR, VOLUME_SUFFIX))
-    mask_list = glob(op.join(INPUT_DIR, MASK_SUFFIX))
+    print(os.listdir(INPUT_DIR))
+
+    vol_list = glob(op.join(INPUT_DIR, SUBJECT_PATTERN, VOLUME_SUFFIX))
+    mask_list = glob(op.join(INPUT_DIR, SUBJECT_PATTERN, MASK_SUFFIX))
     print(f"Volumes: {vol_list}")
     print(f"Masks: {mask_list}")
 
@@ -140,7 +143,7 @@ def create_dataset(
     masks.sort()
 
     if not volumes:
-        msg = "No MRI-volumes found."
+        msg = f"No MRI-volumes found at: {op.join(subject_pattern, volume_suffix)}"
         logging.error(msg)
         raise ValueError(msg)
 
