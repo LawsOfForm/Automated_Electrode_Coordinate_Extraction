@@ -247,9 +247,13 @@ class Network:
             desc="Training (X / X Steps) (loss=X.X)",
             dynamic_ncols=True,
         )
+        batch_idx = {"image": 0, "mask": 1}
         for step, batch in enumerate(epoch_iterator):
             step += 1
-            x, y = batch[0].cuda(), batch[1].cuda()
+            x, y = (
+                batch[batch_idx["image"]].cuda(),
+                batch[batch_idx["mask"]].cuda(),
+            )
 
             with torch.cuda.amp.autocast():
                 logit_map = self.net(x)
