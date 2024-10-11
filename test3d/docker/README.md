@@ -32,5 +32,5 @@ docker run --rm -it -v /path/to/input/data:/data:ro -v /output/path/to/store/res
 # Run the Singularity skript
 
 ```bash
-
+singularity run --nv -B /path/to/input/data:/data:ro -B /output/path/to/store/results/:/results test_model.tar
 ```
