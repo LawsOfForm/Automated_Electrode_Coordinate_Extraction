@@ -49,5 +49,4 @@ COPY ./fileconfig.py ./
 # COPY ./runscript.sh ./
 # RUN chmod +x ./runscript.sh
 # CMD ["./runscript.sh"]
-
 ENTRYPOINT ["python", "/usr/src/app/docker_model.py"]

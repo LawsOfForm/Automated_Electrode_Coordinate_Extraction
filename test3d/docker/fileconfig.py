@@ -23,7 +23,7 @@ CONSTANTS:
 
 
 SUBJECT_PATTERN = "sub-*/electrode_extraction/ses-*/run-*"
-VOLUME_SUFFIX = "petra_.nii.gz"
-MASK_SUFFIX = "petra_masked.nii.gz"
+VOLUME_SUFFIX = "petra_cut_pads.nii.gz"
+MASK_SUFFIX = "cylinder_plus_plug_ROI.nii.gz"
 INPUT_DIR = "/data"
 OUTPUT_DIR = "/results"

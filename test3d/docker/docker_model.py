@@ -14,6 +14,8 @@ from monai.metrics import DiceMetric
 from monai.networks.nets import UNet
 from tqdm import tqdm
 
+RESIZE_DIM = (256, 256, 256)
+
 logging.basicConfig(
     level=logging.INFO,
     filename=f"{OUTPUT_DIR}/docker_model.log",
@@ -175,7 +177,7 @@ def create_dataset(
             tfms.RandAffine(
                 prob=1, rotate_range=0.5, shear_range=0.5, padding_mode="zeros"
             ),
-            tfms.Resize((64, 64, 64)),
+            tfms.Resize((RESIZE_DIM)),
             tfms.SignalFillEmpty(),
         ]
     )
@@ -195,7 +197,7 @@ def create_dataset(
             tfms.RandAffine(
                 prob=1, rotate_range=0.5, shear_range=0.5, padding_mode="zeros"
             ),
-            tfms.Resize((64, 64, 64)),
+            tfms.Resize((RESIZE_DIM)),
             tfms.SignalFillEmpty(),
         ]
     )
@@ -356,6 +358,8 @@ def plot_training(network: Network) -> plt.Axes:
 def main() -> None:
     check_paths()
 
+    print(f"Cuda device: {torch.cuda.get_device_name(0)}")
+
     vc, tc = 2, 2
     bs = 8
     seed = 1001
@@ -369,6 +373,7 @@ def main() -> None:
         pin_memory=torch.cuda.is_available(),
         shuffle=True,
     )
+
     val_dataset = create_dataset(
         subset="validation", validation_cases=vc, test_cases=tc, seed=seed
     )
@@ -378,7 +383,7 @@ def main() -> None:
         num_workers=2,
         pin_memory=torch.cuda.is_available(),
     )
-    device = torch.device("cuda:0")
+    device = torch.device("cuda")
     net = UNet(
         spatial_dims=3,
         in_channels=1,
