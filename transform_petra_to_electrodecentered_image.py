@@ -72,7 +72,9 @@ def jitter_matrix(trans_bounds, rot_bounds, scale_bounds):
     return T @ R @ S
 
 
-def check_img_shapes(img1: nib.nifti1.Nifti1Image, img2: nib.nifti1.Nifti1Image):
+def check_img_shapes(
+    img1: nib.nifti1.Nifti1Image, img2: nib.nifti1.Nifti1Image
+):
     """Takes two nifti-images and checks if the first three dims are the same shape
 
     Args:
@@ -95,7 +97,8 @@ def check_img_shapes(img1: nib.nifti1.Nifti1Image, img2: nib.nifti1.Nifti1Image)
 def check_affine(img1_aff, img2_aff):
     if not np.all(np.isclose(img1_aff, img2_aff)):
         raise ValueError(
-            "Reference and electrode affines do not match\n" "Are they coregistered?"
+            "Reference and electrode affines do not match\n"
+            "Are they coregistered?"
         )
 
 
@@ -136,7 +139,7 @@ def load_electrode_img(
         # assert np.all(ref_img.dataobj.shape[:3] == manlabel_img.dataobj.shape[:3])
         # assert np.all(np.isclose(manlabel_affine, ref_affine))
         check_img_shapes(ref_img, manlabel_img)
-        check_affine(ref_img_affine, manlabel_affine)
+        check_affine(ref_affine, manlabel_affine)
     else:
         # register PETRA to T1
         reg_mat = reg_6DOF(
@@ -158,7 +161,9 @@ def load_electrode_img(
             intorder=0,  # *NOTE: nearest-neighbor = 0, linear = 1, ... (quadratic = 2 ??)
         )
         hlp_img = nib.Nifti1Image(manlabel_vol, ref_affine)
-        nib.save(hlp_img, os.path.join(output_folder, "manlabel_img_coreg.nii.gz"))
+        nib.save(
+            hlp_img, os.path.join(output_folder, "manlabel_img_coreg.nii.gz")
+        )
 
     return ele_img.get_fdata(), manlabel_vol
 
@@ -217,9 +222,7 @@ if __name__ == "__main__":
     )
     output_folder = "cylinder_test"
 
-    register_to_T1 = (
-        True  # set to True if input image is not yet coregistered with T1 of m2m-folder
-    )
+    register_to_T1 = True  # set to True if input image is not yet coregistered with T1 of m2m-folder
     write_resampledT1_as_control = True  # for debugging
 
     # set the size of the resampled image, and the z-offset of the origin
@@ -234,9 +237,7 @@ if __name__ == "__main__":
     boundary_aboveskin = 10
     boundary_belowskin = 20
 
-    jitter_image = (
-        True  # whether to apply a random affine matrix to create more training data
-    )
+    jitter_image = True  # whether to apply a random affine matrix to create more training data
     # max translations in millimeter
     trans_bounds = {"x": [-10, 10], "y": [-10, 10], "z": [-1, 5]}
     # max rotation in degrees
@@ -249,7 +250,9 @@ if __name__ == "__main__":
     if not os.path.exists(output_folder):
         os.mkdir(output_folder)
 
-    ref_img = nib.load(sub_files.reference_volume)  # NOTE: reference_volume = T1.nii.gz
+    ref_img = nib.load(
+        sub_files.reference_volume
+    )  # NOTE: reference_volume = T1.nii.gz
     ref_vol = ref_img.get_fdata()
     ref_affine = ref_img.get_qform()
     ele_vol, manlabel_vol = load_electrode_img(
@@ -283,7 +286,8 @@ if __name__ == "__main__":
     # resample image and save
     # Note: the following part would be iterated (with jitter_image=True) to create sufficient training data
     world_to_world = (
-        world_to_world_org @ jitter_matrix(trans_bounds, rot_bounds, scale_bounds)
+        world_to_world_org
+        @ jitter_matrix(trans_bounds, rot_bounds, scale_bounds)
         if jitter_image
         else world_to_world_org
     )

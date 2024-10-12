@@ -1,13 +1,19 @@
 import logging
 import os.path as op
 from glob import glob
+from typing import Any
 
 import matplotlib.pyplot as plt
 import monai.transforms as tfms
 import numpy as np
 import torch
-from fileconfig import (INPUT_DIR, MASK_SUFFIX, OUTPUT_DIR, SUBJECT_PATTERN,
-                        VOLUME_SUFFIX)
+from fileconfig import (
+    INPUT_DIR,
+    MASK_SUFFIX,
+    OUTPUT_DIR,
+    SUBJECT_PATTERN,
+    VOLUME_SUFFIX,
+)
 from monai.data import ArrayDataset, DataLoader, decollate_batch
 from monai.losses import DiceLoss
 from monai.metrics import DiceMetric
@@ -18,7 +24,7 @@ RESIZE_DIM = (256, 256, 256)
 
 logging.basicConfig(
     level=logging.INFO,
-    filename=f"{OUTPUT_DIR}/docker_model.log",
+    filename=op.join(OUTPUT_DIR, "docker_model.log"),
     filemode="w",
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     datefmt="%d-%b-%y %H:%M:%S",
@@ -255,6 +261,7 @@ class Network:
     validation():
         Executes the validation loop for the neural network.
     """
+
     def __init__(
         self,
         net,
@@ -308,7 +315,7 @@ class Network:
                 logit_map = self.net(x)
                 loss = self.loss_function(logit_map, y)
 
-            with open(f"{OUTPUT_DIR}/loss.txt", "a") as f:
+            with open(op.join(OUTPUT_DIR, "loss.txt"), "a") as f:
                 f.write(f"{str(loss.item())}\n")
 
             self.opt.zero_grad()
@@ -331,7 +338,7 @@ class Network:
                 continue
             dice_val = self.validation()
             epoch_loss /= step
-            with open(f"{OUTPUT_DIR}/epoch_loss.txt", "a") as f:
+            with open(op.join(OUTPUT_DIR, "epoch_loss.txt"), "a") as f:
                 f.write(f"{str(loss.item())}\n")
             self.epoch_loss_values.append(epoch_loss)
             self.metric_values.append(dice_val)
@@ -388,13 +395,13 @@ class Network:
                 "Validate (%d / %d Steps)" % (self.global_step, 10.0)
             )
         mean_dice_val = self.dice_metric.aggregate().item()
-        with open(f"{OUTPUT_DIR}/mean_dice_val.txt", "a") as f:
+        with open(op.join(OUTPUT_DIR, "mean_dice_val.txt"), "a") as f:
             f.write(f"{str(mean_dice_val)}\n")
         self.dice_metric.reset()
         return mean_dice_val
 
 
-def plot_training(network: Network) -> plt.Axes:
+def plot_training(network: Network) -> Any:
     _, axes = plt.subplots(nrows=1, ncols=2)
 
     for data, ax in zip(
@@ -405,7 +412,7 @@ def plot_training(network: Network) -> plt.Axes:
         ax.plot(x, data)
         plt.xlabel("Iteration")
 
-    axes
+    return axes
 
 
 def main() -> None:
@@ -474,7 +481,7 @@ def main() -> None:
     )
 
     ax = plot_training(network)
-    plt.save(f"{OUTPUT_DIR}/training_plot.png", ax)
+    plt.save(op.join(OUTPUT_DIR, "training_plot.png"), ax)
 
 
 if __name__ == "__main__":
