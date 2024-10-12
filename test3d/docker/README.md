@@ -60,7 +60,7 @@ singularity run --nv \
     model.sif
 ```
 
-The tqdm loop is printed to the <jobnumber>.err file.
+The tqdm loop is printed to the `<jobnumber>.err` file.
 Therefore, you can continuously check the progress of the training with:
 
 ```bash
