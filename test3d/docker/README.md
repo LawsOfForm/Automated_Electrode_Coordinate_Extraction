@@ -34,3 +34,35 @@ docker run --rm -it -v /path/to/input/data:/data:ro -v /output/path/to/store/res
 ```bash
 singularity run --nv -B /path/to/input/data:/data -B /output/path/to/store/results/:/results test_model.tar
 ```
+
+## Run the script on the HPC Greifswald
+
+Write a submit file. Insert your email-address.
+
+```bash
+#!/bin/bash
+#SBATCH -J unet_train
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --partition=vision
+#SBATCH -o %j.out
+#SBATCH -e %j.err
+#SBATCH -t 72:00:00
+#SBATCH --mail-type=end
+#SBATCH --mail-user=<email-address>
+
+module load cuda/12.0.0
+module load singularity/3.11.3
+
+singularity run --nv \
+    -B /path/to/input/data:/data \
+    -B /output/path/to/store/results/:/results \
+    model.sif
+```
+
+The tqdm loop is printed to the <jobnumber>.err file.
+Therefore, you can continuously check the progress of the training with:
+
+```bash
+tail -f <jobnumber>.err
+```
