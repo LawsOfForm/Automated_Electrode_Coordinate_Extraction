@@ -478,7 +478,7 @@ def main() -> None:
     )
 
     ax = plot_training(network)
-    plt.save(op.join(OUTPUT_DIR, "training_plot.png"), ax)
+    ax.save(op.join(OUTPUT_DIR, "training_plot.png"))
 
 
 if __name__ == "__main__":
