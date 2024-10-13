@@ -26,13 +26,19 @@ sudo singularity build test_model.tar docker-archive://test_model.tar
 ## Run the Docker skript
 
 ```bash
-docker run --rm -it -v /path/to/input/data:/data:ro -v /output/path/to/store/results/:/results test/model:0.1
+docker run --rm -it \
+    -v /path/to/input/data:/data:ro \
+    -v /output/path/to/store/results/:/results \
+    test/model:0.1
 ```
 
 ## Run the Singularity skript
 
 ```bash
-singularity run --nv -B /path/to/input/data:/data -B /output/path/to/store/results/:/results test_model.tar
+singularity run --nv \ # --nv necessary for GPU support
+    -B /path/to/input/data:/data }
+    -B /output/path/to/store/results/:/results \
+    test_model.sif
 ```
 
 ## Run the script on the HPC Greifswald
@@ -57,7 +63,7 @@ module load singularity/3.11.3
 singularity run --nv \
     -B /path/to/input/data:/data \
     -B /output/path/to/store/results/:/results \
-    model.sif
+    test_model.sif
 ```
 
 The tqdm loop is printed to the `<jobnumber>.err` file.
