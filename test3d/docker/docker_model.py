@@ -7,13 +7,8 @@ import matplotlib.pyplot as plt
 import monai.transforms as tfms
 import numpy as np
 import torch
-from fileconfig import (
-    INPUT_DIR,
-    MASK_SUFFIX,
-    OUTPUT_DIR,
-    SUBJECT_PATTERN,
-    VOLUME_SUFFIX,
-)
+from fileconfig import (INPUT_DIR, MASK_SUFFIX, OUTPUT_DIR, SUBJECT_PATTERN,
+                        VOLUME_SUFFIX)
 from monai.data import ArrayDataset, DataLoader, decollate_batch
 from monai.losses import DiceLoss
 from monai.metrics import DiceMetric
@@ -454,7 +449,7 @@ def main() -> None:
     network = Network(
         net=net,
         scaler=torch.cuda.amp.GradScaler(),
-        opt=torch.optim.Adam(net.parameters(), lr=1e-4),
+        opt=torch.optim.Adam(net.parameters(), lr=1e-3),
         # opt=torch.optim.SGD(
         #    net.parameters(),
         #    lr=5e-3,

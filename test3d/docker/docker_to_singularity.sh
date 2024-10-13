@@ -1,6 +1,6 @@
 #!/bin/bash
 IMAGE_NAME="test/model:0.1"
-SINGULARITY_NAME="model.sif"
+SINGULARITY_NAME="model_lr_1e-3.sif"
 
 docker build -t $IMAGE_NAME .
 docker image save $IMAGE_NAME -o tmp.tar
