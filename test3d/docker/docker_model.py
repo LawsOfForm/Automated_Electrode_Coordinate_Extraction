@@ -262,6 +262,8 @@ class Network:
         Executes the validation loop for the neural network.
     """
 
+    batch_idx = {"image": 0, "mask": 1}
+
     def __init__(
         self,
         net,
@@ -303,12 +305,11 @@ class Network:
             desc="Training (X / X Steps) (loss=X.X)",
             dynamic_ncols=True,
         )
-        batch_idx = {"image": 0, "mask": 1}
         for step, batch in enumerate(epoch_iterator):
             step += 1
             x, y = (
-                batch[batch_idx["image"]].cuda(),
-                batch[batch_idx["mask"]].cuda(),
+                batch[Network.batch_idx["image"]].cuda(),
+                batch[Network.batch_idx["mask"]].cuda(),
             )
 
             with torch.cuda.amp.autocast():
@@ -369,8 +370,6 @@ class Network:
         """
         post_pred = tfms.Compose([tfms.AsDiscrete(argmax=True, to_onehot=2)])
         post_label = tfms.Compose([tfms.AsDiscrete(to_onehot=2)])
-        # post_pred2 = tfms.Compose([tfms.AsDiscrete(argmax=True)])
-        # sigmoid = torch.nn.Sigmoid()
         epoch_iterator_val = tqdm(
             self.val_loader,
             desc="Validate (X / X Steps) (dice=X.X)",
@@ -378,14 +377,11 @@ class Network:
         )
         self.net.eval()
         for batch in epoch_iterator_val:
-            val_inputs, val_labels = batch[0].cuda(), batch[1].cuda()
+            val_inputs, val_labels = (
+                batch[Network.batch_idx["image"]].cuda(),
+                batch[Network.batch_idx["mask"]].cuda(),
+            )
             val_output = self.net(val_inputs)
-
-            val_output_ = val_output.cpu().numpy()
-            val_labels_ = val_labels.cpu().numpy()
-
-            np.save("val_out2.npy", val_output_)
-            np.save("val_in2.npy", val_labels_)
 
             self.dice_metric(
                 y_pred=[post_pred(i) for i in decollate_batch(val_output)],
@@ -394,6 +390,7 @@ class Network:
             epoch_iterator_val.set_description(
                 "Validate (%d / %d Steps)" % (self.global_step, 10.0)
             )
+
         mean_dice_val = self.dice_metric.aggregate().item()
         with open(op.join(OUTPUT_DIR, "mean_dice_val.txt"), "a") as f:
             f.write(f"{str(mean_dice_val)}\n")
