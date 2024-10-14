@@ -33,6 +33,8 @@ while [ -d "${out_dir}" ]; do
     out_dir="${out_base}${model_out}"
 done
 
+mkdir -p "$out_dir"
+
 # Run the model
 # --------------
 # `-B` option in singularity is analog to `-v` in docker
