@@ -43,6 +43,12 @@ singularity run --nv \ # --nv necessary for GPU support
 
 ## Run the script on the HPC Greifswald
 
+Copy the singularity container to the HPC.
+
+```bash
+scp test_model.sif <user>@brain.uni-greifswald.de:~/path/to/store/
+```
+
 Write a submit file. Insert your email-address.
 
 ```bash
@@ -64,6 +70,18 @@ singularity run --nv \
     -B /path/to/input/data:/data \
     -B /output/path/to/store/results/:/results \
     test_model.sif
+```
+
+Submit the job
+
+```bash
+sbatch <submitfile.sh>
+```
+
+See submitted jobs
+
+```bash
+squeue --user=<user>
 ```
 
 The tqdm loop is printed to the `<jobnumber>.err` file.
