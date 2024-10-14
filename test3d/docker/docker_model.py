@@ -443,13 +443,13 @@ def main() -> None:
         channels=(32, 64, 128, 256, 512),
         strides=(2, 2, 2, 2),
         num_res_units=2,
-        act="RELU",
+        act="PRELU",
     ).to(device)
 
     network = Network(
         net=net,
         scaler=torch.cuda.amp.GradScaler(),
-        opt=torch.optim.Adam(net.parameters(), lr=1e-3),
+        opt=torch.optim.Adam(net.parameters(), lr=5e-4),
         # opt=torch.optim.SGD(
         #    net.parameters(),
         #    lr=5e-3,
