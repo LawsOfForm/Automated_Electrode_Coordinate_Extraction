@@ -1,4 +1,5 @@
 *.nii.gz
+*.nii
 __pycache__
 config.m
 paths.py
@@ -6,3 +7,4 @@ reports/*
 reports
 *.sif
 *.tar
+code/Network/modules/*
