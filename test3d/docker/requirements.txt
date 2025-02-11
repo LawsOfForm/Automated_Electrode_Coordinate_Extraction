@@ -1,6 +1,0 @@
-torch==2.2.2
-monai @ git+https://github.com/Project-MONAI/MONAI@dev
-tqdm==4.66
-matplotlib
-nibabel
-scikit-image
