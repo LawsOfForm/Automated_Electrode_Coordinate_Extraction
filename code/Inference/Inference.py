@@ -15,7 +15,8 @@ root = script_directory.parent.parent.resolve()
 # change the path to your image folder in which all images are stored in sub-directories
 root_images = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction'
 # choose a model which you want to use for inference
-model = "best_metric_model_0756_0402_5level_Adamax.pth"
+#model = "best_metric_model_0756_0402_5level_Adamax.pth" #94% of electrdoe detection rate
+model = "best_metric_model_0663_1202_5level_Adam_52tr.pth"
 model_path = os.path.join(root,'code','Network','models', model )
 #model_path = os.path.join(root,'code','Network','models', "best_metric_model_0756_0402_5level_Adamax.pth")
 
@@ -100,7 +101,7 @@ def main(root_images, model_path, overwrite = False):
 
         for nifti_file in nifti_files:
             # Construct the output path for the segmentation
-            output_segmentation_path = nifti_file.replace('_.nii', '_inference.nii')
+            output_segmentation_path = nifti_file.replace('_.nii', '_inference_2.nii')
 
             # Check if the output file already exists
             if os.path.exists(output_segmentation_path) and not args.overwrite:
