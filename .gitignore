@@ -7,4 +7,4 @@ reports/*
 reports
 *.sif
 *.tar
-code/Network/modules/*
+code/Network/models/*
