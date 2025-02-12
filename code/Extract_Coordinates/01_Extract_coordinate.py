@@ -3,16 +3,24 @@ import glob
 import numpy as np
 import pandas as pd
 import nibabel as nib
-from scipy.ndimage import center_of_mass, label
+from scipy.ndimage import center_of_mass, label, sum
 from scipy.spatial.distance import euclidean
-from scipy.ndimage import measurements
+#from scipy.ndimage import measurements
 from nilearn import image
 from itertools import permutations
+from pathlib import Path
+
+# define most import path variables
+script_directory = Path(__file__).parent.resolve()
+root = script_directory.parent.parent.resolve()
+
+root_images = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction'
+Table_path = os.path.join(root,'code','Extract_Coordinates','Tables')
 
 def find_nifti_files(base_path):
-    #pattern = os.path.join(base_path, "sub-*", "unzipped", "*inference.nii.gz")
+    pattern = os.path.join(base_path, "sub-*", "unzipped", "*inference.nii.gz")
     #pattern = os.path.join(base_path, "sub-*", "electrode_extraction","ses*","run*", "*cut_pads_inference.nii.gz")
-    pattern = os.path.join(base_path, "sub-*", "electrode_extraction","ses*","run*", "petra_inference.nii.gz")
+    #pattern = os.path.join(base_path, "sub-*", "electrode_extraction","ses*","run*", "petra_inference_2.nii.gz")
     return glob.glob(pattern)
 
 def load_nifti(file_path):
@@ -29,7 +37,8 @@ def find_electrode_clusters(image):
     
     if num_features > 4:
         # Calculate sizes of all clusters
-        cluster_sizes = measurements.sum(image > 0, labeled_array, index=range(1, num_features + 1))
+        #cluster_sizes = measurements.sum(image > 0, labeled_array, index=range(1, num_features + 1))
+        cluster_sizes = sum(image > 0, labeled_array, index=range(1, num_features + 1))
         
         # Calculate average cluster size
         average_cluster_size = np.mean(cluster_sizes)
@@ -157,7 +166,7 @@ def process_nifti_files(base_path):
     return pd.DataFrame(results)
 
 # Usage
-base_path = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction'
-df = process_nifti_files(base_path)
-Table_path = '/media/Data03/Thesis/code/Inference/inference/Coordinates'
-df.to_csv(os.path.join(Table_path,'electrode_positions_orig_img.csv'), index=False)
+
+df = process_nifti_files(base_path=root_dir)
+
+df.to_csv(os.path.join(Table_path,'electrode_positions.csv'), index=False)

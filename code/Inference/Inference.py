@@ -13,7 +13,9 @@ script_directory = Path(__file__).parent.resolve()
 root = script_directory.parent.parent.resolve()
 
 # change the path to your image folder in which all images are stored in sub-directories
-root_images = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction'
+#root_images = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction'
+root_images = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction'
+
 # choose a model which you want to use for inference
 #model = "best_metric_model_0756_0402_5level_Adamax.pth" #94% of electrdoe detection rate
 model = "best_metric_model_0663_1202_5level_Adam_52tr.pth"
@@ -94,30 +96,34 @@ def main(root_images, model_path, overwrite = False):
     # Loop through each subject directory
     for subject_dir in glob.glob(os.path.join(root_images, 'sub-*')):
         #subject = os.path.basename(subject_dir)
-        unzipped_dir = os.path.join(subject_dir, 'electrode_extraction','ses*','run*')
+        #unzipped_dir = os.path.join(subject_dir, 'electrode_extraction','ses*','run*')
+        unzipped_dir = os.path.join(subject_dir, 'unzipped')
 
         # Find all matching NIfTI files in the unzipped directory
-        nifti_files = glob.glob(os.path.join(unzipped_dir, 'petra_.nii.gz'))
+        #nifti_files = glob.glob(os.path.join(unzipped_dir, 'petra_.nii.gz'))
+        nifti_files = glob.glob(os.path.join(unzipped_dir, 'rsub*_PDw.nii'))
 
-        for nifti_file in nifti_files:
-            # Construct the output path for the segmentation
-            output_segmentation_path = nifti_file.replace('_.nii', '_inference_2.nii')
+        if nifti_files:
+            for nifti_file in nifti_files:
+                # Construct the output path for the segmentation
+                #output_segmentation_path = nifti_file.replace('_.nii', '_inference.nii')
+                output_segmentation_path = nifti_file.replace('.nii', '_inference.nii.gz')
 
-            # Check if the output file already exists
-            if os.path.exists(output_segmentation_path) and not args.overwrite:
-                print(f"Skipping {nifti_file} because {output_segmentation_path} already exists.")
-                continue
+                # Check if the output file already exists
+                if os.path.exists(output_segmentation_path) and not args.overwrite:
+                    print(f"Skipping {nifti_file} because {output_segmentation_path} already exists.")
+                    continue
 
-            # Load and preprocess the image, preserving the affine matrix
-            image, affine, _ = load_image(nifti_file)
+                # Load and preprocess the image, preserving the affine matrix
+                image, affine, _ = load_image(nifti_file)
 
-            # Perform segmentation
-            segmentation = segment_image(model, image)
-            print(f'Shape of segmentation for {nifti_file}: {segmentation.shape}')
+                # Perform segmentation
+                segmentation = segment_image(model, image)
+                print(f'Shape of segmentation for {nifti_file}: {segmentation.shape}')
 
-            # Save the segmentation result with the original affine matrix
-            save_segmentation(segmentation, output_segmentation_path, affine)
-            print(f"Segmentation saved to {output_segmentation_path}")
+                # Save the segmentation result with the original affine matrix
+                save_segmentation(segmentation, output_segmentation_path, affine)
+                print(f"Segmentation saved to {output_segmentation_path}")
 
 if __name__ == "__main__":
     # Set up command-line argument parsing

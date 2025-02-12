@@ -1,16 +1,21 @@
 import pandas as pd
 import ast
 import numpy as np
-
-# Read the CSV files
-df_A = pd.read_csv('DF_2Methods_2Raters_All_Coord.csv')
-df_B = pd.read_csv('electrode_positions.csv')
-
-import pandas as pd
+from pathlib import Path
+import os
 import ast
 
-# Read the CSV file
-df = pd.read_csv('electrode_positions.csv')
+# define most import path variables
+script_directory = Path(__file__).parent.resolve()
+root = script_directory.parent.parent.resolve()
+
+path_Tables = os.path.join(root, 'code','Extract_Coordinates','Tables')
+
+# Read the CSV files
+df = pd.read_csv(os.path.join(path_Tables,'electrode_positions.csv'))
+
+#If you have a dataframe with baseline electrode coordinates you can merge it with the electrode_positions.csv file
+df_baseline = pd.read_csv(os.path.join(path_Tables,'DF_2Methods_2Raters_All_Coord.csv'))
 
 # Process each electrode
 electrodes = ['anode_mni', 'cathode1_mni', 'cathode2_mni', 'cathode3_mni']

@@ -1,5 +1,14 @@
 import pandas as pd
 import numpy as np
+from pathlib import Path
+import os
+
+# define most import path variables
+script_directory = Path(__file__).parent.resolve()
+root = script_directory.parent.parent.resolve()
+
+# Load the data
+df = pd.read_csv(os.path.join(root,'code','Electrode_Coordinates','Tables','combined_electrode_positions.csv'))
 
 def euclidean_distance(coord1, coord2):
     return np.sqrt(np.sum((np.array(coord1) - np.array(coord2))**2))
@@ -63,9 +72,6 @@ def check_and_correct_coordinates(df):
                                 df.loc[mask, 'Coordinates'] = full_auto_coords[correct_electrode][num]
 
     return df
-
-# Load the data
-df = pd.read_csv('combined_electrode_positions.csv')
 
 # Apply the correction
 corrected_df = check_and_correct_coordinates(df)
