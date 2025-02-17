@@ -19,13 +19,6 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 [![Contributors][contributors-shield]][https://github.com/LawsOfForm][https://github.com/sriemannn]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![project_license][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -75,7 +68,7 @@
       </ul>
     </li>
     <li><a href="#network">Network</a></li>
-    <li><a href="#inference">Inference</a></li>
+    <li><a href="#inference">Segmentation</a></li>
     <li><a href="#coordinate-extraction">Coordinate Extraction</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -436,15 +429,15 @@ Run the code
 (network)$ python3 model.py
 ```
 
-## Inference
+## Segmentation
 
 After each training session a test dice metric is displayed at the terminal. The model with the best dice metric will automatically safed. If you want to safe this model copy and paste it in the *models* folder and rename it.
-You can use the model for inference. Therefore go to the inference folder */repository/code/Inference*
+You can use the model for inference. Therefore go to the inference folder */repository/code/Segmentation*
 
 Befor you start change the __root_images__ and __model__ variable at the top of the script.
 
 ```sh
-(base)$ cd repository/code/Inference
+(base)$ cd repository/code/Segmentation
 ```
 
 If not already done active the virtual environment
@@ -456,13 +449,13 @@ If not already done active the virtual environment
 Run the code
 
 ```sh
-(network)$ python3 Inference.py
+(network)$ python3 Segmentation.py
 ```
 
 To overwrite already segmented images use
 
 ```sh
-(network)$ python3 Inference.py --overwrite
+(network)$ python3 Segmentation.py --overwrite
 ```
 
 ## Coordinate Extraction

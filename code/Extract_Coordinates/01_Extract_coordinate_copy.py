@@ -5,24 +5,25 @@ import pandas as pd
 import nibabel as nib
 from scipy.ndimage import center_of_mass, label, sum
 from scipy.spatial.distance import euclidean
+#from scipy.ndimage import measurements
 from nilearn import image
 from itertools import permutations
 from pathlib import Path
-import logging  # Import the logging module
 
-# Define most important path variables
+# define most import path variables
 script_directory = Path(__file__).parent.resolve()
 root = script_directory.parent.parent.resolve()
 
-root_images = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction'
-Table_path = os.path.join(root, 'code', 'Extract_Coordinates', 'Tables')
+#root_images = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction'
 
-# Set up logging configuration
-log_file_path = os.path.join(Table_path, 'electrode_extraction.log')
-logging.basicConfig(filename=log_file_path, level=logging.INFO, format='%(asctime)s - %(message)s')
+root_images = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction'
+Table_path = os.path.join(root,'code','Extract_Coordinates','Tables')
+
 
 def find_nifti_files(base_path):
     pattern = os.path.join(base_path, "sub-*", "unzipped", "*inference.nii.gz")
+    #pattern = os.path.join(base_path, "sub-*", "electrode_extraction","ses*","run*", "*cut_pads_inference.nii.gz")
+    #pattern = os.path.join(base_path, "sub-*", "electrode_extraction","ses*","run*", "petra_inference_2.nii.gz")
     return glob.glob(pattern)
 
 def load_nifti(file_path):
@@ -38,8 +39,14 @@ def find_electrode_clusters(image):
     clusters = {}
     
     if num_features > 4:
+        # Calculate sizes of all clusters
+        #cluster_sizes = measurements.sum(image > 0, labeled_array, index=range(1, num_features + 1))
         cluster_sizes = sum(image > 0, labeled_array, index=range(1, num_features + 1))
+        
+        # Calculate average cluster size
         average_cluster_size = np.mean(cluster_sizes)
+        
+        # Threshold for cluster size (20% of average)
         size_threshold = 0.2 * average_cluster_size
         
         for i in range(1, num_features + 1):
@@ -64,33 +71,36 @@ def find_electrode_clusters(image):
     
     return clusters
 
-def is_valid_configuration(clusters, counters, subject, session, run):
+def is_valid_configuration(clusters,counters, subject, session, run):
+
     if len(clusters) != 4:
-        if len(clusters) == 3:
-            counters['three_mask_detected'] += 1
+        if len(clusters)==3:
+            counters['three_mask_detected'] +=1
             counters['three_mask_detected_sub'].append(f'{subject}_{session}_{run}')
-        elif len(clusters) == 2:
-            counters['two_mask_detected'] += 1
+        elif len(clusters)==2:
+            counters['two_mask_detected'] +=1
             counters['two_mask_detected_sub'].append(f'{subject}_{session}_{run}')
-        elif len(clusters) == 1:
-            counters['one_mask_detected'] += 1
+        elif len(clusters)==1:
+            counters['one_mask_detected'] +=1
             counters['one_mask_detected_sub'].append(f'{subject}_{session}_{run}')
-        elif len(clusters) == 0:
-            counters['no_mask_detected'] += 1
+        elif len(clusters)==0:
+            counters['no_mask_detected'] +=1
             counters['no_mask_detected_sub'].append(f'{subject}_{session}_{run}')
         else:
-            counters['more_then_four_mask_detected'] += 1
+            counters['more_then_four_mask_detected'] +=1
             counters['more_then_four_mask_detected_sub'].append(f'{subject}_{session}_{run}')
         return False, counters
     
     centers = [cluster['center_of_mass'] for cluster in clusters.values()]
     
+    # Check all possible permutations of centers
     for perm in permutations(centers):
         center = perm[0]
         satellites = perm[1:]
         
         distances = [euclidean(center, satellite) for satellite in satellites]
         
+        # Check if all distances are within the valid range
         if all(5 <= d <= 70 for d in distances):
             return True, counters
     
@@ -121,6 +131,7 @@ def process_nifti_files(base_path):
         session = parts[-3]
         run = parts[-2]
 
+        # Load the image using nibabel to get the affine matrix
         nii_img = nib.load(file_path)
         affine = nii_img.affine
         image = nii_img.get_fdata()
@@ -133,6 +144,7 @@ def process_nifti_files(base_path):
             counters['valid_configurations'] += 1
             cluster_list = list(clusters.values())
 
+            # Transform voxel coordinates to MNI coordinates
             anode_mni = voxel_to_mni(cluster_list[0]['center_of_mass'], affine)
             cathode1_mni = voxel_to_mni(cluster_list[1]['center_of_mass'], affine)
             cathode2_mni = voxel_to_mni(cluster_list[2]['center_of_mass'], affine)
@@ -150,12 +162,14 @@ def process_nifti_files(base_path):
         else:
             counters['invalid_configurations'] += 1
 
-    # Log the counters
     for key, value in counters.items():
-        logging.info(f"{key.replace('_', ' ').capitalize()}: {value}")
+        print(f"{key.replace('_', ' ').capitalize()}: {value}")
+
 
     return pd.DataFrame(results)
 
 # Usage
+
 df = process_nifti_files(base_path=root_images)
-df.to_csv(os.path.join(Table_path, 'electrode_positions.csv'), index=False)
+
+df.to_csv(os.path.join(Table_path,'electrode_positions.csv'), index=False)
