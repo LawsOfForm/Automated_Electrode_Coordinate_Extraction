@@ -117,9 +117,19 @@ def process_nifti_files(base_path):
     for file_path in nifti_files:
         counters['total_images'] += 1
         parts = file_path.split(os.sep)
-        subject = parts[-5]
-        session = parts[-3]
-        run = parts[-2]
+        
+        
+        ##depends on files and data structure 
+        ## if subject, session and run information in path structure use
+        #subject = parts[-5]
+        #session = parts[-3]
+        #run = parts[-2]
+
+        ## in information in file name use
+
+        subject = parts[-1].split('_')[0]
+        session = parts[-1].split('_')[1]
+        run = parts[-1].split('_')[3]
 
         nii_img = nib.load(file_path)
         affine = nii_img.affine
