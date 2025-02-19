@@ -14,7 +14,8 @@ root = script_directory.parent.parent.resolve()
 
 # change the path to your image folder in which all images are stored in sub-directories
 #root_images = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction'
-root_images = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction'
+#root_images = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction'
+root_images = '/media/Data03/Projects/PlastMem'
 
 # choose a model which you want to use for inference
 #model = "best_metric_model_0756_0402_5level_Adamax.pth" #94% of electrdoe detection rate
@@ -35,10 +36,14 @@ def load_image(image_path):
         tfms.LoadImage(image_only=True),
         tfms.ScaleIntensity(),
         tfms.EnsureChannelFirst(),
+        tfms.Resize((224,288,288)),   
     ])
     image = transform(image_path)
 
-    return image, affine, header
+    # Create a NIfTI image from the transformed data
+    transformed_nii_img = nib.Nifti1Image(image.squeeze().numpy(), affine)
+
+    return image, affine, header, transformed_nii_img
 
 def get_model(model_path):
     """Load the trained model."""
@@ -94,20 +99,25 @@ def main(root_images, model_path, overwrite = False):
     model = get_model(model_path)
 
     # Loop through each subject directory
-    for subject_dir in glob.glob(os.path.join(root_images, 'sub-*')):
+    #for subject_dir in glob.glob(os.path.join(root_images, 'sub-*')):
+    for subject_dir in glob.glob(os.path.join(root_images, 'sub-*','ses-*')):
         #subject = os.path.basename(subject_dir)
         #unzipped_dir = os.path.join(subject_dir, 'electrode_extraction','ses*','run*')
-        unzipped_dir = os.path.join(subject_dir, 'unzipped')
+        #unzipped_dir = os.path.join(subject_dir, 'unzipped')
+        unzipped_dir = os.path.join(subject_dir, 'anat')
 
         # Find all matching NIfTI files in the unzipped directory
         #nifti_files = glob.glob(os.path.join(unzipped_dir, 'petra_.nii.gz'))
-        nifti_files = glob.glob(os.path.join(unzipped_dir, 'rsub*_PDw.nii'))
+        #nifti_files = glob.glob(os.path.join(unzipped_dir, 'rsub*_PDw.nii'))
+        nifti_files = glob.glob(os.path.join(unzipped_dir, 'sub*_T1w.nii.gz'))
 
         if nifti_files:
             for nifti_file in nifti_files:
                 # Construct the output path for the segmentation
                 #output_segmentation_path = nifti_file.replace('_.nii', '_inference.nii')
-                output_segmentation_path = nifti_file.replace('.nii', '_inference.nii.gz')
+                #output_segmentation_path = nifti_file.replace('.nii', '_inference.nii.gz')
+                output_segmentation_path = nifti_file.replace('.nii.gz', '_segmented.nii.gz')
+                output_transformed_path = nifti_file.replace('.nii.gz', '_transformed.nii.gz')
 
                 # Check if the output file already exists
                 if os.path.exists(output_segmentation_path) and not args.overwrite:
@@ -115,7 +125,11 @@ def main(root_images, model_path, overwrite = False):
                     continue
 
                 # Load and preprocess the image, preserving the affine matrix
-                image, affine, _ = load_image(nifti_file)
+                image, affine, _, transformed_nii_img = load_image(nifti_file)
+
+                # Save the transformed image
+                nib.save(transformed_nii_img, output_transformed_path)
+                print(f"Transformed image saved to {output_transformed_path}")
 
                 # Perform segmentation
                 segmentation = segment_image(model, image)
@@ -127,7 +141,7 @@ def main(root_images, model_path, overwrite = False):
 
 if __name__ == "__main__":
     # Set up command-line argument parsing
-    parser = argparse.ArgumentParser(description="Run inference on NIfTI images.")
+    parser = argparse.ArgumentParser(description="Run segmentation on NIfTI images.")
     parser.add_argument(
         "--overwrite",
         action="store_true",
