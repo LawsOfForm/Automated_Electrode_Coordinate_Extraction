@@ -14,7 +14,8 @@ import logging  # Import the logging module
 script_directory = Path(__file__).parent.resolve()
 root = script_directory.parent.parent.resolve()
 
-root_images = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction'
+root_images = '/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction' # Research Unit data
+#root_images = '/media/Data03/Thesis/Hering/derivatives/automated_electrode_extraction' #
 Table_path = os.path.join(root, 'code', 'Extract_Coordinates', 'Tables')
 
 # Set up logging configuration
@@ -22,7 +23,9 @@ log_file_path = os.path.join(Table_path, 'electrode_extraction.log')
 logging.basicConfig(filename=log_file_path, level=logging.INFO, format='%(asctime)s - %(message)s')
 
 def find_nifti_files(base_path):
-    pattern = os.path.join(base_path, "sub-*", "unzipped", "*inference.nii.gz")
+    #pattern = os.path.join(base_path, "sub-*", "unzipped", "*inference.nii.gz")
+    pattern = os.path.join(base_path, "sub-*", "electrode_extraction","ses*","run*", "petra_inference.nii.gz")
+
     return glob.glob(pattern)
 
 def load_nifti(file_path):

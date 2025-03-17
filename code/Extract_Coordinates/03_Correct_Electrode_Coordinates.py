@@ -6,9 +6,9 @@ import os
 # define most import path variables
 script_directory = Path(__file__).parent.resolve()
 root = script_directory.parent.parent.resolve()
-
+tables = os.path.join(root,'code','Extract_Coordinates','Tables')
 # Load the data
-df = pd.read_csv(os.path.join(root,'code','Electrode_Coordinates','Tables','combined_electrode_positions.csv'))
+df = pd.read_csv(os.path.join(tables,'combined_electrode_positions.csv'))
 
 def euclidean_distance(coord1, coord2):
     return np.sqrt(np.sum((np.array(coord1) - np.array(coord2))**2))
@@ -52,13 +52,20 @@ def check_and_correct_coordinates(df):
                                     for electrode in electrodes}
 
                     #generate template in which anode is paired with anode etc
-                    correct_mapping = {electrode: electrode for electrode in electrodes}
+                    correct_mapping = {}
+                    used_electrodes = set()  # Track electrodes that have already been mapped
+
                     for electrode_distance in dict_electrode_distances.keys():
-                        closest_match = min( dict_electrode_distances[electrode_distance], key= dict_electrode_distances[electrode_distance].get)
-                        if closest_match != electrode:
+                        # Filter out electrodes that have already been used
+                        available_electrodes = {k: v for k, v in dict_electrode_distances[electrode_distance].items() if k not in used_electrodes}
+                        if not available_electrodes:
+                            continue  # Skip if no available electrodes left
+                        closest_match = min(available_electrodes, key=available_electrodes.get)
+                        if closest_match != electrode_distance:
                             print(f"Potential mix-up detected in {session}, {run}:")
                             print(f"{electrode_distance} coordinates seem to match {closest_match}")
                             correct_mapping[electrode_distance] = closest_match
+                            used_electrodes.add(closest_match)  # Mark this electrode as used
                         dict_electrode_distances[electrode_distance].pop(closest_match)
 
                     # Correct the coordinates if mix-ups are detected
@@ -66,9 +73,6 @@ def check_and_correct_coordinates(df):
                         if electrode != correct_electrode:
                             for num,dimension in enumerate(['X', 'Y', 'Z']):
                                 mask = (df['Subject'] == subject) & (df['Session'] == session) & (df['run'] == run) & (df['Electrode'] == electrode) & (df['Method'] == 'full-automated') & (df['Dimension'] == dimension)
-                                #df.loc[mask, 'new_coordinate'] = full_auto_coords[correct_electrode][num]
-                                #rint(full_auto_coords[correct_electrode][num])
-                                #print(df.loc[mask, 'new_coordinate'].values[0])
                                 df.loc[mask, 'Coordinates'] = full_auto_coords[correct_electrode][num]
 
     return df
@@ -77,4 +81,4 @@ def check_and_correct_coordinates(df):
 corrected_df = check_and_correct_coordinates(df)
 
 # Save the corrected data
-corrected_df.to_csv('corrected_electrode_positions.csv', index=False)
+corrected_df.to_csv(os.path.join(tables,'corrected_electrode_positions.csv'), index=False)
