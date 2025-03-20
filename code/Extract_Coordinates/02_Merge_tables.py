@@ -74,13 +74,13 @@ column_order = ['Experiment', 'Subject', 'Session', 'run', 'Rater', 'Method', 'E
 df_results = df_results[column_order]
 
 # Merge df_results with df_original
-df_combined = pd.concat([df_A, df_results], ignore_index=True)
+df_combined = pd.concat([df_baseline, df_results], ignore_index=True)
 
 # Sort the combined dataframe
 df_combined = df_combined.sort_values(['Experiment', 'Subject', 'Session', 'run', 'Rater', 'Method', 'Electrode', 'Dimension', 'Coordinates'])
 
 # Save the combined dataframe to a new CSV file
-df_combined.to_csv('combined_electrode_positions.csv', index=False)
+df_combined.to_csv(os.path.join(path_Tables,'combined_electrode_positions.csv'), index=False)
 
 print("Combined CSV file has been created: combined_electrode_positions.csv")
 
