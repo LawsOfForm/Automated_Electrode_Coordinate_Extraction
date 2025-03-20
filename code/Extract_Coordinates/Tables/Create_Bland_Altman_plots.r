@@ -16,8 +16,10 @@ file.path()
 path_root <- dirname(this.path())
 path_figures <- file.path(path_root,'Figures')
 path_tables <- file.path(path_root,'Tables')
+path_tables <- file.path('/media/Data03/Projects/Paper_Method_Auto_Semi_Manual/tables')
+
 #path_japan <- '/media/Data03/Projects/Paper_Method_Auot_Semi_Manual/figures'
-path_japan <- file.path(path_root,'Figures')
+path_japan <- file.path('/media/Data03/Projects/Paper_Method_Auto_Semi_Manual/figures')
 
 #path_japan <- '/media/Data03/Projects/Automated_Electrode_Extraction/Poster_Japan/Poster_Japan_3/images'
 
@@ -48,6 +50,7 @@ print(unique(df$Experiment))
 # delete all control data points but do not delete if you want check precision
 #df <- df[df$Session != "ses-0", ]
 df$Method[df$run == "baseline"] <- "baseline"
+df$Method[df$Method == "half-automated"] <- "semi-automated"
 View(df)
 
 
@@ -98,8 +101,8 @@ sd_multiplier <- 1.5
     theme(
       panel.background = element_rect(fill = "white", color = "black"),
       plot.background = element_rect(fill = "white"),
-      axis.text = element_text(size = 23),
-      axis.title = element_text(size = 25),
+      axis.text = element_text(size = 20),
+      axis.title = element_text(size = 22),
       #plot.title = element_text(size = 41, face = "bold"),
       legend.text = element_text(size = 20),
       legend.title = element_text(size = 22),
@@ -114,13 +117,24 @@ sd_multiplier <- 1.5
     scale_fill_manual(values = cbf_colors) + # Use the color-blind friendly palette for fill
     scale_shape_manual(values = cbf_shapes) + # Use different shapes for each electrode
     guides(
-      fill = guide_legend(override.aes = list(shape = 21, size = 10, stroke = 0)),
-      shape = guide_legend(override.aes = list(size = 10, stroke = 2))
-    ) +
+      fill = guide_legend(override.aes = list(shape = 21, size = 8, stroke = 0)),
+      shape = guide_legend(override.aes = list(size = 8, stroke = 2))
+    ) #+
     # Use the color-blind friendly palette
-    scale_x_continuous(limits = c(70, 130), breaks = seq(70, 130, by = 20)) +
-    scale_y_continuous(limits = c(-35, 25), breaks = seq(-35, 25, by = 5)) # Set x and y axis limits # You can change the color palette as needed
+    #scale_x_continuous(limits = c(70, 130), breaks = seq(70, 130, by = 20)) +
+    #scale_y_continuous(limits = c(-35, 25), breaks = seq(-35, 25, by = 5)) # Set x and y axis limits # You can change the color palette as needed
 
+    if (COI == "Euclidean_Norm")
+    { plot <-plot +
+    scale_x_continuous(limits = c(70, 130), breaks = seq(70, 130, by = 20)) +
+    scale_y_continuous(limits = c(-35, 10), breaks = seq(-35, 10, by = 5)) # Set x and y axis limits # You can change the color palette as needed
+    }
+    else {
+           { plot <-plot +
+    scale_x_continuous(limits = c(-100, 100), breaks = seq(-100, 100, by = 25)) +
+    scale_y_continuous(limits = c(-55, 55), breaks = seq(-55, 55, by = 10)) # Set x and y axis limits # You can change the color palette as needed
+    }
+    }
 
   # Determine file name
   file_name <- glue("BlandAltmanPlot_{method_1}_{method_2}_{COI}.png")
@@ -141,27 +155,31 @@ sd_multiplier <- 1.5
   total_points <- nrow(df)
   percentage_within_loa <- (points_within_loa / total_points) * 100
 
- 
- 
-
       # Count points outside LoA belonging to rDLPFC
   points_outside_rdlpfc <- sum((df$Difference < LoA2 | df$Difference > LoA1) & df$Area == "rDLPFC")
-  result <- df[df$Difference < LoA2 | df$Difference > LoA1, c("Subject", "Session", "run")]
+  result <- df[df$Difference < LoA2 | df$Difference > LoA1, c("Subject", "Session", "run","Electrode",method_1,method_2)]
   # Then, save the result to a CSV file
   write.csv(result, file = file.path(path_tables,glue("points_outside_LoA_{method_1}_{method_2}_{COI}.csv")), row.names = FALSE)
   write.csv(result, file = file.path(path_japan,"points_outside_LoA__{method_1}_{method_2}_{COI}.csv"), row.names = FALSE)
   
+  # Create filename using glue (ensure {method_1}, {method_2}, and {COI} exist in your environment)
+    txt_file <- file.path(path_tables, glue::glue("points_outside_LoA_{method_1}_{method_2}_{COI}.txt"))
+
+    # Redirect console output to file
+    sink(txt_file)
     # Print the information for points outside LoA
   cat("Points outside Limits of Agreement:\n")
-  print(result)
-  # Print the parameters and count
-  cat("Bias:", round(bias, 4), "\n")
-  cat("Upper Limit of Agreement (LoA1):", round(LoA1, 4), "\n")
-  cat("Lower Limit of Agreement (LoA2):", round(LoA2, 4), "\n")
-  cat("Points within LoA:", points_within_loa, "out of", total_points, "\n")
-  cat("Percentage within LoA:", round(percentage_within_loa, 2), "%\n\n")
-  cat("Points outside LoA:", points_outside_loa, "\n")
-  cat("Points outside LoA belonging to rDLPFC:", points_outside_rdlpfc, "\n\n")
+print(result)
+cat("\nBias:", round(bias, 4), 
+    "\nUpper Limit of Agreement (LoA1):", round(LoA1, 4),
+    "\nLower Limit of Agreement (LoA2):", round(LoA2, 4),
+    "\nPoints within LoA:", points_within_loa, "out of", total_points,
+    "\nPercentage within LoA:", round(percentage_within_loa, 2), "%",
+    "\nPoints outside LoA:", points_outside_loa,
+    "\nPoints outside LoA belonging to rDLPFC:", points_outside_rdlpfc, "\n")
+
+    # Return output to console
+    sink()
 
   return(plot)
 }
@@ -301,11 +319,11 @@ sd_multiplier <- 1.5
     theme(
       panel.background = element_rect(fill = "white", color = "black"),
       plot.background = element_rect(fill = "white"),
-      axis.text = element_text(size = 35),
-      axis.title = element_text(size = 31),
-      plot.title = element_text(size = 41, face = "bold"),
-      legend.text = element_text(size = 35),
-      legend.title = element_text(size = 38),
+      axis.text = element_text(size = 31),
+      axis.title = element_text(size = 28),
+      plot.title = element_text(size = 35, face = "bold"),
+      legend.text = element_text(size = 31),
+      legend.title = element_text(size = 33),
       legend.key.size = unit(5, "lines"), 
       legend.position = "top",
       legend.direction = "horizontal",
@@ -445,22 +463,23 @@ bland_altman_data <- bland_altman_data %>%
 # Call the function
 create_bland_altman_plot_all(bland_altman_data, path_japan, path_figures,method_1,method_2,COI)
 
+return(bland_altman_data)
 }
 
 ## -loop thour all possible differences and method pairs
 diff_list <- c("Euclidean_Norm", "X", "Y", "Z")
-#method_list <- c("baseline","full-automated", "half-automated", "manually")
-method_list <- c("full-automated", "half-automated", "manually")
+#method_list <- c("baseline","full-automated", "semi-automated", "manually")
+method_list <- c("full-automated", "semi-automated", "manually")
 method_pairs <- list(
-  c("full-automated", "half-automated"),
+  c("full-automated", "semi-automated"),
   c("full-automated", "manually"),
-  c("half-automated", "manually")
+  c("semi-automated", "manually")
 )
 
 #method_pairs <- list(
-#  c("baseline", "full-automated"),
-#  c("baseline", "half-automated"),
-#  c("baseline", "manually")
+#  c("baseline", "manually"),
+#  c("baseline", "semi-automated"),
+#  c("baseline", "full-automated")
 #)
 Area_List <- c('rOTC','lTPJ','rDLPFC')
 
@@ -474,11 +493,25 @@ for (element in diff_list){
     print(paste("Method 2:", method_2))
     print("---")  # Add a separator for clarity
 
+
     #run_all_input(df,method_1, method_2, COI, path_root, path_japan, path_figures,path_tables)
     
     for (area in Area_List){
         AOI <- area
-        run_all_input(df,method_1, method_2, COI, AOI, path_root, path_japan, path_figures,path_tables)
+     #if filter of subject, session, run for first method pair "full-automated", "semi-automated" exists use it    
+    df_1 <- df
+    if (exists("filter_df")){
+    # filter for methode comparison  
+     df_1 <- df_1 %>% semi_join(filter_df, by = c("Subject", "Session", "run"))
+     write.csv(df_1, glue("filtered_corrected_electrode_positions_{method_1}_{method_2}_{COI}_{AOI}.csv"), row.names = FALSE)
+    # filter for baseline
+    #  df_1 <- df_1 %>% semi_join(filter_df, by = c("Subject"))
+    }
+
+    filter_df <- run_all_input(df_1,method_1, method_2, COI, AOI, path_root, path_japan, path_figures,path_tables)
+    #run_all_input(df,method_1, method_2, COI, AOI, path_root, path_japan, path_figures,path_tables)
+ 
+    
     }
 }
 }

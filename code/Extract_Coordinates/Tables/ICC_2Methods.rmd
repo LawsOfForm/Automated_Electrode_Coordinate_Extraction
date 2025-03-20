@@ -1,0 +1,150 @@
+---
+output:
+  reprex::reprex_document:
+    venue: "gh"
+    advertise: FALSE
+    session_info: TRUE
+    style: TRUE
+    comment: "#;-)"
+    tidyverse_quiet: FALSE
+    std_out_err: TRUE
+knit: reprex::reprex_render
+---
+
+```{r}
+library(irr)
+library(this.path)
+#path_table <- "/media/Data03/Thesis/code/Inference/inference/Coordinates"
+path_table <- this.path()
+# Load the data from the CSV file
+# Make sure to replace "your_file_path.csv" with the actual path to your file
+data <- read.csv(file.path(path_table,"filtered_corrected_electrode_positions.csv"))
+#data <- read.csv(file.path(path_table,"corrected_electrode_positions.csv"))
+
+# Filter the data for the two methods you want to compare
+data_subset <- data[data$Method %in% c("half-automated", "full-automated"), ]
+View(data_subset)
+```
+
+```{r}
+
+# Reshape the data to have the Euclidean Norm values for each method in separate columns
+# This assumes that each electrode, run, session etc. has two rows, one for each method.
+reshaped_data <- reshape(data_subset,
+                          idvar = c("Subject", "Session", "run", "Experiment", "Electrode"),
+                          timevar = "Method",
+                          direction = "wide",
+                          drop = c("Rater","X", "Y", "Z"))
+
+# The resulting column names might be a bit unwieldy, so let's clean them up
+colnames(reshaped_data) <- c("Subject", "Session", "run", "Experiment", "Electrode", "Euclidean_Norm.full", "Euclidean_Norm.half")
+View(reshaped_data)
+```
+
+
+```{r}
+# Now, calculate the ICC.  We'll use ICC(1,1) here, which is appropriate 
+# when you have different raters (or in this case, methods) rating each target.
+# If you had the *same* raters rating *all* targets, you'd want a different ICC.
+icc_result <- icc(reshaped_data[, c("Euclidean_Norm.half", "Euclidean_Norm.full")], model = "oneway", type = "agreement", unit = "single")
+
+# Print the ICC results
+print(icc_result)
+
+# If you just want the ICC value:
+icc_value <- icc_result$value
+print(paste("ICC Value:", icc_value))
+
+```
+
+```{r}
+normality_test <- function(df, column) {
+qqnorm(df$column)
+qqline(df$column)
+# if 
+shapiro.test(df$column)
+ks.test(df$column, "pnorm")
+}
+normality_test(reshaped_data, "Euclidean_Norm.half")
+normality_test(reshaped_data, "Euclidean_Norm.full")
+```
+
+```{r}
+# Now, calculate the ICC.  We'll use ICC(1,1) here, which is appropriate 
+# when you have different raters (or in this case, methods) rating each target.
+# If you had the *same* raters rating *all* targets, you'd want a different ICC.
+reshaped_data_fil <- reshaped_data %>%
+            filter(Electrode %in% c("Anode"))
+icc_result <- icc(reshaped_data_fil[, c("Euclidean_Norm.half", "Euclidean_Norm.full")], model = "oneway", type = "agreement", unit = "single")
+
+# Print the ICC results
+print(icc_result)
+
+# If you just want the ICC value:
+icc_value <- icc_result$value
+print(paste("ICC Value:", icc_value))
+```
+
+```{r}
+# Now, calculate the ICC.  We'll use ICC(1,1) here, which is appropriate 
+# when you have different raters (or in this case, methods) rating each target.
+# If you had the *same* raters rating *all* targets, you'd want a different ICC.
+reshaped_data_fil <- reshaped_data %>%
+            filter(Electrode %in% c("Cathode1"))
+icc_result <- icc(reshaped_data_fil[, c("Euclidean_Norm.half", "Euclidean_Norm.full")], model = "oneway", type = "agreement", unit = "single")
+
+# Print the ICC results
+print(icc_result)
+
+# If you just want the ICC value:
+icc_value <- icc_result$value
+print(paste("ICC Value:", icc_value))
+```
+
+```{r}
+# Now, calculate the ICC.  We'll use ICC(1,1) here, which is appropriate 
+# when you have different raters (or in this case, methods) rating each target.
+# If you had the *same* raters rating *all* targets, you'd want a different ICC.
+reshaped_data_fil <- reshaped_data %>%
+            filter(Electrode %in% c("Cathode2"))
+icc_result <- icc(reshaped_data_fil[, c("Euclidean_Norm.half", "Euclidean_Norm.full")], model = "oneway", type = "agreement", unit = "single")
+
+# Print the ICC results
+print(icc_result)
+
+# If you just want the ICC value:
+icc_value <- icc_result$value
+print(paste("ICC Value:", icc_value))
+```
+
+```{r}
+# Now, calculate the ICC.  We'll use ICC(1,1) here, which is appropriate 
+# when you have different raters (or in this case, methods) rating each target.
+# If you had the *same* raters rating *all* targets, you'd want a different ICC.
+reshaped_data_fil <- reshaped_data %>%
+            filter(Electrode %in% c("Cathode3"))
+icc_result <- icc(reshaped_data_fil[, c("Euclidean_Norm.half", "Euclidean_Norm.full")], model = "oneway", type = "agreement", unit = "single")
+
+# Print the ICC results
+print(icc_result)
+
+# If you just want the ICC value:
+icc_value <- icc_result$value
+print(paste("ICC Value:", icc_value))
+```
+
+```{r}
+# Now, calculate the ICC.  We'll use ICC(1,1) here, which is appropriate 
+# when you have different raters (or in this case, methods) rating each target.
+# If you had the *same* raters rating *all* targets, you'd want a different ICC.
+reshaped_data_fil <- reshaped_data %>%
+            filter((Electrode %in% c("Cathode2")) & (Experiment %in% c("P3")))
+icc_result <- icc(reshaped_data_fil[, c("Euclidean_Norm.half", "Euclidean_Norm.full")], model = "oneway", type = "agreement", unit = "single")
+
+# Print the ICC results
+print(icc_result)
+
+# If you just want the ICC value:
+icc_value <- icc_result$value
+print(paste("ICC Value:", icc_value))
+```
