@@ -8,3 +8,6 @@ reports
 *.sif
 *.tar
 code/Network/modules/*
+code/Extract_Coordinates/Tables/Tables/*
+code/Extract_Coordinates/Tables/Figures/*
+code/Extract_Coordinates/Tables/old/*
