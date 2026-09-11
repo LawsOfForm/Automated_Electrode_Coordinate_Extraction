@@ -1,0 +1,1247 @@
+WARNING: Cannot parse subject from: sub-001/c1sub-001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-001/c2sub-001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-001/c3sub-001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-001/c4sub-001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-001/c5sub-001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-001/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-002/c1sub-002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-002/c2sub-002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-002/c3sub-002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-002/c4sub-002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-002/c5sub-002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-002/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-003/c1sub-003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-003/c2sub-003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-003/c3sub-003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-003/c4sub-003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-003/c5sub-003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-003/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-004/c1sub-004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-004/c2sub-004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-004/c3sub-004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-004/c4sub-004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-004/c5sub-004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-004/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-005/c1sub-005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-005/c2sub-005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-005/c3sub-005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-005/c4sub-005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-005/c5sub-005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-005/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-006/c1sub-006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-006/c2sub-006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-006/c3sub-006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-006/c4sub-006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-006/c5sub-006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-006/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-007/c1sub-007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-007/c2sub-007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-007/c3sub-007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-007/c4sub-007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-007/c5sub-007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-007/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-008/c1sub-008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-008/c2sub-008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-008/c3sub-008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-008/c4sub-008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-008/c5sub-008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-008/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-009/c1sub-009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-009/c2sub-009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-009/c3sub-009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-009/c4sub-009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-009/c5sub-009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-009/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-010/Segmentation.nii
+WARNING: Cannot parse subject from: sub-010/c1sub-010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-010/c2sub-010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-010/c3sub-010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-010/c4sub-010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-010/c5sub-010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-010/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-011/c1sub-011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-011/c2sub-011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-011/c3sub-011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-011/c4sub-011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-011/c5sub-011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-011/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-012/c1sub-012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-012/c2sub-012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-012/c3sub-012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-012/c4sub-012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-012/c5sub-012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-012/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-013/c1sub-013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-013/c2sub-013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-013/c3sub-013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-013/c4sub-013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-013/c5sub-013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-013/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-014/c1sub-014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-014/c2sub-014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-014/c3sub-014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-014/c4sub-014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-014/c5sub-014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-014/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-015/c1sub-015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-015/c2sub-015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-015/c3sub-015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-015/c4sub-015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-015/c5sub-015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-015/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-016/c1sub-016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-016/c2sub-016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-016/c3sub-016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-016/c4sub-016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-016/c5sub-016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-016/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-017/c1sub-017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-017/c2sub-017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-017/c3sub-017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-017/c4sub-017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-017/c5sub-017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-017/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-018/c1sub-018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-018/c2sub-018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-018/c3sub-018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-018/c4sub-018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-018/c5sub-018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-018/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-019/c1sub-019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-019/c2sub-019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-019/c3sub-019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-019/c4sub-019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-019/c5sub-019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-019/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-020/c1sub-020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-020/c2sub-020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-020/c3sub-020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-020/c4sub-020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-020/c5sub-020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-020/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-021/c1sub-021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-021/c2sub-021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-021/c3sub-021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-021/c4sub-021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-021/c5sub-021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-021/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-022/c1sub-022_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-022/c2sub-022_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-022/c3sub-022_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-022/c4sub-022_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-022/c5sub-022_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-022/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-023/c1sub-023_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-023/c2sub-023_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-023/c3sub-023_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-023/c4sub-023_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-023/c5sub-023_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-023/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-024/c1sub-024_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-024/c2sub-024_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-024/c3sub-024_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-024/c4sub-024_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-024/c5sub-024_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-024/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-025/c1sub-025_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-025/c2sub-025_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-025/c3sub-025_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-025/c4sub-025_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-025/c5sub-025_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-025/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-026/c1sub-026_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-026/c2sub-026_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-026/c3sub-026_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-026/c4sub-026_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-026/c5sub-026_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-026/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-027/c1sub-027_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-027/c2sub-027_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-027/c3sub-027_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-027/c4sub-027_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-027/c5sub-027_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-027/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-028/c1sub-028_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-028/c2sub-028_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-028/c3sub-028_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-028/c4sub-028_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-028/c5sub-028_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-028/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-029/c1sub-029_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-029/c2sub-029_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-029/c3sub-029_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-029/c4sub-029_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-029/c5sub-029_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-029/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-030/c1sub-030_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-030/c2sub-030_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-030/c3sub-030_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-030/c4sub-030_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-030/c5sub-030_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-030/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-031/c1sub-031_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-031/c2sub-031_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-031/c3sub-031_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-031/c4sub-031_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-031/c5sub-031_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-031/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-032/c1sub-032_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-032/c2sub-032_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-032/c3sub-032_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-032/c4sub-032_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-032/c5sub-032_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-032/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-033/c1sub-033_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-033/c2sub-033_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-033/c3sub-033_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-033/c4sub-033_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-033/c5sub-033_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-033/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-034/c1sub-034_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-034/c2sub-034_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-034/c3sub-034_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-034/c4sub-034_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-034/c5sub-034_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-034/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-035/c1sub-035_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-035/c2sub-035_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-035/c3sub-035_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-035/c4sub-035_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-035/c5sub-035_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-035/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-036/c1sub-036_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-036/c2sub-036_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-036/c3sub-036_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-036/c4sub-036_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-036/c5sub-036_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-036/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-037/c1sub-037_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-037/c2sub-037_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-037/c3sub-037_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-037/c4sub-037_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-037/c5sub-037_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-037/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-038/c1sub-038_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-038/c2sub-038_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-038/c3sub-038_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-038/c4sub-038_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-038/c5sub-038_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-038/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-039/c1sub-039_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-039/c2sub-039_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-039/c3sub-039_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-039/c4sub-039_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-039/c5sub-039_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-039/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-040/Segmentation.nii
+WARNING: Cannot parse subject from: sub-040/c1sub-040_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-040/c2sub-040_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-040/c3sub-040_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-040/c4sub-040_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-040/c5sub-040_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-040/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-042/c1sub-042_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-042/c2sub-042_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-042/c3sub-042_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-042/c4sub-042_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-042/c5sub-042_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-042/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-043/c1sub-043_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-043/c2sub-043_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-043/c3sub-043_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-043/c4sub-043_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-043/c5sub-043_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-043/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-044/c1sub-044_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-044/c2sub-044_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-044/c3sub-044_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-044/c4sub-044_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-044/c5sub-044_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-044/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-045/c1sub-045_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-045/c2sub-045_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-045/c3sub-045_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-045/c4sub-045_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-045/c5sub-045_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-045/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-046/c1sub-046_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-046/c2sub-046_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-046/c3sub-046_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-046/c4sub-046_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-046/c5sub-046_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-046/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-047/c1sub-047_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-047/c2sub-047_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-047/c3sub-047_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-047/c4sub-047_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-047/c5sub-047_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-047/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-048/c1sub-048_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-048/c2sub-048_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-048/c3sub-048_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-048/c4sub-048_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-048/c5sub-048_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-048/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-049/c1sub-049_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-049/c2sub-049_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-049/c3sub-049_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-049/c4sub-049_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-049/c5sub-049_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-049/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-050/c1sub-050_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-050/c2sub-050_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-050/c3sub-050_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-050/c4sub-050_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-050/c5sub-050_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-050/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-052/c1sub-052_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-052/c2sub-052_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-052/c3sub-052_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-052/c4sub-052_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-052/c5sub-052_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-052/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-054/c1sub-054_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-054/c2sub-054_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-054/c3sub-054_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-054/c4sub-054_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-054/c5sub-054_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-054/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-055/c1sub-055_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-055/c2sub-055_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-055/c3sub-055_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-055/c4sub-055_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-055/c5sub-055_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-055/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-056/c1sub-056_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-056/c2sub-056_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-056/c3sub-056_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-056/c4sub-056_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-056/c5sub-056_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-056/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-057/c1sub-057_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-057/c2sub-057_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-057/c3sub-057_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-057/c4sub-057_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-057/c5sub-057_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-057/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-058/c1sub-058_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-058/c2sub-058_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-058/c3sub-058_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-058/c4sub-058_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-058/c5sub-058_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-058/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-059/c1sub-059_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-059/c2sub-059_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-059/c3sub-059_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-059/c4sub-059_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-059/c5sub-059_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-059/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-060/c1sub-060_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-060/c2sub-060_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-060/c3sub-060_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-060/c4sub-060_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-060/c5sub-060_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-060/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-062/c1sub-062_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-062/c2sub-062_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-062/c3sub-062_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-062/c4sub-062_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-062/c5sub-062_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-062/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-063/c1sub-063_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-063/c2sub-063_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-063/c3sub-063_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-063/c4sub-063_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-063/c5sub-063_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-063/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-064/c1sub-064_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-064/c2sub-064_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-064/c3sub-064_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-064/c4sub-064_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-064/c5sub-064_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-064/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-065/c1sub-065_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-065/c2sub-065_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-065/c3sub-065_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-065/c4sub-065_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-065/c5sub-065_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-065/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-066/c1sub-066_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-066/c2sub-066_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-066/c3sub-066_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-066/c4sub-066_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-066/c5sub-066_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-066/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-067/c1sub-067_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-067/c2sub-067_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-067/c3sub-067_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-067/c4sub-067_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-067/c5sub-067_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-067/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-068/c1sub-068_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-068/c2sub-068_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-068/c3sub-068_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-068/c4sub-068_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-068/c5sub-068_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-068/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-069/c1sub-069_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-069/c2sub-069_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-069/c3sub-069_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-069/c4sub-069_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-069/c5sub-069_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-069/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-070/c1sub-070_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-070/c2sub-070_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-070/c3sub-070_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-070/c4sub-070_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-070/c5sub-070_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-070/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-073/c1sub-073_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-073/c2sub-073_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-073/c3sub-073_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-073/c4sub-073_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-073/c5sub-073_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-073/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-074/c1sub-074_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-074/c2sub-074_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-074/c3sub-074_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-074/c4sub-074_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-074/c5sub-074_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-074/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-075/c1sub-075_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-075/c2sub-075_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-075/c3sub-075_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-075/c4sub-075_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-075/c5sub-075_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-075/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-076/c1sub-076_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-076/c2sub-076_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-076/c3sub-076_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-076/c4sub-076_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-076/c5sub-076_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-076/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-077/c1sub-077_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-077/c2sub-077_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-077/c3sub-077_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-077/c4sub-077_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-077/c5sub-077_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-077/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-078/c1sub-078_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-078/c2sub-078_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-078/c3sub-078_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-078/c4sub-078_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-078/c5sub-078_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-078/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-079/c1sub-079_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-079/c2sub-079_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-079/c3sub-079_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-079/c4sub-079_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-079/c5sub-079_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-079/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-080/c1sub-080_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-080/c2sub-080_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-080/c3sub-080_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-080/c4sub-080_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-080/c5sub-080_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-080/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-081/c1sub-081_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-081/c2sub-081_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-081/c3sub-081_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-081/c4sub-081_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-081/c5sub-081_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-081/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-082/c1sub-082_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-082/c2sub-082_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-082/c3sub-082_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-082/c4sub-082_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-082/c5sub-082_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-082/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-083/c1sub-083_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-083/c2sub-083_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-083/c3sub-083_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-083/c4sub-083_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-083/c5sub-083_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-083/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-084/c1sub-084_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-084/c2sub-084_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-084/c3sub-084_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-084/c4sub-084_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-084/c5sub-084_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-084/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-085/c1sub-085_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-085/c2sub-085_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-085/c3sub-085_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-085/c4sub-085_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-085/c5sub-085_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-085/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-086/c1sub-086_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-086/c2sub-086_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-086/c3sub-086_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-086/c4sub-086_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-086/c5sub-086_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-086/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-087/c1sub-087_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-087/c2sub-087_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-087/c3sub-087_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-087/c4sub-087_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-087/c5sub-087_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-089/c1sub-089_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-089/c2sub-089_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-089/c3sub-089_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-089/c4sub-089_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-089/c5sub-089_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-089/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-090/c1sub-090_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-090/c2sub-090_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-090/c3sub-090_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-090/c4sub-090_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-090/c5sub-090_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-090/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-1101/c1sub-1101_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1101/c2sub-1101_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1101/c3sub-1101_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1101/c4sub-1101_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1101/c5sub-1101_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1101/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-1104/c1sub-1104_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1104/c2sub-1104_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1104/c3sub-1104_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1104/c4sub-1104_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1104/c5sub-1104_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-1104/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2000/c1sub-2000_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2000/c2sub-2000_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2000/c3sub-2000_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2000/c4sub-2000_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2000/c5sub-2000_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2000/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2001/c1sub-2001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2001/c2sub-2001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2001/c3sub-2001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2001/c4sub-2001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2001/c5sub-2001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2001/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2002/c1sub-2002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2002/c2sub-2002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2002/c3sub-2002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2002/c4sub-2002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2002/c5sub-2002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2002/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2003/c1sub-2003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2003/c2sub-2003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2003/c3sub-2003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2003/c4sub-2003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2003/c5sub-2003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2003/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2004/c1sub-2004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2004/c2sub-2004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2004/c3sub-2004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2004/c4sub-2004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2004/c5sub-2004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2004/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2005/c1sub-2005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2005/c2sub-2005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2005/c3sub-2005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2005/c4sub-2005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2005/c5sub-2005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2005/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2006/c1sub-2006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2006/c2sub-2006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2006/c3sub-2006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2006/c4sub-2006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2006/c5sub-2006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2006/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2007/c1sub-2007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2007/c2sub-2007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2007/c3sub-2007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2007/c4sub-2007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2007/c5sub-2007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2007/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2008/c1sub-2008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2008/c2sub-2008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2008/c3sub-2008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2008/c4sub-2008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2008/c5sub-2008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2008/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2009/c1sub-2009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2009/c2sub-2009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2009/c3sub-2009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2009/c4sub-2009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2009/c5sub-2009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2009/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2010/c1sub-2010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2010/c2sub-2010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2010/c3sub-2010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2010/c4sub-2010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2010/c5sub-2010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2010/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2011/c1sub-2011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2011/c2sub-2011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2011/c3sub-2011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2011/c4sub-2011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2011/c5sub-2011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2011/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2012/c1sub-2012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2012/c2sub-2012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2012/c3sub-2012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2012/c4sub-2012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2012/c5sub-2012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2012/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2013/c1sub-2013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2013/c2sub-2013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2013/c3sub-2013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2013/c4sub-2013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2013/c5sub-2013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2013/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2014/c1sub-2014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2014/c2sub-2014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2014/c3sub-2014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2014/c4sub-2014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2014/c5sub-2014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2014/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2015/c1sub-2015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2015/c2sub-2015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2015/c3sub-2015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2015/c4sub-2015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2015/c5sub-2015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2015/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2501/c1sub-2501_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2501/c2sub-2501_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2501/c3sub-2501_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2501/c4sub-2501_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2501/c5sub-2501_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2501/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2504/c1sub-2504_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2504/c2sub-2504_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2504/c3sub-2504_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2504/c4sub-2504_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2504/c5sub-2504_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2504/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2505/c1sub-2505_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2505/c2sub-2505_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2505/c3sub-2505_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2505/c4sub-2505_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2505/c5sub-2505_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2505/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2506/c1sub-2506_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2506/c2sub-2506_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2506/c3sub-2506_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2506/c4sub-2506_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2506/c5sub-2506_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2506/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2507/c1sub-2507_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2507/c2sub-2507_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2507/c3sub-2507_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2507/c4sub-2507_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2507/c5sub-2507_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2507/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2508/c1sub-2508_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2508/c2sub-2508_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2508/c3sub-2508_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2508/c4sub-2508_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2508/c5sub-2508_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2508/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2509/c1sub-2509_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2509/c2sub-2509_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2509/c3sub-2509_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2509/c4sub-2509_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2509/c5sub-2509_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2509/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2510/c1sub-2510_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2510/c2sub-2510_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2510/c3sub-2510_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2510/c4sub-2510_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2510/c5sub-2510_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2510/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-2511/c1sub-2511_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2511/c2sub-2511_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2511/c3sub-2511_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2511/c4sub-2511_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2511/c5sub-2511_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-2511/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4001/c1sub-4001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4001/c2sub-4001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4001/c3sub-4001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4001/c4sub-4001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4001/c5sub-4001_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4001/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4002/c1sub-4002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4002/c2sub-4002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4002/c3sub-4002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4002/c4sub-4002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4002/c5sub-4002_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4002/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4003/c1sub-4003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4003/c2sub-4003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4003/c3sub-4003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4003/c4sub-4003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4003/c5sub-4003_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4003/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4004/c1sub-4004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4004/c2sub-4004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4004/c3sub-4004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4004/c4sub-4004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4004/c5sub-4004_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4004/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4005/c1sub-4005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4005/c2sub-4005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4005/c3sub-4005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4005/c4sub-4005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4005/c5sub-4005_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4005/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4006/c1sub-4006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4006/c2sub-4006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4006/c3sub-4006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4006/c4sub-4006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4006/c5sub-4006_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4006/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4007/c1sub-4007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4007/c2sub-4007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4007/c3sub-4007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4007/c4sub-4007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4007/c5sub-4007_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4007/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4008/c1sub-4008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4008/c2sub-4008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4008/c3sub-4008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4008/c4sub-4008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4008/c5sub-4008_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4008/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4009/c1sub-4009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4009/c2sub-4009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4009/c3sub-4009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4009/c4sub-4009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4009/c5sub-4009_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4009/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4010/c1sub-4010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4010/c2sub-4010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4010/c3sub-4010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4010/c4sub-4010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4010/c5sub-4010_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4010/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4011/c1sub-4011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4011/c2sub-4011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4011/c3sub-4011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4011/c4sub-4011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4011/c5sub-4011_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4011/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4012/c1sub-4012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4012/c2sub-4012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4012/c3sub-4012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4012/c4sub-4012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4012/c5sub-4012_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4012/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4013/c1sub-4013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4013/c2sub-4013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4013/c3sub-4013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4013/c4sub-4013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4013/c5sub-4013_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4013/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4014/c1sub-4014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4014/c2sub-4014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4014/c3sub-4014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4014/c4sub-4014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4014/c5sub-4014_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4014/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4015/c1sub-4015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4015/c2sub-4015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4015/c3sub-4015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4015/c4sub-4015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4015/c5sub-4015_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4015/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4016/c1sub-4016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4016/c2sub-4016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4016/c3sub-4016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4016/c4sub-4016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4016/c5sub-4016_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4016/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4017/c1sub-4017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4017/c2sub-4017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4017/c3sub-4017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4017/c4sub-4017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4017/c5sub-4017_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4017/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4018/c1sub-4018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4018/c2sub-4018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4018/c3sub-4018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4018/c4sub-4018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4018/c5sub-4018_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4018/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4019/c1sub-4019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4019/c2sub-4019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4019/c3sub-4019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4019/c4sub-4019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4019/c5sub-4019_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4019/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4020/c1sub-4020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4020/c2sub-4020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4020/c3sub-4020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4020/c4sub-4020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4020/c5sub-4020_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4020/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4021/c1sub-4021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4021/c2sub-4021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4021/c3sub-4021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4021/c4sub-4021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4021/c5sub-4021_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-4021/finalmask_SPM.nii
+WARNING: Cannot parse subject from: sub-4124/sub-CO_ses-base_acq-mprage_T1w.nii
+WARNING: Cannot parse subject from: sub-5001/sub-CO_ses-base_acq-mprage_T1w.nii
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0900/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0901/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0902/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0903/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0904/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseD2OLD
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0905/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0906/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0907/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0908/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseB1
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseB2
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseD1
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseD2
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseE1
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseE2
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseG1
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseG2
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseL1
+WARNING: Skipping unexpected session folder: sub-0909/ses-baseL2
+WARNING: Skipping unexpected session folder: sub-106/ses-3(corrupt)
+WARNING: Skipping unexpected session folder: sub-1116/ses-base_renamed
+WARNING: Skipping unexpected session folder: sub-1126/ses-1_old
+WARNING: Skipping unexpected session folder: sub-2024/ses-05
+WARNING: Skipping unexpected session folder: sub-2024/ses-06
+WARNING: Skipping unexpected session folder: sub-2024/ses-10
+WARNING: Skipping unexpected session folder: sub-2515/ses-rest1
+WARNING: Skipping unexpected session folder: sub-3102/ses-s4
+WARNING: Skipping unexpected session folder: sub-3113/ses-s3
+WARNING: Skipping unexpected session folder: sub-3120/ses-s1
+WARNING: Skipping unexpected session folder: sub-3174/ses-NA
+WARNING: Skipping unexpected session folder: sub-4152/ses-NA
+WARNING: Skipping unexpected session folder: sub-4210/ses-ses1
+WARNING: 2 matches for sub-5001 ses-base T1 — using sub-5001_ses-base_acq-mprage_T1w.nii.gz
+    ignored: /media/MeMoSLAP_Subjects/SUBJECTS_XNAT/sub-5001/ses-base/anat/sub-CO_ses-base_acq-mprage_T1w.nii.gz
+WARNING: Skipping unexpected session folder: sub-5006/ses-Baseline
+WARNING: Skipping unexpected session folder: sub-5009/ses-Baseline
+WARNING: Skipping unexpected session folder: sub-5171/ses-Baseline
+WARNING: Skipping unexpected session folder: sub-6125/ses-rest
+WARNING: Skipping unexpected session folder: sub-8103/ses-rest
+WARNING: Skipping unexpected session folder: sub-base/ses-NA
+WARNING: sub008 has no valid Petra sessions, skipping.
+WARNING: sub019 has no valid Petra sessions, skipping.
+WARNING: sub027 has no valid Petra sessions, skipping.
+WARNING: sub045 has no valid Petra sessions, skipping.
+WARNING: sub050 has no valid Petra sessions, skipping.
+WARNING: sub063 has no valid Petra sessions, skipping.
+WARNING: sub074 has no valid Petra sessions, skipping.
+WARNING: sub088 has no valid Petra sessions, skipping.
+WARNING: sub0900 has no valid ses-base, skipping.
+WARNING: sub0901 has no valid ses-base, skipping.
+WARNING: sub0902 has no valid ses-base, skipping.
+WARNING: sub0903 has no valid ses-base, skipping.
+WARNING: sub0904 has no valid ses-base, skipping.
+WARNING: sub0905 has no valid ses-base, skipping.
+WARNING: sub0906 has no valid ses-base, skipping.
+WARNING: sub0907 has no valid ses-base, skipping.
+WARNING: sub0908 has no valid ses-base, skipping.
+WARNING: sub0909 has no valid ses-base, skipping.
+WARNING: sub102 has no valid Petra sessions, skipping.
+WARNING: sub1102 has no valid Petra sessions, skipping.
+WARNING: sub1106 has no valid Petra sessions, skipping.
+WARNING: sub1118 has no valid Petra sessions, skipping.
+WARNING: sub1119 has no valid Petra sessions, skipping.
+WARNING: sub1120 has no valid Petra sessions, skipping.
+WARNING: sub1123 has no valid Petra sessions, skipping.
+WARNING: sub1135 has no valid Petra sessions, skipping.
+WARNING: sub1139 has no valid Petra sessions, skipping.
+WARNING: sub1142 has no valid Petra sessions, skipping.
+WARNING: sub1146 has no valid Petra sessions, skipping.
+WARNING: sub1149 has no valid Petra sessions, skipping.
+WARNING: sub1157 has no valid Petra sessions, skipping.
+WARNING: sub1160 has no valid Petra sessions, skipping.
+WARNING: sub1162 has no valid Petra sessions, skipping.
+WARNING: sub1170 has no valid Petra sessions, skipping.
+WARNING: sub1178 has no valid Petra sessions, skipping.
+WARNING: sub1213 has no valid Petra sessions, skipping.
+WARNING: sub1220 has no valid Petra sessions, skipping.
+WARNING: sub1226 has no valid Petra sessions, skipping.
+WARNING: sub2014 has no valid Petra sessions, skipping.
+WARNING: sub2022 has no valid Petra sessions, skipping.
+WARNING: sub2201 has no valid Petra sessions, skipping.
+WARNING: sub2203 has no valid Petra sessions, skipping.
+WARNING: sub2224 has no valid Petra sessions, skipping.
+WARNING: sub2249 has no valid Petra sessions, skipping.
+WARNING: sub2251 has no valid Petra sessions, skipping.
+WARNING: sub2265 has no valid Petra sessions, skipping.
+WARNING: sub2271 has no valid Petra sessions, skipping.
+WARNING: sub2272 has no valid Petra sessions, skipping.
+WARNING: sub2273 has no valid Petra sessions, skipping.
+WARNING: sub2274 has no valid Petra sessions, skipping.
+WARNING: sub2275 has no valid Petra sessions, skipping.
+WARNING: sub2276 has no valid Petra sessions, skipping.
+WARNING: sub2277 has no valid Petra sessions, skipping.
+WARNING: sub2278 has no valid Petra sessions, skipping.
+WARNING: sub2279 has no valid Petra sessions, skipping.
+WARNING: sub2280 has no valid Petra sessions, skipping.
+WARNING: sub2281 has no valid Petra sessions, skipping.
+WARNING: sub2282 has no valid Petra sessions, skipping.
+WARNING: sub2283 has no valid Petra sessions, skipping.
+WARNING: sub2285 has no valid Petra sessions, skipping.
+WARNING: sub2286 has no valid Petra sessions, skipping.
+WARNING: sub2287 has no valid Petra sessions, skipping.
+WARNING: sub2288 has no valid Petra sessions, skipping.
+WARNING: sub2290 has no valid Petra sessions, skipping.
+WARNING: sub2291 has no valid Petra sessions, skipping.
+WARNING: sub3101 has no valid Petra sessions, skipping.
+WARNING: sub3108 has no valid Petra sessions, skipping.
+WARNING: sub3109 has no valid Petra sessions, skipping.
+WARNING: sub3110 has no valid Petra sessions, skipping.
+WARNING: sub3112 has no valid Petra sessions, skipping.
+WARNING: sub3126 has no valid Petra sessions, skipping.
+WARNING: sub3131 has no valid Petra sessions, skipping.
+WARNING: sub3140 has no valid Petra sessions, skipping.
+WARNING: sub3156 has no valid Petra sessions, skipping.
+WARNING: sub3159 has no valid Petra sessions, skipping.
+WARNING: sub3175 has no valid Petra sessions, skipping.
+WARNING: sub3182 has no valid Petra sessions, skipping.
+WARNING: sub3198 has no valid Petra sessions, skipping.
+WARNING: sub3200 has no valid Petra sessions, skipping.
+WARNING: sub3208 has no valid Petra sessions, skipping.
+WARNING: sub3209 has no valid Petra sessions, skipping.
+WARNING: sub3215 has no valid Petra sessions, skipping.
+WARNING: sub4004 has no valid Petra sessions, skipping.
+WARNING: sub4107 has no valid Petra sessions, skipping.
+WARNING: sub4108 has no valid Petra sessions, skipping.
+WARNING: sub4124 has no valid Petra sessions, skipping.
+WARNING: sub4140 has no valid Petra sessions, skipping.
+WARNING: sub4156 has no T1 in ses-base, skipping.
+WARNING: sub4160 has no valid Petra sessions, skipping.
+WARNING: sub4164 has no valid Petra sessions, skipping.
+WARNING: sub4172 has no valid Petra sessions, skipping.
+WARNING: sub4184 has no valid Petra sessions, skipping.
+WARNING: sub4192 has no valid Petra sessions, skipping.
+WARNING: sub4200 has no valid Petra sessions, skipping.
+WARNING: sub4209 has no valid Petra sessions, skipping.
+WARNING: sub4220 has no valid Petra sessions, skipping.
+WARNING: sub5004 has no valid Petra sessions, skipping.
+WARNING: sub5005 has no valid Petra sessions, skipping.
+WARNING: sub5006 has no valid Petra sessions, skipping.
+WARNING: sub5007 has no valid Petra sessions, skipping.
+WARNING: sub5008 has no valid Petra sessions, skipping.
+WARNING: sub5009 has no valid Petra sessions, skipping.
+WARNING: sub5010 has no valid Petra sessions, skipping.
+WARNING: sub5011 has no valid Petra sessions, skipping.
+WARNING: sub5012 has no valid Petra sessions, skipping.
+WARNING: sub5013 has no valid Petra sessions, skipping.
+WARNING: sub5014 has no valid Petra sessions, skipping.
+WARNING: sub5015 has no valid Petra sessions, skipping.
+WARNING: sub5016 has no valid Petra sessions, skipping.
+WARNING: sub5017 has no valid Petra sessions, skipping.
+WARNING: sub5018 has no valid Petra sessions, skipping.
+WARNING: sub5019 has no valid Petra sessions, skipping.
+WARNING: sub5020 has no valid Petra sessions, skipping.
+WARNING: sub5021 has no valid Petra sessions, skipping.
+WARNING: sub5022 has no valid Petra sessions, skipping.
+WARNING: sub5101 has no valid Petra sessions, skipping.
+WARNING: sub5103 has no valid Petra sessions, skipping.
+WARNING: sub5104 has no valid Petra sessions, skipping.
+WARNING: sub5105 has no valid Petra sessions, skipping.
+WARNING: sub5106 has no valid Petra sessions, skipping.
+WARNING: sub5107 has no valid Petra sessions, skipping.
+WARNING: sub5108 has no valid Petra sessions, skipping.
+WARNING: sub5109 has no valid Petra sessions, skipping.
+WARNING: sub5110 has no valid Petra sessions, skipping.
+WARNING: sub5112 has no valid Petra sessions, skipping.
+WARNING: sub5113 has no valid Petra sessions, skipping.
+WARNING: sub5114 has no valid Petra sessions, skipping.
+WARNING: sub5115 has no valid Petra sessions, skipping.
+WARNING: sub5117 has no valid Petra sessions, skipping.
+WARNING: sub5118 has no valid Petra sessions, skipping.
+WARNING: sub5119 has no valid Petra sessions, skipping.
+WARNING: sub5120 has no valid Petra sessions, skipping.
+WARNING: sub5121 has no valid Petra sessions, skipping.
+WARNING: sub5122 has no valid Petra sessions, skipping.
+WARNING: sub5123 has no valid Petra sessions, skipping.
+WARNING: sub5124 has no valid Petra sessions, skipping.
+WARNING: sub5126 has no valid Petra sessions, skipping.
+WARNING: sub5127 has no valid Petra sessions, skipping.
+WARNING: sub5128 has no valid Petra sessions, skipping.
+WARNING: sub5129 has no valid Petra sessions, skipping.
+WARNING: sub5130 has no valid Petra sessions, skipping.
+WARNING: sub5131 has no valid Petra sessions, skipping.
+WARNING: sub5132 has no valid Petra sessions, skipping.
+WARNING: sub5133 has no valid Petra sessions, skipping.
+WARNING: sub5134 has no valid Petra sessions, skipping.
+WARNING: sub5135 has no valid Petra sessions, skipping.
+WARNING: sub5136 has no valid Petra sessions, skipping.
+WARNING: sub5137 has no valid Petra sessions, skipping.
+WARNING: sub5138 has no valid Petra sessions, skipping.
+WARNING: sub5139 has no valid Petra sessions, skipping.
+WARNING: sub5140 has no valid Petra sessions, skipping.
+WARNING: sub5141 has no valid Petra sessions, skipping.
+WARNING: sub5142 has no valid Petra sessions, skipping.
+WARNING: sub5143 has no valid Petra sessions, skipping.
+WARNING: sub5144 has no valid Petra sessions, skipping.
+WARNING: sub5145 has no valid Petra sessions, skipping.
+WARNING: sub5146 has no valid Petra sessions, skipping.
+WARNING: sub5147 has no valid Petra sessions, skipping.
+WARNING: sub5148 has no valid Petra sessions, skipping.
+WARNING: sub5149 has no valid Petra sessions, skipping.
+WARNING: sub5150 has no valid Petra sessions, skipping.
+WARNING: sub5151 has no valid Petra sessions, skipping.
+WARNING: sub5152 has no valid Petra sessions, skipping.
+WARNING: sub5153 has no valid Petra sessions, skipping.
+WARNING: sub5154 has no valid Petra sessions, skipping.
+WARNING: sub5155 has no valid Petra sessions, skipping.
+WARNING: sub5156 has no valid Petra sessions, skipping.
+WARNING: sub5158 has no valid Petra sessions, skipping.
+WARNING: sub5160 has no valid Petra sessions, skipping.
+WARNING: sub5162 has no valid Petra sessions, skipping.
+WARNING: sub5163 has no valid Petra sessions, skipping.
+WARNING: sub5164 has no valid Petra sessions, skipping.
+WARNING: sub5165 has no valid Petra sessions, skipping.
+WARNING: sub5166 has no valid Petra sessions, skipping.
+WARNING: sub5167 has no valid Petra sessions, skipping.
+WARNING: sub5168 has no valid Petra sessions, skipping.
+WARNING: sub5169 has no valid Petra sessions, skipping.
+WARNING: sub5170 has no valid Petra sessions, skipping.
+WARNING: sub5171 has no valid Petra sessions, skipping.
+WARNING: sub6001 has no valid Petra sessions, skipping.
+WARNING: sub6104 has no valid Petra sessions, skipping.
+WARNING: sub6105 has no valid Petra sessions, skipping.
+WARNING: sub6118 has no valid Petra sessions, skipping.
+WARNING: sub6126 has no valid Petra sessions, skipping.
+WARNING: sub6130 has no valid Petra sessions, skipping.
+WARNING: sub6131 has no valid Petra sessions, skipping.
+WARNING: sub6208 has no valid Petra sessions, skipping.
+WARNING: sub6212 has no valid Petra sessions, skipping.
+WARNING: sub6213 has no valid Petra sessions, skipping.
+WARNING: sub6216 has no valid Petra sessions, skipping.
+WARNING: sub6217 has no valid Petra sessions, skipping.
+WARNING: sub701 has no valid ses-base, skipping.
+WARNING: sub702 has no valid ses-base, skipping.
+WARNING: sub710 has no valid ses-base, skipping.
+WARNING: sub7102 has no valid Petra sessions, skipping.
+WARNING: sub7103 has no valid Petra sessions, skipping.
+WARNING: sub7104 has no valid Petra sessions, skipping.
+WARNING: sub7105 has no valid Petra sessions, skipping.
+WARNING: sub7106 has no valid Petra sessions, skipping.
+WARNING: sub7107 has no valid Petra sessions, skipping.
+WARNING: sub7108 has no valid Petra sessions, skipping.
+WARNING: sub7109 has no valid Petra sessions, skipping.
+WARNING: sub7110 has no valid Petra sessions, skipping.
+WARNING: sub7111 has no valid Petra sessions, skipping.
+WARNING: sub7113 has no valid Petra sessions, skipping.
+WARNING: sub7114 has no valid Petra sessions, skipping.
+WARNING: sub7115 has no valid Petra sessions, skipping.
+WARNING: sub7117 has no valid Petra sessions, skipping.
+WARNING: sub7119 has no valid Petra sessions, skipping.
+WARNING: sub7120 has no valid Petra sessions, skipping.
+WARNING: sub7121 has no valid Petra sessions, skipping.
+WARNING: sub7123 has no valid Petra sessions, skipping.
+WARNING: sub7124 has no valid Petra sessions, skipping.
+WARNING: sub7126 has no valid Petra sessions, skipping.
+WARNING: sub714 has no valid ses-base, skipping.
+WARNING: sub716 has no valid ses-base, skipping.
+WARNING: sub719 has no valid ses-base, skipping.
+WARNING: sub723 has no valid ses-base, skipping.
+WARNING: sub724 has no valid ses-base, skipping.
+WARNING: sub725 has no valid ses-base, skipping.
+WARNING: sub726 has no valid ses-base, skipping.
+WARNING: sub727 has no valid ses-base, skipping.
+WARNING: sub730 has no valid ses-base, skipping.
+WARNING: sub733 has no valid ses-base, skipping.
+WARNING: sub735 has no valid ses-base, skipping.
+WARNING: sub739 has no valid ses-base, skipping.
+WARNING: sub740 has no valid ses-base, skipping.
+WARNING: sub741 has no valid ses-base, skipping.
+WARNING: sub743 has no valid ses-base, skipping.
+WARNING: sub744 has no valid ses-base, skipping.
+WARNING: sub745 has no valid ses-base, skipping.
+WARNING: sub748 has no valid ses-base, skipping.
+WARNING: sub750 has no valid ses-base, skipping.
+WARNING: sub751 has no valid ses-base, skipping.
+WARNING: sub753 has no valid ses-base, skipping.
+WARNING: sub755 has no valid ses-base, skipping.
+WARNING: sub756 has no valid ses-base, skipping.
+WARNING: sub759 has no valid ses-base, skipping.
+WARNING: sub762 has no valid ses-base, skipping.
+WARNING: sub765 has no valid ses-base, skipping.
+WARNING: sub777 has no valid ses-base, skipping.
+WARNING: sub8104 has no valid Petra sessions, skipping.
+WARNING: sub8106 has no valid Petra sessions, skipping.
+WARNING: sub8116 has no valid Petra sessions, skipping.
+WARNING: sub8121 has no valid Petra sessions, skipping.
+WARNING: sub8127 has no valid Petra sessions, skipping.
+WARNING: sub8136 has no valid Petra sessions, skipping.
+WARNING: sub8139 has no valid Petra sessions, skipping.
+WARNING: sub8147 has no valid Petra sessions, skipping.
+WARNING: sub8154 has no valid Petra sessions, skipping.
+WARNING: sub8156 has no valid Petra sessions, skipping.
+WARNING: sub8157 has no valid Petra sessions, skipping.
+WARNING: sub8158 has no valid Petra sessions, skipping.
+WARNING: sub8159 has no valid Petra sessions, skipping.
+WARNING: sub8164 has no valid Petra sessions, skipping.
+WARNING: sub8165 has no valid Petra sessions, skipping.
+WARNING: sub8166 has no valid Petra sessions, skipping.
+WARNING: sub8167 has no valid Petra sessions, skipping.
+WARNING: sub8169 has no valid Petra sessions, skipping.
+WARNING: sub8170 has no valid Petra sessions, skipping.
+WARNING: sub8171 has no valid Petra sessions, skipping.
+WARNING: sub8172 has no valid Petra sessions, skipping.
+WARNING: sub8176 has no valid Petra sessions, skipping.
+WARNING: sub8177 has no valid Petra sessions, skipping.
+WARNING: sub8178 has no valid Petra sessions, skipping.
+WARNING: sub8180 has no valid Petra sessions, skipping.
+WARNING: sub8182 has no valid Petra sessions, skipping.
+WARNING: sub8183 has no valid Petra sessions, skipping.
+WARNING: sub8185 has no valid Petra sessions, skipping.
+WARNING: sub8186 has no valid Petra sessions, skipping.
+WARNING: sub8187 has no valid Petra sessions, skipping.
+WARNING: sub8188 has no valid Petra sessions, skipping.
+WARNING: sub8189 has no valid Petra sessions, skipping.
+WARNING: sub8190 has no valid Petra sessions, skipping.
+WARNING: sub8191 has no T1 in ses-base, skipping.
+WARNING: sub8192 has no valid Petra sessions, skipping.
+WARNING: sub8194 has no valid Petra sessions, skipping.
+WARNING: sub8195 has no valid Petra sessions, skipping.
+WARNING: sub8196 has no valid Petra sessions, skipping.
+WARNING: sub8197 has no valid Petra sessions, skipping.
+WARNING: sub8198 has no valid Petra sessions, skipping.
+WARNING: sub8199 has no valid Petra sessions, skipping.
+WARNING: sub8202 has no valid Petra sessions, skipping.
+WARNING: sub8203 has no valid Petra sessions, skipping.
+WARNING: subbase has no valid ses-base, skipping.
+Petra not found: sub-2254 ses2
+Petra not found: sub-2257 ses3
+Petra not found: sub-4221 ses3
+Petra not found: sub-6201 ses3
+Petra not found: sub-6210 ses1
+No valid data for sub-1221 ses3, skipping
+No valid data for sub-1221 ses4, skipping
+No valid data for sub-1227 ses2, skipping
+No valid data for sub-1227 ses3, skipping
+No valid data for sub-1227 ses4, skipping
+No valid data for sub-1228 ses3, skipping
+No valid data for sub-1228 ses4, skipping
+No valid data for sub-2254 ses2, skipping
+No valid data for sub-2257 ses3, skipping
+No valid data for sub-2258 ses2, skipping
+No valid data for sub-2258 ses3, skipping
+No valid data for sub-2258 ses4, skipping
+No valid data for sub-2261 ses3, skipping
+No valid data for sub-2261 ses4, skipping
+No valid data for sub-2263 ses3, skipping
+No valid data for sub-2264 ses1, skipping
+No valid data for sub-2266 ses2, skipping
+No valid data for sub-2267 ses2, skipping
+No valid data for sub-2270 ses3, skipping
+No valid data for sub-2270 ses4, skipping
+No valid data for sub-3201 ses3, skipping
+No valid data for sub-3201 ses4, skipping
+No valid data for sub-3204 ses3, skipping
+No valid data for sub-3212 ses3, skipping
+No valid data for sub-3212 ses4, skipping
+No valid data for sub-3214 ses2, skipping
+No valid data for sub-3214 ses3, skipping
+No valid data for sub-3214 ses4, skipping
+No valid data for sub-4221 ses3, skipping
+No valid data for sub-4221 ses4, skipping
+No valid data for sub-5003 ses3, skipping
+No valid data for sub-5003 ses4, skipping
+No valid data for sub-6201 ses2, skipping
+No valid data for sub-6201 ses3, skipping
+No valid data for sub-6203 ses2, skipping
+No valid data for sub-6205 ses2, skipping
+No valid data for sub-6209 ses2, skipping
+No valid data for sub-6210 ses1, skipping
+No valid data for sub-6214 ses2, skipping
+No valid data for sub-6214 ses3, skipping
+No valid data for sub-6214 ses4, skipping
+No valid data for sub-6215 ses2, skipping
+No valid data for sub-6215 ses3, skipping
+No valid data for sub-6215 ses4, skipping
+
+SUMMARY: subjects=586 unzip_skipped=518 coreg_skipped=516 unzip_done=233 unzip_failed=0 coreg_done=193 coreg_skipped=43 coreg_failed=0

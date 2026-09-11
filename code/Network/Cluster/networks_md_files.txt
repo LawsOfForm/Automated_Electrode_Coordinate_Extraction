@@ -1,0 +1,438 @@
+ablation_results
+├── ablation_results_focal_dice_loss
+│   ├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_best_metric_model.pth
+│   ├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_split_manifest.json
+│   ├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_best_metric_model.pth
+│   ├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_split_manifest.json
+│   ├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_best_metric_model.pth
+│   ├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_split_manifest.json
+│   ├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_best_metric_model.pth
+│   ├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_metrics.json
+│   ├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_metrics.txt
+│   ├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_report.md
+│   ├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_split_manifest.json
+│   ├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_best_metric_model.pth
+│   ├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_split_manifest.json
+│   ├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_best_metric_model.pth
+│   ├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_metrics.json
+│   ├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_metrics.txt
+│   ├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_report.md
+│   ├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_split_manifest.json
+│   ├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_test_per_case.csv
+│   ├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_best_metric_model.pth
+│   ├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_metrics.json
+│   ├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_metrics.txt
+│   ├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_report.md
+│   ├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_split_manifest.json
+│   ├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_test_per_case.csv
+│   ├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_best_metric_model.pth
+│   ├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_metrics.json
+│   ├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_metrics.txt
+│   ├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_report.md
+│   ├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_split_manifest.json
+│   ├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_test_per_case.csv
+│   ├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_best_metric_model.pth
+│   ├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_metrics.json
+│   ├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_metrics.txt
+│   ├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_report.md
+│   ├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_split_manifest.json
+│   ├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_test_per_case.csv
+│   ├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_best_metric_model.pth
+│   ├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_split_manifest.json
+│   ├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_best_metric_model.pth
+│   ├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_split_manifest.json
+│   ├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_best_metric_model.pth
+│   ├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_split_manifest.json
+│   ├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_best_metric_model.pth
+│   ├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_split_manifest.json
+│   ├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_best_metric_model.pth
+│   ├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_split_manifest.json
+│   ├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_best_metric_model.pth
+│   ├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_split_manifest.json
+│   ├── paper_attention_unet_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_metrics.json
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_metrics.txt
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_report.md
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f0_seed9001_d_increased_smoketest_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f0_seed9001_d_increased_smoketest_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_metrics.json
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_metrics.txt
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_report.md
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f2_seed1001_c_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f2_seed1001_c_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f3_seed1001_c_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f3_seed1001_c_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f4_seed1001_c_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f4_seed1001_c_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_split_manifest.json
+│   ├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_best_metric_model.pth
+│   ├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_split_manifest.json
+│   ├── paper_attention_unet_metrics.json
+│   ├── paper_attention_unet_metrics.txt
+│   └── paper_attention_unet_report.md
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_dicece_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_dicece_metrics.json
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_dicece_metrics.txt
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_dicece_report.md
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_dicece_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_dicece_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_metrics.json
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_metrics.txt
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_report.md
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f0_seed1001_c_reduced_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_dicece_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_dicece_metrics.json
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_dicece_metrics.txt
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_dicece_report.md
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_dicece_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_dicece_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_metrics.json
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_metrics.txt
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_report.md
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f1_seed1001_c_reduced_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_dicece_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_dicece_metrics.json
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_dicece_metrics.txt
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_dicece_report.md
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_dicece_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_dicece_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_metrics.json
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_metrics.txt
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_report.md
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f2_seed1001_c_reduced_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_dicece_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_dicece_metrics.json
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_dicece_metrics.txt
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_dicece_report.md
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_dicece_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_dicece_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_metrics.json
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_metrics.txt
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_report.md
+├── attention_unet_reduced_HGW_cv5f3_seed1001_c_reduced_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_dicece_best_metric_model.pth
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_dicece_metrics.json
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_dicece_metrics.txt
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_dicece_report.md
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_dicece_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_dicece_test_per_case.csv
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_metrics.json
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_metrics.txt
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_report.md
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_split_manifest.json
+├── attention_unet_reduced_HGW_cv5f4_seed1001_c_reduced_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_dicece_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_dicece_metrics.json
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_dicece_metrics.txt
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_dicece_report.md
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_dicece_split_manifest.json
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_dicece_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_metrics.json
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_metrics.txt
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_report.md
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_split_manifest.json
+├── a_unet_baseline_HGW_cv5f0_seed1001_a_baseline_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_dicece_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_dicece_metrics.json
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_dicece_metrics.txt
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_dicece_report.md
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_dicece_split_manifest.json
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_dicece_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_metrics.json
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_metrics.txt
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_report.md
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_split_manifest.json
+├── a_unet_baseline_HGW_cv5f1_seed1001_a_baseline_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_dicece_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_dicece_metrics.json
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_dicece_metrics.txt
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_dicece_report.md
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_dicece_split_manifest.json
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_dicece_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_metrics.json
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_metrics.txt
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_report.md
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_split_manifest.json
+├── a_unet_baseline_HGW_cv5f2_seed1001_a_baseline_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_dicece_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_dicece_metrics.json
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_dicece_metrics.txt
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_dicece_report.md
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_dicece_split_manifest.json
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_dicece_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_metrics.json
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_metrics.txt
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_report.md
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_split_manifest.json
+├── a_unet_baseline_HGW_cv5f3_seed1001_a_baseline_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_dicece_best_metric_model.pth
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_dicece_metrics.json
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_dicece_metrics.txt
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_dicece_report.md
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_dicece_split_manifest.json
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_dicece_test_per_case.csv
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_metrics.json
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_metrics.txt
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_report.md
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_split_manifest.json
+├── a_unet_baseline_HGW_cv5f4_seed1001_a_baseline_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_dicece_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_dicece_metrics.json
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_dicece_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_dicece_report.md
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_dicece_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_dicece_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_metrics.json
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_report.md
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f0_seed1001_b_no_attention_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_dicece_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_dicece_metrics.json
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_dicece_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_dicece_report.md
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_dicece_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_dicece_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_metrics.json
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_report.md
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f1_seed1001_b_no_attention_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_dicece_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_dicece_metrics.json
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_dicece_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_dicece_report.md
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_dicece_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_dicece_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_metrics.json
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_report.md
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f2_seed1001_b_no_attention_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_dicece_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_dicece_metrics.json
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_dicece_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_dicece_report.md
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_dicece_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_dicece_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_metrics.json
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_report.md
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f3_seed1001_b_no_attention_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_dicece_best_metric_model.pth
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_dicece_metrics.json
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_dicece_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_dicece_report.md
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_dicece_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_dicece_test_per_case.csv
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_metrics.json
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_metrics.txt
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_report.md
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_split_manifest.json
+├── b_proposed_no_attention_HGW_cv5f4_seed1001_b_no_attention_test_per_case.csv
+├── b_proposed_no_attention_RU_FINAL_seed1001_b_no_attention_best_metric_model.pth
+├── b_proposed_no_attention_RU_FINAL_seed1001_b_no_attention_split_manifest.json
+├── merged_ablation_report.md
+├── old
+│   ├── paper_attention_unet_best_metric_model.pth
+│   ├── paper_attention_unet_metrics.json
+│   ├── paper_attention_unet_metrics.txt
+│   └── paper_attention_unet_report.md
+├── paper_attention_unet_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_metrics.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_metrics.txt
+├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_report.md
+├── paper_attention_unet_HGW_cv5f0_seed1001_c_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_dicece_report.md
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_metrics.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_metrics.txt
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_report.md
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_d_increased_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_dicece_report.md
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_metrics.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_metrics.txt
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_report.md
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_split_manifest.json
+├── paper_attention_unet_HGW_cv5f0_seed1001_proposed_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f0_seed9001_d_increased_smoketest_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f0_seed9001_d_increased_smoketest_split_manifest.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_metrics.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_metrics.txt
+├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_report.md
+├── paper_attention_unet_HGW_cv5f1_seed1001_c_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_dicece_report.md
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_metrics.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_metrics.txt
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_report.md
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_d_increased_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_dicece_report.md
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_metrics.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_metrics.txt
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_report.md
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_split_manifest.json
+├── paper_attention_unet_HGW_cv5f1_seed1001_proposed_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f2_seed1001_c_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f2_seed1001_c_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_dicece_report.md
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_metrics.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_metrics.txt
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_report.md
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_d_increased_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_dicece_report.md
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_metrics.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_metrics.txt
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_report.md
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_split_manifest.json
+├── paper_attention_unet_HGW_cv5f2_seed1001_proposed_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f3_seed1001_c_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f3_seed1001_c_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_dicece_report.md
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_metrics.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_metrics.txt
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_report.md
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_d_increased_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_dicece_report.md
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_metrics.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_metrics.txt
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_report.md
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_split_manifest.json
+├── paper_attention_unet_HGW_cv5f3_seed1001_proposed_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f4_seed1001_c_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f4_seed1001_c_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_dicece_report.md
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_metrics.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_metrics.txt
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_report.md
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_split_manifest.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_d_increased_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_dicece_best_metric_model.pth
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_dicece_metrics.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_dicece_metrics.txt
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_dicece_report.md
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_dicece_split_manifest.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_dicece_test_per_case.csv
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_metrics.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_metrics.txt
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_report.md
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_split_manifest.json
+├── paper_attention_unet_HGW_cv5f4_seed1001_proposed_test_per_case.csv
+├── paper_attention_unet_HGW_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_HGW_seed1001_proposed_metrics.json
+├── paper_attention_unet_HGW_seed1001_proposed_metrics.txt
+├── paper_attention_unet_HGW_seed1001_proposed_report.md
+├── paper_attention_unet_HGW_seed1001_proposed_split_manifest.json
+├── paper_attention_unet_HGW_seed1001_proposed_test_per_case.csv
+├── paper_attention_unet_metrics.json
+├── paper_attention_unet_metrics.txt
+├── paper_attention_unet_report.md
+├── paper_attention_unet_RU_FINAL_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_RU_FINAL_seed1001_proposed_split_manifest.json
+├── paper_attention_unet_RU_seed1001_proposed_best_metric_model.pth
+├── paper_attention_unet_RU_seed1001_proposed_metrics.json
+├── paper_attention_unet_RU_seed1001_proposed_metrics.txt
+├── paper_attention_unet_RU_seed1001_proposed_report.md
+├── paper_attention_unet_RU_seed1001_proposed_split_manifest.json
+└── paper_attention_unet_RU_seed1001_proposed_test_per_case.csv
+
+2 directories, 433 files

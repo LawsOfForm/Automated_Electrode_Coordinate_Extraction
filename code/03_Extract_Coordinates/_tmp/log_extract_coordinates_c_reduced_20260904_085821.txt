@@ -1,0 +1,19 @@
+=== Extract Coordinates Log  2026-09-04 08:58:21 ===
+
+[08:58:21] INFO  Script started
+[08:58:21] INFO  Network    : c_reduced  (Attention U-Net, reduced widths 16-256)
+[08:58:21] INFO  Mask glob  : *_inference_c_reduced.nii.gz
+[08:58:21] INFO  Base path  : /media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction
+[08:58:21] INFO  Output CSV : /media/Data03/Projects/New_repository_07042026/Automated_Electrode_Coordinate_Extraction/code/03_Extract_Coordinates/Tables/electrode_positions_c_reduced_20260904.csv
+[08:58:21] INFO  Log file   : /media/Data03/Projects/New_repository_07042026/Automated_Electrode_Coordinate_Extraction/code/03_Extract_Coordinates/_tmp/log_extract_coordinates_c_reduced_20260904_085821.txt
+
+[08:58:21] INFO  Distance window : 5-125 mm
+[08:58:21] INFO  Star min angle  : not enforced
+[08:58:21] INFO  Star max rad CV : not enforced
+[08:58:21] INFO  Audit names above: 90 mm
+
+[08:58:21] INFO  Scanning for NIfTI files under: /media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction
+[08:58:28] WARN  No inference NIfTI files found. Check base_path and folder structure.
+[08:58:28] WARN  No valid results to save - CSV not written. Check that *_inference_c_reduced.nii.gz files exist under /media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction (try --list).
+
+=== Finished 2026-09-04 08:58:28 ===

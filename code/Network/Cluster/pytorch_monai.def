@@ -1,0 +1,53 @@
+Bootstrap: docker
+From: nvcr.io/nvidia/pytorch:24.10-py3
+# This base image ships:
+#   PyTorch 2.5, CUDA 12.6, cuDNN, NCCL, all pre-built for NVIDIA GPUs.
+#   Switch to a different tag if the cluster's CUDA driver is older.
+
+%post
+    # Stay on the wheel index that ships with the base image so we don't
+    # accidentally replace torch with a CPU build. MONAI is a thin layer
+    # on top of torch, so we install it without dependency resolution.
+    pip install --no-cache-dir --no-deps \
+        monai==1.4.0
+    # Everything else (these are pure-python or stable wheels):
+    pip install --no-cache-dir \
+        nibabel \
+        tqdm \
+        tensorboard \
+        matplotlib \
+        einops
+
+    # IMPORTANT: the base image's torch (2.5/nv24.10) is compiled against
+    # NumPy 1.x. Installing matplotlib/tensorboard above pulls in NumPy 2.x
+    # as a transitive dependency, which breaks torch's C-extension ABI
+    # ("_ARRAY_API not found"). Force NumPy back below 2.0 as the LAST pip
+    # action so nothing can re-upgrade it. Confirmed working at numpy 1.26.4.
+    pip install --no-cache-dir --force-reinstall "numpy<2"
+
+    # Fail the build immediately if NumPy ever ends up >= 2.0 again, so a
+    # silent dependency bump can't ship a broken image.
+    python3 -c "import numpy, sys; v=numpy.__version__; print('numpy', v); sys.exit(0 if int(v.split('.')[0]) < 2 else 1)"
+
+    # CUDA forward-compat layer removal.
+    # The NGC base image ships /usr/local/cuda/compat/ (CUDA forward-
+    # compatibility libs). On startup the NGC entrypoint tries to rm/relink
+    # this dir, but a Singularity .sif is READ-ONLY at runtime, so the rm
+    # fails and the stale compat libs shadow the host driver -> CUDA
+    # "Error 803: unsupported display driver / cuda driver combination".
+    # The cluster's host driver (595.71.05, CUDA 13.2) is NEWER than this
+    # container's CUDA (12.6), so the compat layer is not needed at all --
+    # we remove it here at BUILD time (while the fs is still writable) so
+    # the container uses the host driver injected by --nv directly.
+    rm -rf /usr/local/cuda/compat || true
+
+%environment
+    # MONAI emits a lot of deprecation warnings -- quiet them.
+    export PYTHONWARNINGS="ignore::DeprecationWarning"
+    # Keep PyTorch from grabbing more CPU threads than SLURM gave us.
+    export OMP_NUM_THREADS=1
+    export MKL_NUM_THREADS=1
+
+%labels
+    Maintainer niemannf
+    Purpose    Ablation study for the Automated Electrode Extraction paper

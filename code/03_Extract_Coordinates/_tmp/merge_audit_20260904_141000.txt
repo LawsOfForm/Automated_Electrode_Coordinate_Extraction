@@ -1,0 +1,299 @@
+==============================================================
+  MERGE AUDIT LOG
+  Generated : 2026-09-04 14:10:00
+==============================================================
+
+  SECTION 1 — Subject counts
+--------------------------------------------------------------
+  Auto-detection table       :   584 subjects
+  Baseline table             :   833 subjects
+  ── after merge ────────────────────────────────────
+  Combined (unique subjects) :   836 subjects
+  In BOTH tables             :   581 subjects
+  Auto-only (no baseline)    :     3 subjects
+  Baseline-only (no auto)    :   252 subjects
+
+  SECTION 2 — Subjects with NO baseline session after merge
+--------------------------------------------------------------
+  Count : 3
+
+  These subjects exist in the merged table but have no
+  row with session == "ses-baseline":
+
+    sub-004
+    sub-111
+    sub-1159
+
+  SECTION 3 — Auto-only subjects (no baseline row available)
+--------------------------------------------------------------
+  Count : 3
+
+  Coordinates were extracted for these subjects but no
+  matching baseline entry was found — Hungarian correction
+  could not be applied:
+
+    sub-004
+    sub-111
+    sub-1159
+
+  SECTION 4 — Baseline-only subjects (no auto-detection)
+--------------------------------------------------------------
+  Count : 252
+
+  These subjects are in the baseline table but no electrode
+  coordinates were extracted for them:
+
+    sub-019
+    sub-045
+    sub-050
+    sub-063
+    sub-074
+    sub-102
+    sub-1101
+    sub-1102
+    sub-1106
+    sub-1118
+    sub-1119
+    sub-1120
+    sub-1123
+    sub-1135
+    sub-1139
+    sub-1142
+    sub-1146
+    sub-1149
+    sub-1157
+    sub-1160
+    sub-1162
+    sub-1170
+    sub-1178
+    sub-1213
+    sub-1220
+    sub-1226
+    sub-2014
+    sub-2022
+    sub-2201
+    sub-2203
+    sub-2224
+    sub-2249
+    sub-2251
+    sub-2265
+    sub-2271
+    sub-2272
+    sub-2273
+    sub-2274
+    sub-2275
+    sub-2276
+    sub-2277
+    sub-2278
+    sub-2279
+    sub-2280
+    sub-2281
+    sub-2282
+    sub-2283
+    sub-2285
+    sub-2286
+    sub-2287
+    sub-2288
+    sub-2289
+    sub-2290
+    sub-2291
+    sub-2294
+    sub-2295
+    sub-3101
+    sub-3108
+    sub-3110
+    sub-3112
+    sub-3126
+    sub-3131
+    sub-3140
+    sub-3156
+    sub-3159
+    sub-3175
+    sub-3182
+    sub-3198
+    sub-3200
+    sub-3208
+    sub-3209
+    sub-3215
+    sub-3217
+    sub-3218
+    sub-4004
+    sub-4107
+    sub-4108
+    sub-4124
+    sub-4140
+    sub-4156
+    sub-4160
+    sub-4164
+    sub-4172
+    sub-4184
+    sub-4192
+    sub-4200
+    sub-4209
+    sub-4220
+    sub-5004
+    sub-5005
+    sub-5006
+    sub-5007
+    sub-5008
+    sub-5009
+    sub-5010
+    sub-5011
+    sub-5012
+    sub-5013
+    sub-5014
+    sub-5015
+    sub-5016
+    sub-5017
+    sub-5018
+    sub-5019
+    sub-5020
+    sub-5021
+    sub-5022
+    sub-5101
+    sub-5103
+    sub-5104
+    sub-5105
+    sub-5106
+    sub-5107
+    sub-5108
+    sub-5109
+    sub-5110
+    sub-5112
+    sub-5113
+    sub-5114
+    sub-5115
+    sub-5117
+    sub-5118
+    sub-5119
+    sub-5120
+    sub-5121
+    sub-5122
+    sub-5123
+    sub-5124
+    sub-5126
+    sub-5127
+    sub-5128
+    sub-5129
+    sub-5130
+    sub-5131
+    sub-5132
+    sub-5133
+    sub-5134
+    sub-5135
+    sub-5136
+    sub-5137
+    sub-5138
+    sub-5139
+    sub-5140
+    sub-5141
+    sub-5142
+    sub-5143
+    sub-5144
+    sub-5145
+    sub-5146
+    sub-5147
+    sub-5148
+    sub-5149
+    sub-5150
+    sub-5151
+    sub-5152
+    sub-5153
+    sub-5154
+    sub-5155
+    sub-5156
+    sub-5158
+    sub-5160
+    sub-5162
+    sub-5163
+    sub-5164
+    sub-5165
+    sub-5166
+    sub-5167
+    sub-5168
+    sub-5169
+    sub-5170
+    sub-5171
+    sub-5172
+    sub-6001
+    sub-6104
+    sub-6105
+    sub-6118
+    sub-6126
+    sub-6130
+    sub-6131
+    sub-6201
+    sub-6207
+    sub-6208
+    sub-6212
+    sub-6213
+    sub-6214
+    sub-6216
+    sub-6217
+    sub-7102
+    sub-7103
+    sub-7104
+    sub-7105
+    sub-7106
+    sub-7107
+    sub-7108
+    sub-7109
+    sub-7110
+    sub-7111
+    sub-7113
+    sub-7114
+    sub-7115
+    sub-7117
+    sub-7119
+    sub-7120
+    sub-7121
+    sub-7122
+    sub-7123
+    sub-7124
+    sub-7126
+    sub-8104
+    sub-8106
+    sub-8116
+    sub-8121
+    sub-8127
+    sub-8136
+    sub-8139
+    sub-8147
+    sub-8154
+    sub-8156
+    sub-8157
+    sub-8158
+    sub-8159
+    sub-8164
+    sub-8165
+    sub-8166
+    sub-8167
+    sub-8169
+    sub-8170
+    sub-8171
+    sub-8172
+    sub-8176
+    sub-8177
+    sub-8178
+    sub-8180
+    sub-8182
+    sub-8183
+    sub-8185
+    sub-8186
+    sub-8187
+    sub-8188
+    sub-8189
+    sub-8190
+    sub-8192
+    sub-8194
+    sub-8195
+    sub-8196
+    sub-8197
+    sub-8198
+    sub-8202
+    sub-8203
+    sub-8204
+    sub-CO
+    sub-MA
+
+==============================================================
