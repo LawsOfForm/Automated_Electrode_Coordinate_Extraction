@@ -8,8 +8,6 @@
 *** Thanks again! Now go create something AMAZING! :D
 -->
 
-
-
 <!-- PROJECT SHIELDS -->
 <!--
 *** I'm using markdown "reference style" links for readability.
@@ -20,8 +18,8 @@
 -->
 ## Contributors
 
-['Filip Niemann']{https://github.com/LawsOfForm}
-['Steffen Riemann']{https://github.com/sriemannn}
+- [Filip Niemann](https://github.com/LawsOfForm)
+- [Steffen Riemann](https://github.com/sriemannn)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -33,7 +31,7 @@
 <h3 align="center">Automated coordinate extraction from structural MRI data for intrascanner tDCS studies: A machine-learning approach</h3>
 
   <p align="center">
-    project_description
+    A fully automated pipeline that extracts tDCS electrode coordinates from structural PETRA MRI, from hand annotation to labelled coordinates.
     <br />
     <a href="https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction"><strong>Explore the docs »</strong></a>
     <br />
@@ -42,11 +40,9 @@
     &middot;
     <a href="https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/repo_name/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -63,15 +59,24 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
-        <li><a href="#preprocessing-data">Preprocessing data</a></li>
-          <ul>
-            <li><a href="#coregistration">Coregistration</a></li>
-            <li><a href="#prepare-dataset">Prepare dataset</a></li>
-          </ul>
       </ul>
     </li>
-    <li><a href="#network">Network</a></li>
-    <li><a href="#inference">Segmentation</a></li>
+    <li>
+      <a href="#preprocessing-data">Preprocessing data</a>
+      <ul>
+        <li><a href="#coregistration">Coregistration</a></li>
+        <li><a href="#prepare-dataset">Prepare dataset</a></li>
+      </ul>
+    </li>
+    <li><a href="#networks">Networks</a></li>
+    <li>
+      <a href="#network-training">Network training</a>
+      <ul>
+        <li><a href="#training-locally">Training locally</a></li>
+        <li><a href="#training-on-a-slurm-cluster">Training on a SLURM cluster</a></li>
+      </ul>
+    </li>
+    <li><a href="#segmentation">Segmentation</a></li>
     <li><a href="#coordinate-extraction">Coordinate Extraction</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -83,7 +88,7 @@
 ## About The Project
 
 <!-- Built With -->
-### built with
+### Built with
 
 * [![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)](https://www.python.org)
 * [![MONAI](https://img.shields.io/badge/MONAI-AI%20Toolkit-blue?style=for-the-badge&logo=pytorch&logoColor=white)](https://monai.io)
@@ -105,7 +110,6 @@ The pipeline has four stages, each with its own section below:
 2. **[Network training](#network-training)** — locally, or on a SLURM cluster
 3. **[Segmentation](#segmentation)** — apply a trained network to all images
 4. **[Coordinate extraction and analysis](#coordinate-extraction)** — turn masks into labelled coordinates, check them, and compare them with the intended montage
-
 
 ### Prerequisites
 
@@ -264,7 +268,7 @@ If successfully installed, the 'base' environment should change to 'network' in 
 
 In our case we run electric field map simulations to find optimal electrode positions, so we had baseline coordinates which we like to compare against other sessions. Therefore we coregistrated all other sessions to a baseline session. If you don't have baseline sessions, you can ignore the the coregistration.
 
-Use the *Coregistration.m* script in the *code/Preprocess/01_coregistration* 
+Use the *Coregistration.m* script in the *code/Preprocess/01_coregistration*
 It's used for searching a bids format and extracting all petra images of interest and generate a new dataset which can be used as *dataset* folder in the repository.
 
 ```sh
@@ -291,121 +295,85 @@ In matlab coregistrated images named like this *rsub-xx_ses-x_acq-petra_run-0x_P
 
 #### Process of segmenting electrodes
 
-##### overall procedure
+##### Overall procedure
 
-1) create a segment
-2) Get optimal visual of electrode
-   * Choose one electrode
-   * Align the electrod in the middle
-     * Crosshair of AS and LS should perfectly be plane to electrode surface
-     * To achieve that rotate the SPR and AS images via "Transforms" module
+1. Create a segment.
+2. Get an optimal view of the electrode:
+   - choose one electrode;
+   - align it in the middle of the view, so that the AS and LS crosshairs lie parallel to the electrode surface. Rotate the SPR and AS images with the **Transforms** module to achieve this.
+3. Paint a circular segment over the gel and the electrode.
+4. Repeat for the next electrode, then export the segmentation.
 
-3) Add circular segment over gel and electrode plug
-    * Choose another electrode and add segement
-    * Export segmented electrodes
+> [!WARNING]
+> Save between steps, as 3D Slicer can crash and lose unsaved work. Save each project in a folder named like `sub-0xx_ses-x_run-x`, and check the folder name and path every time — otherwise data will be overwritten.
 
-* Save between steps to avoid data loss when the program crashes
-* save project data in folder named like *sub-0xx_ses-x_run-x*
-* check everytime IF THE FOLDERNAME AND PATH IS CORRECT, otherwise data will be overwriten and lost
+##### Modules in 3D Slicer
 
-##### Step by step
+Adding segments, grouping them and transforming images are all done through **modules**. The available modules are listed in the drop-down next to the *Modules:* icon, at the top left beside *Data*, *DCM* and *Save*. Choose one (for example *Segment Editor* or *Transforms*) and its controls appear in the panel to the left of the images.
 
-##### Adjust View
+The steps below refer to these two places as:
 
-* change View in the menu bar
-  *View -> Layout -> Four-Up*
-  * you should see now a 2x2 window in wich on the 
-  * upper left: SPR (Horizontal) plane is displayed in red
-  * upper right: 3D image of the head is shown (feature must be activated)
-  * bottom left: AS (Coronal) plane in green
-  * bottom right: LS (Saggital) plane in yellow
-* Link the slice views by clicking on the 2 rings in each window
-*- Rings have to appear closed
-*- Zomm in and Out: STRG + mouse wheel
+- **Modules drop-down** — where you select a module
+- **Module panel** — where that module's controls appear
 
-##### Switching slider menu on the left of the image
+##### Step 1: Adjust the view
 
-* Adding segments, grouping segments and images etc. can be done with __MODULES__.
-* All available modules are in listed in the slide menu next to "Modules:" Icon on the top left next to "Data", "DCN" and "SAVE" Icon
-* This is called in the text the *Modules: slide bar*
-* Choose the module you need like *Segment Editor* or *Transforms* or *Views*
-* Click on the module to open it
-* On the left of the 3D images you will no find the *module menu*
-* In further instruction we will refer to *Modules: slide bar* and *module menu* to not get confused
+- In the menu bar choose **View → Layout → Four-Up**. You should now see a 2×2 window:
 
-##### 1) Add Segments
+  | Position | Plane | Colour |
+  |---|---|---|
+  | upper left | SPR (horizontal) | red |
+  | upper right | 3D rendering of the head (must be activated) | — |
+  | lower left | AS (coronal) | green |
+  | lower right | LS (sagittal) | yellow |
 
-###### Modules: slide bar
+- Link the slice views by clicking the two rings in each window; the rings must appear closed.
+- Zoom in and out with **Ctrl + mouse wheel**.
 
-* Choose on the slide bar *Segmentation Editor* to open the editor menu
+##### Step 2: Add segments
 
-###### Module menu
+- **Modules drop-down:** choose *Segment Editor*.
+- **Module panel:** click *Add* four times to create four segments.
 
-* Go to "Add" and add 4 segments
+##### Step 3: Align the electrode with transforms
 
-###### 2) Apply Transforms
+- **Modules drop-down:** choose *Transforms*. The panel now shows all available image transformations.
+- **Module panel:**
+  - Under *Active Transform* choose *Linear transforms*.
+  - Before transforming, go to *Apply transform* and select both the segment and the loaded image, so that the transformation is applied to both together.
+  - Use the translation and rotation sliders to bring the electrode to the centre and align it with one crosshair.
 
-##### Modules: slide bar
+How to judge the alignment: each view shows a vertical and a horizontal crosshair line, and in a slice the gel of the electrode also forms a line. Rotate until that line is parallel to the horizontal crosshair in exactly two views, the SPR and the AS. When it is, the gel should appear as a near-perfect circle in the LS view. Scroll to the outermost slice in which the circle is still clearly visible, and start segmenting there.
 
-* Choose on the slide bar *Transforms* to open the menu opportunities
-* On the menu bar on the left are now all options for image transformations we like to apply
+> [!TIP]
+> Hover over a point in any view and hold **Shift** for a moment: the crosshairs of all views centre on that point. This is the quickest way to move to the next electrode.
 
-#### Module menu
+##### Step 4: Segment the electrode
 
-* Go to *Active Transform:* and choose the the slide bar *Linear transforms*
-* Before you start the transformations go to *Apply transform* 
-* Select the "Segment" and the "loaded image" to process transformation on both simultanously
-* Use the Translation and Rotation bars to put the electrode in the middle and to align them to the crosshair of one dimension
-* example:
-  * the crosshair in each image has a vertical and horizontal line
-  * in the slice the electrode gel forms also a line
-  * the line of the gel shoul be parallel with the horizontal line in exact 2 images
-  * the SPR image and the AS image (see image descripitions above the slide bars of the images
-  * if the lines are parallel in both images in the LS image the gel shoul appear nearly as perfect circle
-  * scroll to the outmost point from which a clear circular shape is detectable
-  * start segmenting the electrode with a painter that is circular (details in the next step)
-__Tips__
+- **Modules drop-down:** choose *Segment Editor*.
+- **Module panel:**
+  - Click the segment to draw (for example *Segment_1*).
+  - Click the paint icon to get a circular brush, and adjust its radius with **Shift + mouse wheel** until it exactly matches the radius of the electrode or gel.
+  - Click to paint the first slice, then use the mouse wheel in the LS view to move to the next slice and repeat.
+  - Use *Show 3D* to check coverage. When the gel and electrode are fully covered, move on to the next electrode.
+- When all four electrodes are done, apply **Smoothing** to the segments and **Fill between slices** to close the gaps between painted slices.
 
-* if you place the mous on one point of the imag an then press shift for a wile the crosshair of all images will be centered to that point
-* so if you target a new electrode and you found it. Place the mouse on it and press shift for a while
+**Export** the segments as `.nii`:
 
-#### 3) Segment the electrode
+1. Click the small drop-down next to the green arrow, on the same line as *Add* and *Remove*.
+2. Choose *Export to files*.
+3. Select the correct folder and click *Export*. A file called `Segmentation.nii` should appear.
 
-#### Modules: slide bar
-
-* Choose on the slide bar *Segmentation Editor* to open the editor menu 
-
-####  module menu
-
-* Click on the segment you want to create (exmaple named Segment_1)
-* Click on the paint icon to get a circular painter
-* Increase or decrease the radius of the painter: shift+mouse whell
-* The radius should perfectly match the radius of the electrode or gel
-* If the circular painter is exctly matching the boundaries of the gel, click to segment the first slide
-* use the mouse wheel in the LS window to get to the next slide
-* Use the *Show 3D* button 
-* If the gel and the electrode are fully covered go to the next electrode
-
-* at the end of all segmentations use the smooting option to smooth the segments
-* and the *Fill between slices* to fill between the segments
-
-* _Export_ Segments as *.nii file
-* click on the little sidebar next to the green error (in the same line in which you Add and Remove segments)
-* click *Export to files*
-* make sure to choose the correct folder and click *Export*
-* You should now see a file called __Segmentation.nii__
-__Tips__
-
-* if the electrode is deformed or the gel is spread to more tissue then normally, decrease the radius of the painter to get those areas too and use the erase to erase uncorrect segmentet areas
-
-* if the painter is not drawing sometimes in the menu below the point "Editable area:" is not set to everywhere an therefore the painter can not draw everywhere
+> [!TIP]
+> - If an electrode is deformed or the gel has spread further than usual, reduce the brush radius to reach those areas, and use the eraser to remove anything painted in error.
+> - If the brush does not paint, check that *Editable area* in the panel below is set to *everywhere*.
 
 #### Create dataset for network
 
 Use codes in the *repository/code/Preprocess/02_prepare_dataset* to create a *dataset.tar.gz* file which later can also be used for traning of the network on a cluster.
 
 1) unite the 4 segmented electrodes into 3 mask with the *01_unite_mask.py* script.
-Therefore change in the script 
+Therefore change in the script
 
 ```sh
 network$ python3 unite_mask.py
@@ -459,7 +427,7 @@ Each variant trains for 50,000 iterations, roughly 50 h on an NVIDIA A100 80 GB.
 
 The layout used for the published models:
 
-```
+```text
 ~/ablation/
 ├── ablation_results/     # checkpoints, metrics JSON, per-fold reports
 ├── logs/                 # SLURM .out and .err files
@@ -578,11 +546,10 @@ Counting electrodes in the expert masks is less simple than it looks: a thin gap
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 <!-- LICENSE -->
 ## License
 
-Distributed under the project_license. See `LICENSE.txt` for more information.
+See [`LICENSE.txt`](LICENSE.txt) for licensing information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -604,20 +571,18 @@ Project Link: [https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extr
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/LawsOfForm/Automated_Electrode_Coordinate_Extraction.svg?style=for-the-badge
+[contributors-url]: https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/LawsOfForm/Automated_Electrode_Coordinate_Extraction.svg?style=for-the-badge
+[forks-url]: https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/network/members
+[stars-shield]: https://img.shields.io/github/stars/LawsOfForm/Automated_Electrode_Coordinate_Extraction.svg?style=for-the-badge
+[stars-url]: https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/stargazers
+[issues-shield]: https://img.shields.io/github/issues/LawsOfForm/Automated_Electrode_Coordinate_Extraction.svg?style=for-the-badge
+[issues-url]: https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/issues
+[license-shield]: https://img.shields.io/github/license/LawsOfForm/Automated_Electrode_Coordinate_Extraction.svg?style=for-the-badge
+[license-url]: https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extraction/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
@@ -636,4 +601,4 @@ Project Link: [https://github.com/LawsOfForm/Automated_Electrode_Coordinate_Extr
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[JQuery-url]: https://jquery.com
