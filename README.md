@@ -95,7 +95,17 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This repository shares code to preprocess structural fMRI images (prefered PETRA-images (Pointwise Encoding Time Reduction with Radial Acquisition)). Segment high accurate electrodes by hand to train, test and validate an attention-unet. Use the final network to extract coordinates from your images and finally extract electrode coordinates. 
+This repository provides a fully automated pipeline that extracts tDCS electrode coordinates from structural MRI, preferably PETRA images (Pointwise Encoding Time Reduction with Radial Acquisition). You annotate a small set of images by hand, train a 3D U-Net on them, segment the electrodes in all remaining images, and convert each segmentation into four labelled electrode coordinates.
+
+**Which network to use.** Five 3D U-Net variants are provided. The recommended one is the **standard U-Net without attention gates (`a_baseline`)**: on 4,234 images it recovered four valid electrode coordinates from 97.7 % of images, against 89–91 % for the attention-gated variants. The difference is caused almost entirely by attention-gated networks merging two adjacent electrodes into one object. See [Networks](#networks) for all five.
+
+The pipeline has four stages, each with its own section below:
+
+1. **[Preprocessing](#preprocessing-data)** — coregistration and hand annotation of training images
+2. **[Network training](#network-training)** — locally, or on a SLURM cluster
+3. **[Segmentation](#segmentation)** — apply a trained network to all images
+4. **[Coordinate extraction and analysis](#coordinate-extraction)** — turn masks into labelled coordinates, check them, and compare them with the intended montage
+
 
 ### Prerequisites
 
@@ -409,99 +419,165 @@ network$ python3 create_dataset.py
 
 the *dataset.tar.gz* will be saved in the *02_prepare_dataset* folder. Merg or unzip the tarfile into the */repository/dataset* folder.
 
-## Network
+## Networks
 
-All relevant code in in the *repository/code/Network* folder. If you want to redirect the path to your dataset, change the __root_dataset__ variable at the beginning of the script.
-Be aware that the *create_dataset* script creates the dataset as if they were in your source folder, so you have to change the path to your subject folders. In general, check your dataset folder structure and replace the *dataset/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction* path line with your dataset structure.
+All five networks are 3D U-Nets with five levels, 3×3×3 kernels and stride-2 down-sampling. They differ only in channel width and in whether attention gates are applied to the skip connections, so that a comparison between them isolates architecture.
 
-Change directory
+| Key | Description | Channels | Attention | Parameters | Valid extractions* |
+|---|---|---|---|---|---|
+| **`a_baseline`** | **Standard U-Net — recommended** | 64–512 | no | 7.75 M | **97.69 %** |
+| `b_no_attention` | Narrower channels, no attention | 32–512 | no | 7.91 M | 96.34 % |
+| `c_reduced` | Attention, halved channels | 16–256 | yes | 5.91 M | 89.58 % |
+| `d_increased` | Attention, widened channels | 48–768 | yes | 53.15 M | 91.24 % |
+| `proposed` | Attention U-Net (original design) | 32–512 | yes | 23.63 M | 89.02 % |
+
+\* Fraction of 4,234 images from which four electrode positions passing all plausibility checks were recovered.
+
+Segmentation overlap (Dice) does **not** distinguish the five (one-way ANOVA, *p* = 0.28). What distinguishes them is whether the four electrodes can be separated: attention-gated variants segment two adjacent electrodes as one object in 7–9 % of images, against 1.5–2.7 % without gating. This follows attention rather than model size — the smallest network, `c_reduced`, is an attention variant and behaves like the largest.
+
+Trained weights are in `code/Network/Paper_models/`.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Network training
+
+All training code is in `code/Network`. Set the `root_dataset` variable at the top of the script to your dataset. The dataset script builds paths as they appear in your source folder, so check your folder structure and replace the `dataset/media/MeMoSLAP_Subjects/derivatives/automated_electrode_extraction` path with your own.
+
+### Training locally
 
 ```sh
 (base)$ cd repository/code/Network
-```
-
-Before running the code activate the virtual environment. 
-
-```sh
 (base)$ mamba activate network
-```
-
-Run the code
-
-```sh
 (network)$ python3 model.py
 ```
 
+After each epoch the validation Dice is printed. The model with the best validation Dice is saved automatically; to keep it, copy it into `Paper_models/` and rename it after its network key.
+
+### Training on a SLURM cluster
+
+Each variant trains for 50,000 iterations, roughly 50 h on an NVIDIA A100 80 GB. On a shared cluster this is run as one job per variant and fold, inside a Singularity container that carries PyTorch and MONAI.
+
+The layout used for the published models:
+
+```
+~/ablation/
+├── ablation_results/     # checkpoints, metrics JSON, per-fold reports
+├── logs/                 # SLURM .out and .err files
+├── slurm/                # job scripts
+├── pytorch_monai_2.sif   # container
+└── submit.sh             # submission wrapper
+```
+
+**Cross-validation** (five participant-wise folds per variant, used to compare the architectures):
+
+```sh
+$ ./submit.sh a_baseline --dataset HGW --submit
+```
+
+**Final model** (all annotated data, no held-out test set, used for deployment):
+
+```sh
+$ ./submit.sh a_baseline --dataset RU --final --submit
+```
+
+A final run builds no test set by design, and reports only a validation Dice. **That validation score selected the checkpoint and is therefore optimistic** — report the cross-validation mean as the model's performance, not a number from the final run.
+
+**Participant-wise splitting.** Images of one participant never appear in more than one partition. An image-wise split would place near-identical images of the same head in both training and test data, which inflates every metric; the earlier Dice of 0.76 reported for this pipeline came from such a split, and the participant-wise value is 0.61.
+
+**Slow-starting variants.** `c_reduced`, at halved channel width, needs roughly twice as many iterations before it begins to fit, and can fail the default early sanity check. Give it a longer probation:
+
+```sh
+$ ./submit.sh c_reduced --dataset HGW --sanity-probation-iters 30000 --submit
+```
+
+Check job status with `squeue -u $USER`. The partition, time limit and container path are set in `submit.sh`; adjust them to your cluster.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Segmentation
 
-After each training session a test dice metric is displayed at the terminal. The model with the best dice metric will automatically safed. If you want to safe this model copy and paste it in the *models* folder and rename it.
-You can use the model for inference. Therefore go to the inference folder */repository/code/Segmentation*
-
-Befor you start change the __root_images__ and __model__ variable at the top of the script.
+Apply a trained network to every image. Set `root_images` at the top of the script, then:
 
 ```sh
-(base)$ cd repository/code/Segmentation
-```
-
-If not already done active the virtual environment
-
-```sh
+(base)$ cd repository/code/02_Segmentation
 (base)$ mamba activate network
+(network)$ python3 Segmentation_ablation_final.py --network a_baseline --jobs 2 --threads 3
 ```
 
-Run the code
+Each image gets a mask named `*_inference_<network>.nii.gz` beside it, so several networks can be run on the same data without overwriting each other. Inference runs on CPU; `--jobs` sets how many images are processed in parallel and `--threads` the threads per job. Use `--overwrite` to replace existing masks.
 
-```sh
-(network)$ python3 Segmentation.py
-```
-
-To overwrite already segmented images use
-
-```sh
-(network)$ python3 Segmentation.py --overwrite
-```
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Coordinate Extraction
 
-After the inference ist done, extract the coordinates from the infered images.
-Use the *01_Extract_coordinates.py* script in the */repository/code/Extract_Coordinates* Folder.
+All scripts are in `code/03_Extract_Coordinates`, and every one takes `--network` so that results for different networks are kept apart. Outputs go to `Tables/` and `Figures/`, stamped with the network name and date.
 
 ```sh
-(base)$ cd repository/code/Extract_Coordinates
-```
-
-If not already done active the virtual environment
-
-```sh
+(base)$ cd repository/code/03_Extract_Coordinates
 (base)$ mamba activate network
 ```
 
-Run the code
+### 1. Extract coordinates
 
 ```sh
-(network)$ python3 01_Extract_coordinate.py
+(network)$ python3 01_Extract_coordinate_ablation_final.py --network a_baseline
 ```
 
-Electrodes of each subject, session and run are in the */repository/code/Extract_Coordinates/Table folder*
+Turns each mask into four electrode coordinates. The mask is split into connected components, and a recovery cascade repairs the common failure cases before plausibility checks are applied:
 
-### If you have baseline electrode coordinates, correct electrode naming can be implied
+- **five components** — one electrode split in two; the fragments are merged
+- **fragmented components** — small pieces of one electrode are grouped
+- **three components** — two adjacent electrodes merged into one; a split is attempted
 
-In */repository/code/Extract_Coordinates/Table* folder you will find a file called *DF_2Methods_2Raters_All_Coord.csv*. This file contains the electrode coordinates and the electrode names of all session including baseline. 
-If you have baseline electrode coordinates, you can correct the electrode naming by using the *02_Merge_tables.py* and the *03_Correct_Electrode_Coordinates.py* script. The code is highly dependent on the DF_2Methods_2Raters_All_Coord.csv file. Therefore, make sure to have a similar file before you start.
+An extraction is accepted only if the four positions form a plausible montage: no two centres closer than 15 mm, centre-to-electrode distances between 5 and 125 mm, and the four electrodes approximately coplanar. The 125 mm bound is specific to the 3×1 montages of this study; a montage with a different electrode count or radius needs its own.
 
-Merge both tsv files
+The summary at the end accounts for every image: how many were accepted, and for each rejected image the reason. Output: `Tables/electrode_positions_<network>_<date>.csv`, including per-electrode volumes and montage-geometry metrics.
+
+### 2. Name the electrodes and match them to the intended montage
 
 ```sh
-(network)$ python3 02_Merge_tables.py
+(network)$ python3 02_Merge_tables_and_Corret_Naming_ablation_final.py --network a_baseline
 ```
 
-Fits electrode naming to the baseline naming. For example, if the baseline electrode name is "Anode" with coordinates (x,y,z) and the infered subject electrode name is "Cathode1" with similar coordinates, the subject electrode name will be changed to "Anode" and coordinates will be also switched.
+Extraction returns four positions but not which is which. This step assigns the names — anode and cathodes 1–3 — by matching the configuration to the participant's intended montage with the Hungarian algorithm, then re-checks the result against the montage geometry and reverts a relabelling that would leave a cathode at the centre.
+
+**Target and control montages.** Every participant has two optimised montages, a target and a control, which lie on opposite hemispheres. Which one was applied is not recorded in the optimisation output, so it is identified from **which side of the head the extracted electrodes lie on**. This criterion is deliberately independent of goodness of fit: choosing whichever montage fits better is circular and cannot detect its own failure. Validated against an independent record of the stimulation arm, it classified 589 of 589 images correctly.
+
+Each output row carries a `note` column that flags any doubt about the reference montage — for example `contralateral_baseline?`. These flags concern the **reference**, not the extraction: a flagged image may have perfectly correct coordinates, and it is excluded only from analyses that compare against the intended position.
+
+### 3. Deviation from the intended position
 
 ```sh
-(network)$ python3 03_Correct_Electrode_Coordinates.py
+(network)$ python3 04_baseline_deviation.py --network a_baseline
+(network)$ python3 04_baseline_deviation.py --network a_baseline --clean-only
+(network)$ python3 04_baseline_deviation.py --network a_baseline --stim active --projects P3
 ```
+
+Compares extracted with intended positions per electrode, session and project, and writes violin, raincloud and displacement plots. `--clean-only` drops every row carrying a note; `--exclude-note` drops only the named ones; `--stim` restricts to the sham or active arm.
+
+### Quality control
+
+| Script | What it checks |
+|---|---|
+| `05_qc_html.py` | Browsable report of every segmentation, one row per electrode on three orthogonal slices. Used for the visual screening of the corpus |
+| `06_qc_naming_html.py --network a_baseline` | Every image with its assigned names and the intended positions overlaid, and a separate page collecting flagged images |
+| `07_check_affines.py --network a_baseline` | Confirms each coregistered image shares the geometry of its reference T1 — the first thing to check if coordinates are rigidly offset |
+| `09_fix_target_control.py --network a_baseline --dry-run` | Verifies the target/control assignment against a record of the stimulation arm, where one exists |
+
+### Segmented volume against the expert masks
+
+```sh
+(network)$ python3 08_compare_volumes.py \
+    --networks a_baseline b_no_attention c_reduced d_increased proposed \
+    --gt-root <path to the annotated dataset>
+```
+
+The four electrodes are identical objects, so their segmented volume is an absolute reference that needs no per-image annotation. The script compares each network with the expert masks, paired image by image, and reports the within-image consistency against the annotation's own spread. Use the dataset the networks were trained on, so that the comparison rests on the same masks as the cross-validation.
+
+Counting electrodes in the expert masks is less simple than it looks: a thin gap inside an electrode can split it into pieces, while an isotropic grouping step large enough to close that gap also fuses neighbouring electrodes. The script therefore bridges along one axis at a time. `inspect_gt_masks.py` names any mask that still does not contain exactly four electrodes.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 <!-- LICENSE -->
 ## License
